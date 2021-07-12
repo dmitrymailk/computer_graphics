@@ -1,0 +1,384 @@
+<style type="text/css">
+	body {
+		margin: 0px;
+	}
+	#container {
+		position: relative;
+		width: 100%;	
+		height: 100%;
+		margin: 0px;
+	}
+	#stats_container {
+		position: absolute;
+		left: 0px;
+	}
+	#gui_container {
+		position: absolute;
+		right: 0px;
+	}
+	.post_image {
+		display: none;
+	}
+</style>
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>CS123 Color Lab!</title>    
+  </head>
+  <body>
+    <div id="container">
+	  <div id="stats_container"></div>
+	  <div id="gui_container"></div>
+	</div>
+	<script src="./js/graphics/three.min.js"></script>
+	<script src="./js/graphics/Detector.js"></script>
+	<script src="./js/graphics/stats.min.js"></script>
+	<script src="./js/graphics/dat.gui.min.js"></script>
+	<script src="./js/jquery-2.1.4.min.js"></script>
+
+	<script id="vertexShader" type="x-shader/x-vertex">
+		void main()	{
+			gl_Position = vec4( position, 1.0 );
+		}
+	</script>
+
+	<script id="fragmentShader" type="x-shader/x-fragment">
+		uniform float time;
+		uniform vec2 resolution;
+		uniform float red;
+		uniform float green;
+		uniform float blue;
+		uniform float hsvValue;
+
+		const float PI = 3.14159265358979323846;
+		vec2 center = resolution.xy / 2.0;
+		float radius = 0.4 * resolution.y;
+		float targetRadius = 0.02 * radius;
+
+		// Smooth HSV to RGB conversion 
+		// written by Inigo Quilez
+		// Input: HSV color with all channels [0 1]
+		// Output: RGB color with all channels [0 1]
+		// 
+		vec3 hsv2rgb( in vec3 c ) {	    
+		    vec3 rgb = clamp( abs(mod(c.x*6.0+vec3(0.0,4.0,2.0),6.0)-3.0)-1.0, 0.0, 1.0 );
+			rgb = rgb*rgb*(3.0-2.0*rgb); // cubic smoothing	
+			return c.z * mix( vec3(1.0), rgb, c.y);
+		}
+
+		// RGB to HSV conversion 
+		// Input: RGB color with all channels [0 1]
+		// Output: HSV color with all channels [0 1]
+		// 
+		vec3 rgb2hsv(vec3 rgbColor) {
+		    // extract channel values
+		    float r = rgbColor.x;
+		    float g = rgbColor.y;
+		    float b = rgbColor.z;
+		    // convert to hsv
+		    float c_max = max(max(r, g), b);
+		    float c_min = min(min(r, g), b);
+		    float delta = c_max - c_min;
+		    float hue, saturation, value;
+		    // calculate hue
+		    if (c_max == c_min) {
+		     	hue = 0.0;   
+		    } else if (c_max == r) {
+		        hue = (1.0 / 6.0) * mod(((g-b)/delta), 6.0);
+		    } else if (c_max == g) {
+		        hue = (1.0 / 6.0) * (((b-r)/delta) + 2.0);
+		    } else if (c_max == b) {
+		        hue = (1.0 / 6.0) * (((r-g)/delta) + 4.0);
+		    }
+		    // calculate saturation
+		    if (c_max == 0.0) {
+		        saturation = 0.0;
+		    } else {
+		     	saturation = delta/c_max;   
+		    }
+		    // calculate value (lightness)
+		    value = c_max;
+		    return vec3(hue, saturation, value);
+		}
+
+		float atan2(float x, float y){
+			if(x>0.0)return atan(y/x);
+			if(x<0.0&& y>=0.0)return atan(y/x)+PI;
+			if(y<0.0&&x<0.0)return atan(y/x)-PI;
+			if(y>0.0&&x==0.0)return PI/2.0;
+			if(y<0.0&& x==0.0)return -PI/2.0;
+			return 0.0;
+		}
+
+		// UV to Polar conversion 
+		// Input: UV coordinates
+		// Output: Polar coordinates <r,theta> where theta is [0 2*pi]
+		// 
+		vec2 uv2polar(vec2 uv, vec2 centerPos) {
+		    vec2 displacement = uv - centerPos;
+		    vec2 polarCoords;
+		    polarCoords.x = length(displacement);
+		    polarCoords.y = atan2(displacement.x, displacement.y);
+		    return polarCoords;
+		}
+
+		// Polar to UV conversion 
+		// Input: Polar coordinates <r,theta> where theta is [0 2*pi]
+		// Output: UV coordinates
+		// 
+		vec2 polar2uv(vec2 polarCoords) {
+		    float r = polarCoords.x;
+		    float theta = polarCoords.y;
+		    vec2 uv = center;
+		    uv.x += r * cos(theta);
+		    uv.y += r * sin(theta);
+		    return uv;
+		}
+
+		vec4 drawTarget(vec2 uv, vec2 targetPos) {
+		    vec2 polarCoords = uv2polar(uv, targetPos);    
+		    // make target
+		    float d = (polarCoords.x - targetRadius) / targetRadius;
+		    vec4 targetColor = vec4(0.0);
+		    if (d > 0.45 && d < 1.0) {
+		     	targetColor.w =  1.0;  
+		    }
+		    return targetColor;
+		}
+
+		// Draw color wheel
+		// Input: UV coordinates of pixel
+		// Output: Color of pixel
+		// 
+		vec4 drawColorWheel(vec2 uv) {	  
+			vec2 polarCoords = uv2polar(uv, center); 
+			vec3 rgbColor = vec3(0.0, 0.0, 1.0);
+			// TODO (Task 5) : Calculate the polar coordinates of the pixel.
+			// Scale these polar coordinates to determine the hsv value of the pixel.
+
+		    // draw color wheel circle
+		    float d = polarCoords.x - radius;
+			float t = clamp(d, 0.0, 1.0);
+			vec4 uvColor = vec4(rgbColor, 1.0 - t);
+
+		    // draw target
+		    vec2 targetPos = center;
+		    vec4 targetColor = drawTarget(uv, targetPos);
+
+		    // TODO (Task 6) : Convert the RGB values in the uniforms into HSV
+		    // Scale these coordinates to calculate the polar coordinates of the target
+		    // Finally, convert these polar coordinates to UV coordinates to draw the target
+		    return mix(uvColor, targetColor, targetColor.a);
+		}
+
+		void main() {
+			vec2 uv = gl_FragCoord.xy;
+
+			vec4 bg = vec4(1.0);    
+		    gl_FragColor = bg;	 
+		    	    
+		    // TODO (Task 1) : Set gl_FragColor to the colors
+		    // specified by the uniforms red, green, and blue
+
+		    // TODO (Task 4) : Call drawColorWheel and use mix()
+		    // to draw the color wheel
+		}
+	</script>
+
+	<script>
+		var container, stats;
+
+		var camera, scene, renderer;
+		var guiParams;
+		var uniforms;
+		var containerWidth, containerHeight;
+		
+		if ( Detector.webgl ) {
+			init();
+			animate();
+		} else {
+			document.getElementById( 'container' ).appendChild( Detector.getWebGLErrorMessage() );
+		}
+
+		function init() {
+
+			container = document.getElementById( 'container' );
+			containerWidth = document.getElementById('container').offsetWidth;
+			containerHeight = document.getElementById('container').offsetHeight;
+
+			camera = new THREE.Camera();
+			camera.position.z = 1;			
+
+			scene = new THREE.Scene();
+
+			var geometry = new THREE.PlaneBufferGeometry( 2, 2 );		
+			uniforms = {
+				time: { type: "f", value: 1.0 },
+				resolution: { type: "v2", value: new THREE.Vector2() },
+				red: {type: "f", value: 0.5 },
+				green: {type: "f", value: 0.95 },
+				blue: {type: "f", value: 0.5 },
+				hsvValue: {type: "f", value: 1.0}
+			};
+
+			var material = new THREE.ShaderMaterial( {
+
+				uniforms: uniforms,
+				vertexShader: document.getElementById( 'vertexShader' ).textContent,
+				fragmentShader: document.getElementById( 'fragmentShader' ).textContent
+
+			} );
+
+			var mesh = new THREE.Mesh( geometry, material );
+			scene.add( mesh );
+
+			renderer = new THREE.WebGLRenderer();
+			container.appendChild( renderer.domElement );
+
+			stats = new Stats();
+			stats.domElement.style.position = 'absolute';
+			stats.domElement.style.top = '0px';
+			var statsContainer = document.getElementById('stats_container');
+			statsContainer.appendChild( stats.domElement );
+
+			guiParams = {
+				red: uniforms[ "red" ].value * 255.0,
+				green: uniforms[ "green" ].value * 255.0,
+				blue: uniforms[ "blue" ].value * 255.0,
+				hue: 0,
+				saturation: 0,
+				hsvValue: uniforms[ "hsvValue" ].value
+			}
+			// to set the initial hsv
+			rgbChange();
+			var gui = new dat.GUI( { autoPlace: false } );
+			var guiContainer = document.getElementById('gui_container');
+			guiContainer.appendChild(gui.domElement);
+			var rgbFolder = gui.addFolder('RGB');
+			rgbFolder.open();
+			rgbFolder.add(guiParams,'red').min(0.0).max(255.0).name("red").listen().onChange(rgbChange);
+			rgbFolder.add(guiParams,'green').min(0.0).max(255.0).name("green").listen().onChange(rgbChange);
+			rgbFolder.add(guiParams,'blue').min(0.0).max(255.0).name("blue").listen().onChange(rgbChange);
+			var hsvFolder = gui.addFolder('HSV');
+			hsvFolder.open();
+			hsvFolder.add(guiParams,'hue').min(0.0).max(360.0).name("hue").listen().onChange(hsvChange);
+			hsvFolder.add(guiParams,'saturation').min(0.0).max(100.0).name("saturation").listen().onChange(hsvChange);
+			hsvFolder.add(guiParams,'hsvValue').min(0.0).max(100.0).name("value").listen().onChange(hsvChange);
+			onWindowResize();
+			window.addEventListener( 'resize', onWindowResize, false );
+		}
+
+		function rgbChange() {
+			//copy gui params into shader uniforms
+			uniforms[ "red" ].value = guiParams.red / 255.0;
+			uniforms[ "green" ].value = guiParams.green / 255.0;
+			uniforms[ "blue" ].value = guiParams.blue / 255.0;
+			// adjust gui params for hsv
+			var hsv = rgb2hsv(uniforms[ "red" ].value,
+				uniforms[ "green" ].value,
+				uniforms[ "blue" ].value);
+			guiParams.hue = hsv.hue * 360.0;
+			guiParams.saturation = hsv.saturation * 100.0;	
+			guiParams.hsvValue = hsv.hsvValue * 100.0;
+			uniforms[ "hsvValue" ].value = hsv.hsvValue;
+		}
+
+		function hsvChange() {
+			//copy gui params into shader uniforms		
+			uniforms[ "hsvValue" ].value = guiParams.hsvValue / 100.0;
+			// adjust gui params for hsv
+			var rgb = hsv2rgb(guiParams.hue / 360.0,
+				guiParams.saturation / 100.0,
+				guiParams.hsvValue / 100.0);
+			guiParams.red = rgb.red * 255.0;
+			guiParams.green = rgb.green * 255.0;	
+			guiParams.blue = rgb.blue * 255.0;
+			uniforms[ "red" ].value = rgb.red;
+			uniforms[ "green" ].value = rgb.green;
+			uniforms[ "blue" ].value = rgb.blue;
+		}
+
+		function hsv2rgb(h, s, v){
+	        var r, g, b;
+
+	        var i = Math.floor(h * 6);
+	        var f = h * 6 - i;
+	        var p = v * (1 - s);
+	        var q = v * (1 - f * s);
+	        var t = v * (1 - (1 - f) * s);
+
+	        switch(i % 6){
+	            case 0: r = v, g = t, b = p; break;
+	            case 1: r = q, g = v, b = p; break;
+	            case 2: r = p, g = v, b = t; break;
+	            case 3: r = p, g = q, b = v; break;
+	            case 4: r = t, g = p, b = v; break;
+	            case 5: r = v, g = p, b = q; break;
+	        }
+
+	        return {red: r,
+	        		green: g,
+	        		blue: b};
+	    }
+
+		function rgb2hsv(r, g, b) {
+	        var max = Math.max(r, g, b);
+	        var min = Math.min(r, g, b);
+	        var h, s, v = max;
+
+	        var d = max - min;
+	        s = max == 0 ? 0 : d / max;
+
+	        if(max == min) {
+	            h = 0; // achromatic
+	        } else{
+	            switch(max) {
+	                case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+	                case g: h = (b - r) / d + 2; break;
+	                case b: h = (r - g) / d + 4; break;
+	            }
+	            h /= 6;
+	        }
+
+	        return {hue: h,
+	        		saturation: s,
+	        		hsvValue: v};
+	    }
+		
+		function parseColor(colorVal) {
+			var myColor = new THREE.Color();
+			// if color is a hex string
+			if (colorVal.length > 3) {
+				myColor.set(colorVal);
+			}
+			else if(colorVal.length == 3) {
+				myColor.set( new THREE.Color( colorVal[0]/255.0, colorVal[1]/255.0, colorVal[2]/255.0 ) );
+			}
+			return myColor;
+		}
+
+		function onWindowResize( event ) {
+			containerWidth = document.getElementById('container').offsetWidth;
+			containerHeight = document.getElementById('container').offsetHeight;		
+			
+			uniforms.resolution.value.x = containerWidth;
+			uniforms.resolution.value.y = containerHeight;
+			renderer.setSize( containerWidth, containerHeight );
+		}
+
+		function animate() {
+			requestAnimationFrame( animate );
+			render();
+			stats.update();
+		}
+
+		function render() {
+			uniforms.time.value += 0.05;
+			
+			renderer.render( scene, camera );
+		}
+	</script>
+  </body>
+</html>

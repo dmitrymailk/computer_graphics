@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/shaders">
+        <file>phong.frag</file>
+        <file>phong.vert</file>
+        <file>horizontalBlur.frag</file>
+        <file>verticalBlur.frag</file>
+        <file>quad.vert</file>
+        <file>texture.frag</file>
+        <file>particles_draw.frag</file>
+        <file>particles_draw.vert</file>
+        <file>particles_update.frag</file>
+    </qresource>
+</RCC>

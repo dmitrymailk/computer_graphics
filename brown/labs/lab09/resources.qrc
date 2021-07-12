@@ -1,0 +1,24 @@
+<RCC>
+    <qresource prefix="/shaders">
+        <file>skybox.frag</file>
+        <file>standard.vert</file>
+        <file>default.frag</file>
+        <file>default.vert</file>
+        <file>skybox.vert</file>
+        <file>color.frag</file>
+        <file>glass.frag</file>
+        <file>glass.vert</file>
+        <file>metal.frag</file>
+        <file>metal.vert</file>
+        <file>metal.vars</file>
+        <file>glass.vars</file>
+    </qresource>
+    <qresource prefix="/skybox">
+        <file>negx.jpg</file>
+        <file>negy.jpg</file>
+        <file>negz.jpg</file>
+        <file>posx.jpg</file>
+        <file>posy.jpg</file>
+        <file>posz.jpg</file>
+    </qresource>
+</RCC>
