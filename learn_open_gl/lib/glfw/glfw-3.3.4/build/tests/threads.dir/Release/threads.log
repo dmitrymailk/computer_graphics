@@ -1,0 +1,6 @@
+﻿  Building Custom Rule D:/computer_science_essentials/computer_graphics/learn_open_gl/lib/glfw/glfw-3.3.4/tests/CMakeLists.txt
+  threads.c
+  tinycthread.c
+  glad_gl.c
+  Generating Code...
+  threads.vcxproj -> D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\build\tests\Release\threads.exe

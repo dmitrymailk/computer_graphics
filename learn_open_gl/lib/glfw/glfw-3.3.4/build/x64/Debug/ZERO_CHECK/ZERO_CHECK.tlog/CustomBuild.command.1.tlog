@@ -1,0 +1,10 @@
+^D:\COMPUTER_SCIENCE_ESSENTIALS\COMPUTER_GRAPHICS\LEARN_OPEN_GL\LIB\GLFW\GLFW-3.3.4\BUILD\CMAKEFILES\4C3BFD74291179DBFB4E51837D954A45\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SD:/computer_science_essentials/computer_graphics/learn_open_gl/lib/glfw/glfw-3.3.4 -BD:/computer_science_essentials/computer_graphics/learn_open_gl/lib/glfw/glfw-3.3.4/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file D:/computer_science_essentials/computer_graphics/learn_open_gl/lib/glfw/glfw-3.3.4/build/GLFW.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

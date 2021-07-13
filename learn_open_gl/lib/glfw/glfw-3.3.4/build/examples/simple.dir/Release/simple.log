@@ -1,0 +1,5 @@
+﻿  Building Custom Rule D:/computer_science_essentials/computer_graphics/learn_open_gl/lib/glfw/glfw-3.3.4/examples/CMakeLists.txt
+  simple.c
+  glad_gl.c
+  Generating Code...
+  simple.vcxproj -> D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\build\examples\Release\simple.exe

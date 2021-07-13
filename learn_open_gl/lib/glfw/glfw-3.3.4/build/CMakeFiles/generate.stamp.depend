@@ -1,0 +1,36 @@
+# CMake generation dependency list for this directory.
+C:/Program Files/CMake/share/cmake-3.21/Modules/BasicConfigVersion-SameMajorVersion.cmake.in
+C:/Program Files/CMake/share/cmake-3.21/Modules/CMakeCInformation.cmake
+C:/Program Files/CMake/share/cmake-3.21/Modules/CMakeCommonLanguageInclude.cmake
+C:/Program Files/CMake/share/cmake-3.21/Modules/CMakeDependentOption.cmake
+C:/Program Files/CMake/share/cmake-3.21/Modules/CMakeGenericSystem.cmake
+C:/Program Files/CMake/share/cmake-3.21/Modules/CMakeInitializeConfigs.cmake
+C:/Program Files/CMake/share/cmake-3.21/Modules/CMakeLanguageInformation.cmake
+C:/Program Files/CMake/share/cmake-3.21/Modules/CMakePackageConfigHelpers.cmake
+C:/Program Files/CMake/share/cmake-3.21/Modules/CMakeRCInformation.cmake
+C:/Program Files/CMake/share/cmake-3.21/Modules/CMakeSystemSpecificInformation.cmake
+C:/Program Files/CMake/share/cmake-3.21/Modules/CMakeSystemSpecificInitialize.cmake
+C:/Program Files/CMake/share/cmake-3.21/Modules/CheckCSourceCompiles.cmake
+C:/Program Files/CMake/share/cmake-3.21/Modules/CheckIncludeFile.cmake
+C:/Program Files/CMake/share/cmake-3.21/Modules/CheckLibraryExists.cmake
+C:/Program Files/CMake/share/cmake-3.21/Modules/Compiler/CMakeCommonCompilerMacros.cmake
+C:/Program Files/CMake/share/cmake-3.21/Modules/Compiler/MSVC-C.cmake
+C:/Program Files/CMake/share/cmake-3.21/Modules/FindDoxygen.cmake
+C:/Program Files/CMake/share/cmake-3.21/Modules/FindPackageHandleStandardArgs.cmake
+C:/Program Files/CMake/share/cmake-3.21/Modules/FindPackageMessage.cmake
+C:/Program Files/CMake/share/cmake-3.21/Modules/FindThreads.cmake
+C:/Program Files/CMake/share/cmake-3.21/Modules/GNUInstallDirs.cmake
+C:/Program Files/CMake/share/cmake-3.21/Modules/Internal/CheckSourceCompiles.cmake
+C:/Program Files/CMake/share/cmake-3.21/Modules/Platform/Windows-MSVC-C.cmake
+C:/Program Files/CMake/share/cmake-3.21/Modules/Platform/Windows-MSVC.cmake
+C:/Program Files/CMake/share/cmake-3.21/Modules/Platform/Windows.cmake
+C:/Program Files/CMake/share/cmake-3.21/Modules/Platform/WindowsPaths.cmake
+C:/Program Files/CMake/share/cmake-3.21/Modules/WriteBasicConfigVersionFile.cmake
+D:/computer_science_essentials/computer_graphics/learn_open_gl/lib/glfw/glfw-3.3.4/CMakeLists.txt
+D:/computer_science_essentials/computer_graphics/learn_open_gl/lib/glfw/glfw-3.3.4/build/CMakeFiles/3.21.0-rc3/CMakeCCompiler.cmake
+D:/computer_science_essentials/computer_graphics/learn_open_gl/lib/glfw/glfw-3.3.4/build/CMakeFiles/3.21.0-rc3/CMakeRCCompiler.cmake
+D:/computer_science_essentials/computer_graphics/learn_open_gl/lib/glfw/glfw-3.3.4/build/CMakeFiles/3.21.0-rc3/CMakeSystem.cmake
+D:/computer_science_essentials/computer_graphics/learn_open_gl/lib/glfw/glfw-3.3.4/cmake_uninstall.cmake.in
+D:/computer_science_essentials/computer_graphics/learn_open_gl/lib/glfw/glfw-3.3.4/src/glfw3.pc.in
+D:/computer_science_essentials/computer_graphics/learn_open_gl/lib/glfw/glfw-3.3.4/src/glfw3Config.cmake.in
+D:/computer_science_essentials/computer_graphics/learn_open_gl/lib/glfw/glfw-3.3.4/src/glfw_config.h.in

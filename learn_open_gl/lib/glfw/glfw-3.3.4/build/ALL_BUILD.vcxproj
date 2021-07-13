@@ -1,0 +1,296 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{F91FB438-9C1E-319D-B82B-2BF2729B41DC}</ProjectGuid>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+    <Keyword>Win32Proj</Keyword>
+    <Platform>x64</Platform>
+    <ProjectName>ALL_BUILD</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\CMakeLists.txt">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule D:/computer_science_essentials/computer_graphics/learn_open_gl/lib/glfw/glfw-3.3.4/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SD:/computer_science_essentials/computer_graphics/learn_open_gl/lib/glfw/glfw-3.3.4 -BD:/computer_science_essentials/computer_graphics/learn_open_gl/lib/glfw/glfw-3.3.4/build --check-stamp-file D:/computer_science_essentials/computer_graphics/learn_open_gl/lib/glfw/glfw-3.3.4/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\CMake\share\cmake-3.21\Modules\BasicConfigVersion-SameMajorVersion.cmake.in;C:\Program Files\CMake\share\cmake-3.21\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\CMakeDependentOption.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\CMakePackageConfigHelpers.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\CheckLibraryExists.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\FindDoxygen.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\FindThreads.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\GNUInstallDirs.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\Platform\WindowsPaths.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\WriteBasicConfigVersionFile.cmake;D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\build\CMakeFiles\3.21.0-rc3\CMakeCCompiler.cmake;D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\build\CMakeFiles\3.21.0-rc3\CMakeRCCompiler.cmake;D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\build\CMakeFiles\3.21.0-rc3\CMakeSystem.cmake;D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\cmake_uninstall.cmake.in;D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\src\glfw3.pc.in;D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\src\glfw3Config.cmake.in;D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\src\glfw_config.h.in;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule D:/computer_science_essentials/computer_graphics/learn_open_gl/lib/glfw/glfw-3.3.4/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SD:/computer_science_essentials/computer_graphics/learn_open_gl/lib/glfw/glfw-3.3.4 -BD:/computer_science_essentials/computer_graphics/learn_open_gl/lib/glfw/glfw-3.3.4/build --check-stamp-file D:/computer_science_essentials/computer_graphics/learn_open_gl/lib/glfw/glfw-3.3.4/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files\CMake\share\cmake-3.21\Modules\BasicConfigVersion-SameMajorVersion.cmake.in;C:\Program Files\CMake\share\cmake-3.21\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\CMakeDependentOption.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\CMakePackageConfigHelpers.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\CheckLibraryExists.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\FindDoxygen.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\FindThreads.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\GNUInstallDirs.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\Platform\WindowsPaths.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\WriteBasicConfigVersionFile.cmake;D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\build\CMakeFiles\3.21.0-rc3\CMakeCCompiler.cmake;D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\build\CMakeFiles\3.21.0-rc3\CMakeRCCompiler.cmake;D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\build\CMakeFiles\3.21.0-rc3\CMakeSystem.cmake;D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\cmake_uninstall.cmake.in;D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\src\glfw3.pc.in;D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\src\glfw3Config.cmake.in;D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\src\glfw_config.h.in;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule D:/computer_science_essentials/computer_graphics/learn_open_gl/lib/glfw/glfw-3.3.4/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SD:/computer_science_essentials/computer_graphics/learn_open_gl/lib/glfw/glfw-3.3.4 -BD:/computer_science_essentials/computer_graphics/learn_open_gl/lib/glfw/glfw-3.3.4/build --check-stamp-file D:/computer_science_essentials/computer_graphics/learn_open_gl/lib/glfw/glfw-3.3.4/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Program Files\CMake\share\cmake-3.21\Modules\BasicConfigVersion-SameMajorVersion.cmake.in;C:\Program Files\CMake\share\cmake-3.21\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\CMakeDependentOption.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\CMakePackageConfigHelpers.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\CheckLibraryExists.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\FindDoxygen.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\FindThreads.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\GNUInstallDirs.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\Platform\WindowsPaths.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\WriteBasicConfigVersionFile.cmake;D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\build\CMakeFiles\3.21.0-rc3\CMakeCCompiler.cmake;D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\build\CMakeFiles\3.21.0-rc3\CMakeRCCompiler.cmake;D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\build\CMakeFiles\3.21.0-rc3\CMakeSystem.cmake;D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\cmake_uninstall.cmake.in;D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\src\glfw3.pc.in;D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\src\glfw3Config.cmake.in;D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\src\glfw_config.h.in;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule D:/computer_science_essentials/computer_graphics/learn_open_gl/lib/glfw/glfw-3.3.4/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SD:/computer_science_essentials/computer_graphics/learn_open_gl/lib/glfw/glfw-3.3.4 -BD:/computer_science_essentials/computer_graphics/learn_open_gl/lib/glfw/glfw-3.3.4/build --check-stamp-file D:/computer_science_essentials/computer_graphics/learn_open_gl/lib/glfw/glfw-3.3.4/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Program Files\CMake\share\cmake-3.21\Modules\BasicConfigVersion-SameMajorVersion.cmake.in;C:\Program Files\CMake\share\cmake-3.21\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\CMakeDependentOption.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\CMakePackageConfigHelpers.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\CheckLibraryExists.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\FindDoxygen.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\FindThreads.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\GNUInstallDirs.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\Platform\WindowsPaths.cmake;C:\Program Files\CMake\share\cmake-3.21\Modules\WriteBasicConfigVersionFile.cmake;D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\build\CMakeFiles\3.21.0-rc3\CMakeCCompiler.cmake;D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\build\CMakeFiles\3.21.0-rc3\CMakeRCCompiler.cmake;D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\build\CMakeFiles\3.21.0-rc3\CMakeSystem.cmake;D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\cmake_uninstall.cmake.in;D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\src\glfw3.pc.in;D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\src\glfw3Config.cmake.in;D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\src\glfw_config.h.in;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\build\ZERO_CHECK.vcxproj">
+      <Project>{EF2D4AAF-8A65-3A25-9381-D0E11F577F69}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\build\examples\boing.vcxproj">
+      <Project>{7171B524-8617-3F2F-8E02-288255FFE49F}</Project>
+      <Name>boing</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\build\tests\clipboard.vcxproj">
+      <Project>{DFBA4DF5-7E9B-3D28-8383-85CA1137986B}</Project>
+      <Name>clipboard</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\build\tests\cursor.vcxproj">
+      <Project>{4200C8F5-B7C2-39C7-AE4B-89A451016C8F}</Project>
+      <Name>cursor</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\build\tests\empty.vcxproj">
+      <Project>{B597993E-21D9-32B9-93B5-D37612FFE014}</Project>
+      <Name>empty</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\build\tests\events.vcxproj">
+      <Project>{575D35E9-75EB-350B-8D5A-9F89422DD041}</Project>
+      <Name>events</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\build\tests\gamma.vcxproj">
+      <Project>{EDAD257F-5794-3B4A-B3C4-C07C776EE307}</Project>
+      <Name>gamma</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\build\examples\gears.vcxproj">
+      <Project>{E753464D-5969-3B59-8F6D-3BCFCBA7BCB0}</Project>
+      <Name>gears</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\build\src\glfw.vcxproj">
+      <Project>{E359CF99-ED8D-3A1E-BF1C-751047B5C5DF}</Project>
+      <Name>glfw</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\build\tests\glfwinfo.vcxproj">
+      <Project>{F3C03844-D7E0-3E4F-AF9D-726C3B83187A}</Project>
+      <Name>glfwinfo</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\build\examples\heightmap.vcxproj">
+      <Project>{3ADC0B92-107F-3321-BCC6-FAAFD6322500}</Project>
+      <Name>heightmap</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\build\tests\icon.vcxproj">
+      <Project>{00B06BF3-FBC0-3A1D-89D5-55982D515009}</Project>
+      <Name>icon</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\build\tests\iconify.vcxproj">
+      <Project>{D28397AC-2A9F-31A7-A186-0867FB5D1BF2}</Project>
+      <Name>iconify</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\build\tests\inputlag.vcxproj">
+      <Project>{B0E82E36-0678-312C-BF00-BD6493B0B015}</Project>
+      <Name>inputlag</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\build\tests\joysticks.vcxproj">
+      <Project>{BC02B037-6F35-31EB-9A9B-B55AC326E2F5}</Project>
+      <Name>joysticks</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\build\tests\monitors.vcxproj">
+      <Project>{C7049AEC-63AF-38BD-9B80-968776BB8C6C}</Project>
+      <Name>monitors</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\build\tests\msaa.vcxproj">
+      <Project>{84D3F742-0B9F-3A9F-B83A-84CE805CF080}</Project>
+      <Name>msaa</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\build\examples\offscreen.vcxproj">
+      <Project>{E9230BAA-A363-3C96-AD91-44CEAAA1F954}</Project>
+      <Name>offscreen</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\build\tests\opacity.vcxproj">
+      <Project>{BA4BF10A-5AF5-376F-A707-2238EE1C0296}</Project>
+      <Name>opacity</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\build\examples\particles.vcxproj">
+      <Project>{C4F5745D-4837-3778-94D0-CF3C5D1B4364}</Project>
+      <Name>particles</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\build\tests\reopen.vcxproj">
+      <Project>{9C4E5D01-5E0E-3EE4-9A6F-310F603F3EBB}</Project>
+      <Name>reopen</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\build\examples\sharing.vcxproj">
+      <Project>{AD24B351-368B-3951-A5C3-09FACD0D72D2}</Project>
+      <Name>sharing</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\build\examples\simple.vcxproj">
+      <Project>{981AEF8E-9ACD-3B4A-9284-FE2833DAF488}</Project>
+      <Name>simple</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\build\examples\splitview.vcxproj">
+      <Project>{16645D60-3FB2-36AC-A058-8F9CBEE68387}</Project>
+      <Name>splitview</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\build\tests\tearing.vcxproj">
+      <Project>{5D5A9CAD-73ED-3FD8-BED0-79BC1134073A}</Project>
+      <Name>tearing</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\build\tests\threads.vcxproj">
+      <Project>{C6D46963-6803-3CD1-9DD1-04066D632A0E}</Project>
+      <Name>threads</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\build\tests\timeout.vcxproj">
+      <Project>{501D7A2F-F423-32CF-9B57-0EBF0E286746}</Project>
+      <Name>timeout</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\build\tests\title.vcxproj">
+      <Project>{93CCF3C1-5683-3659-981C-CA7DB00D1555}</Project>
+      <Name>title</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\build\tests\triangle-vulkan.vcxproj">
+      <Project>{C9073A37-8DA2-37B0-A904-C8A57ED0E393}</Project>
+      <Name>triangle-vulkan</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\build\examples\wave.vcxproj">
+      <Project>{4444A85B-39A8-31F6-B5E4-7A7AF0BE25C3}</Project>
+      <Name>wave</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\computer_science_essentials\computer_graphics\learn_open_gl\lib\glfw\glfw-3.3.4\build\tests\windows.vcxproj">
+      <Project>{6FC2FA20-8F38-3900-BAB3-DBC200E5F30E}</Project>
+      <Name>windows</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
