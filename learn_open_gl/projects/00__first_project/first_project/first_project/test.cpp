@@ -4,7 +4,7 @@
 
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
-
+void processInput(GLFWwindow* window);
 
 int main()
 { 
@@ -29,7 +29,7 @@ int main()
 	}
 
 	glViewport(0, 0, 800, 600);
-	// set callback
+	// установка 
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 	
 	// простой render loop
@@ -56,8 +56,16 @@ int main()
 	return 0;
 }
 
+// callback для изменения размера окна
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {	
-	// callback for resizing window
 	glViewport(0, 0, width, height);
 }
+
+// обработка
+void processInput(GLFWwindow* window)
+{
+	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+		glfwSetWindowShouldClose(window, true);
+}
+
