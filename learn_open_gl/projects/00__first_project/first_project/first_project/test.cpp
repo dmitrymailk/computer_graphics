@@ -1,4 +1,4 @@
-п»ї#include <glad\glad.h>
+#include <glad\glad.h>
 #include <GLFW\glfw3.h>
 #include <iostream>
 
@@ -7,12 +7,12 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
 
 int main()
-{ 
+{
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	
+
 	GLFWwindow* window = glfwCreateWindow(800, 600, "LearnOpenGL", NULL, NULL);
 	if (window == NULL)
 	{
@@ -29,26 +29,26 @@ int main()
 	}
 
 	glViewport(0, 0, 800, 600);
-	// СѓСЃС‚Р°РЅРѕРІРєР° 
+	// установка 
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-	
-	// РїСЂРѕСЃС‚РѕР№ render loop
-	// РјС‹ РЅРµ С…РѕС‚РёРј С‡С‚РѕР±С‹ РїСЂРёР»РѕР¶РµРЅРёРµ СЃСЂР°Р·Сѓ Р·Р°РєСЂС‹Р»РѕСЃСЊ, РїРѕСЌС‚РѕРјСѓ РІС‹СЃС‚Р°РІР»СЏРµРј РЅРµРєРѕС‚РѕСЂРѕРµ СѓСЃР»РѕРІРёРµ
+
+	// простой render loop
+	// мы не хотим чтобы приложение сразу закрылось, поэтому выставляем некоторое условие
 	while (!glfwWindowShouldClose(window))
 	{
 		/*
-		РјРµС…Р°РЅРёР·Рј РѕС‚СЂРёСЃРѕРІРєРё РѕРєРЅР° double buffer.
-		РџРѕС‡РµРјСѓ double buffer, РїРѕС‚РѕРјСѓ С‡С‚Рѕ РµСЃР»Рё Р±С‹ Сѓ РЅР°СЃ Р±С‹Р» РѕРґРёРЅ РјР°СЃСЃРёРІ, РєРѕС‚РѕСЂС‹Р№ Р±С‹ РѕС‚СЂРёСЃРѕРІС‹РІР°Р»
-		Рё РёР·РјРµРЅСЏР» РµРґРёРЅС‹Р№ buffer, СЌС‚Рѕ РїРѕРІР»РµРєР»Рѕ Р±С‹ Р·Р° СЃРѕР±РѕР№ С„СЂРёР·С‹ РЅР° СЌРєСЂР°РЅРµ. 
-		РџРѕСЌС‚РѕРјСѓ РµСЃС‚СЊ 2 buffer, РѕРґРёРЅ РєРѕС‚РѕСЂС‹Р№ РѕС‚СЂРёСЃРѕРІС‹РІР°РµС‚СЃСЏ, РґСЂСѓРіРѕР№ РєРѕС‚РѕСЂС‹Р№ РѕР±СЂР°Р±Р°С‚С‹РІР°РµС‚СЃСЏ
-		Рё РіРѕС‚РѕРІРёС‚СЃСЏ Рє РѕС‚СЂРёСЃРѕРІРєРµ.
+		механизм отрисовки окна double buffer.
+		Почему double buffer, потому что если бы у нас был один массив, который бы отрисовывал
+		и изменял единый buffer, это повлекло бы за собой фризы на экране.
+		Поэтому есть 2 buffer, один который отрисовывается, другой который обрабатывается
+		и готовится к отрисовке.
 		*/
 		glfwSwapBuffers(window);
-		
-		// РїСЂРѕРІРµСЂСЏРµС‚ РІСЃРµ events СЃ РєР»Р°РІРёР°С‚СѓСЂС‹ Рё СЌРєСЂР°РЅР°
+
+		// проверяет все events с клавиатуры и экрана
 		glfwPollEvents();
 	}
-	// С‡РёСЃС‚РёС‚ РєРµС€ Рё РєРѕСЂСЂРµРєС‚РЅРѕ Р·Р°РІРµСЂС€Р°РµС‚ СЂР°Р±РѕС‚Сѓ СЃ glfw
+	// чистит кеш и корректно завершает работу с glfw
 	glfwTerminate();
 
 
@@ -56,13 +56,13 @@ int main()
 	return 0;
 }
 
-// callback РґР»СЏ РёР·РјРµРЅРµРЅРёСЏ СЂР°Р·РјРµСЂР° РѕРєРЅР°
+// callback для изменения размера окна
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
-{	
+{
 	glViewport(0, 0, width, height);
 }
 
-// РѕР±СЂР°Р±РѕС‚РєР°
+// обработка
 void processInput(GLFWwindow* window)
 {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
