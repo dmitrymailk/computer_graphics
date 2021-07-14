@@ -29,26 +29,31 @@ int main()
 	}
 
 	glViewport(0, 0, 800, 600);
-	// установка 
+	// set window size
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
-	// простой render loop
-	// мы не хотим чтобы приложение сразу закрылось, поэтому выставляем некоторое условие
+	// simple render loop
+	// we don't want close window immediately 
 	while (!glfwWindowShouldClose(window))
 	{
+		// get events
+		processInput(window);
+		
+		// render commands goes after here
+		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT);
+
+	
 		/*
-		механизм отрисовки окна double buffer.
-		Почему double buffer, потому что если бы у нас был один массив, который бы отрисовывал
-		и изменял единый buffer, это повлекло бы за собой фризы на экране.
-		Поэтому есть 2 buffer, один который отрисовывается, другой который обрабатывается
-		и готовится к отрисовке.
+		Double buffer When an application draws in a single buffer the resulting image may display flickering issues. 
+		first buffer store image on the screen
+		second buffer process 
 		*/
 		glfwSwapBuffers(window);
-
-		// проверяет все events с клавиатуры и экрана
+		// check all events from keyboard and screen
 		glfwPollEvents();
 	}
-	// чистит кеш и корректно завершает работу с glfw
+	// clean cache and close program correctly
 	glfwTerminate();
 
 
@@ -56,13 +61,13 @@ int main()
 	return 0;
 }
 
-// callback для изменения размера окна
+// callback for size changing
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
 	glViewport(0, 0, width, height);
 }
 
-// обработка
+// callback for keyboard input
 void processInput(GLFWwindow* window)
 {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
