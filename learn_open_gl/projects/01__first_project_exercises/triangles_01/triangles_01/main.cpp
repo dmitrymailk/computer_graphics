@@ -1,4 +1,4 @@
-#include <glad\glad.h>
+ï»¿#include <glad\glad.h>
 #include <GLFW\glfw3.h>
 #include <iostream>
 
@@ -35,9 +35,26 @@ int main()
 	// ----------------- INPUT VERTICES -----------------
 	// draw triangle
 	float vertices[] = {
-		-0.5f, -0.5f, 0.0f,
-		0.5f, -0.5f, 0.0f,
-		0.0f, 0.5f, 0.0f
+		// 1 triangle
+		0.0f, 0.4f, 0.0f,
+		0.2f, 0.2f, 0.0f,
+		-0.2f, 0.2f, 0.0f,
+		// 2 triangle
+		0.0f, 0.25f, 0.0f,
+		0.3f, 0.0f, 0.0f,
+		-0.3f, 0.0f, 0.0f,
+		// 3 triangle
+		0.0f, 0.1f, 0.0f,
+		0.4f, -0.2f, 0.0f,
+		-0.4f, -0.2f, 0.0f,
+		// 4 triangle
+		-0.03f, -0.2f, 0,
+		-0.03f, -0.3f, 0,
+		0.03f, -0.3f, 0,
+		// 5 triangle
+		-0.03f, -0.2f, 0,
+		0.03f, -0.2f, 0,
+		0.03f, -0.3f, 0,
 	};
 
 	unsigned int VBO;
@@ -56,9 +73,9 @@ int main()
 	/*
 	copying data into buffer object by VBO's id
 	there are many types:
-	• GL_STREAM_DRAW: the data is set only once and used by the GPU at most a few times.
-	• GL_STATIC_DRAW: the data is set only once and used many times.
-	• GL_DYNAMIC_DRAW: the data is changed a lot and used many times.
+	ï¿½ GL_STREAM_DRAW: the data is set only once and used by the GPU at most a few times.
+	ï¿½ GL_STATIC_DRAW: the data is set only once and used many times.
+	ï¿½ GL_DYNAMIC_DRAW: the data is changed a lot and used many times.
 	*/
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
@@ -151,7 +168,7 @@ int main()
 
 		//  activate shader program
 		glUseProgram(shaderProgram);
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		glDrawArrays(GL_TRIANGLES, 0, 15);
 
 		/*
 		Double buffer When an application draws in a single buffer the resulting image may display flickering issues.
