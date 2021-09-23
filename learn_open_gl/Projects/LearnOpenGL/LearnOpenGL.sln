@@ -5,12 +5,16 @@ VisualStudioVersion = 16.0.31702.278
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "1__hello_world", "1__hello_world\1__hello_world.vcxproj", "{AE348430-1649-4BBA-8DE1-133354EA7E3A}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "2__hello_triangle", "2__hello_triangle\2__hello_triangle.vcxproj", "{BD84BDEF-586B-41D3-93F6-EE9AC49DF2CC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
+		test_conf|x64 = test_conf|x64
+		test_conf|x86 = test_conf|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{AE348430-1649-4BBA-8DE1-133354EA7E3A}.Debug|x64.ActiveCfg = Debug|x64
@@ -21,6 +25,21 @@ Global
 		{AE348430-1649-4BBA-8DE1-133354EA7E3A}.Release|x64.Build.0 = Release|x64
 		{AE348430-1649-4BBA-8DE1-133354EA7E3A}.Release|x86.ActiveCfg = Release|Win32
 		{AE348430-1649-4BBA-8DE1-133354EA7E3A}.Release|x86.Build.0 = Release|Win32
+		{AE348430-1649-4BBA-8DE1-133354EA7E3A}.test_conf|x64.ActiveCfg = test_conf|x64
+		{AE348430-1649-4BBA-8DE1-133354EA7E3A}.test_conf|x86.ActiveCfg = test_conf|Win32
+		{AE348430-1649-4BBA-8DE1-133354EA7E3A}.test_conf|x86.Build.0 = test_conf|Win32
+		{BD84BDEF-586B-41D3-93F6-EE9AC49DF2CC}.Debug|x64.ActiveCfg = Debug|x64
+		{BD84BDEF-586B-41D3-93F6-EE9AC49DF2CC}.Debug|x64.Build.0 = Debug|x64
+		{BD84BDEF-586B-41D3-93F6-EE9AC49DF2CC}.Debug|x86.ActiveCfg = Debug|Win32
+		{BD84BDEF-586B-41D3-93F6-EE9AC49DF2CC}.Debug|x86.Build.0 = Debug|Win32
+		{BD84BDEF-586B-41D3-93F6-EE9AC49DF2CC}.Release|x64.ActiveCfg = Release|x64
+		{BD84BDEF-586B-41D3-93F6-EE9AC49DF2CC}.Release|x64.Build.0 = Release|x64
+		{BD84BDEF-586B-41D3-93F6-EE9AC49DF2CC}.Release|x86.ActiveCfg = Release|Win32
+		{BD84BDEF-586B-41D3-93F6-EE9AC49DF2CC}.Release|x86.Build.0 = Release|Win32
+		{BD84BDEF-586B-41D3-93F6-EE9AC49DF2CC}.test_conf|x64.ActiveCfg = Debug|x64
+		{BD84BDEF-586B-41D3-93F6-EE9AC49DF2CC}.test_conf|x64.Build.0 = Debug|x64
+		{BD84BDEF-586B-41D3-93F6-EE9AC49DF2CC}.test_conf|x86.ActiveCfg = Debug|Win32
+		{BD84BDEF-586B-41D3-93F6-EE9AC49DF2CC}.test_conf|x86.Build.0 = Debug|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
