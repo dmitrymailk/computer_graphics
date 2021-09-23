@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="D:\computer_science_essentials\computer_graphics\learn_open_gl\GLFW_source\glfw-3.3.4\examples\simple.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\computer_science_essentials\computer_graphics\learn_open_gl\GLFW_source\glfw-3.3.4\deps\glad_gl.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="D:\computer_science_essentials\computer_graphics\learn_open_gl\GLFW_source\glfw-3.3.4\deps\glad\gl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\computer_science_essentials\computer_graphics\learn_open_gl\GLFW_source\glfw-3.3.4\examples\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="D:\computer_science_essentials\computer_graphics\learn_open_gl\GLFW_source\glfw-3.3.4\examples\glfw.rc">
+      <Filter>Source Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{275FED27-5CA5-3E6D-AA6C-7A224198D09C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{0B9FDE86-2CC3-3B01-B9D7-5822B18453B0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
