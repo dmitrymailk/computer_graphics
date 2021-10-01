@@ -29,8 +29,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{4f0501fe-bda5-4a2b-b518-b10d8f5ba68e}</ProjectGuid>
-    <RootNamespace>_2__hello_triangle</RootNamespace>
+    <ProjectGuid>{2a2dc60f-6818-4ea2-ae8d-5a09fd524b8c}</ProjectGuid>
+    <RootNamespace>_3__element_buffer_objects</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -202,7 +202,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="glad.c" />
-    <ClCompile Include="2__hello-triangle.cpp" />
+    <ClCompile Include="3__element_buffer_objects%28rectangle%29.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

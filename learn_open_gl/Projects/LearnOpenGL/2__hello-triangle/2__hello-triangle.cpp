@@ -52,11 +52,7 @@ int main()
 		"   FragColor = vec4(1.0f, 0.4f, 0.1f, 1.0f);\n"
 		"}\n\0";
 
-	float vertices[] = {
-		-0.5f, -0.5f, 0.0f,
-		0.5f, -0.5f, 0.0f,
-		0.0f, 0.5f, 0.0f
-	};
+
 
 
 	// create vertex shader
@@ -114,7 +110,12 @@ int main()
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShader);
 
-
+	float vertices[] = {
+		-0.5f, -0.5f, 0.0f,
+		0.5f, -0.5f, 0.0f,
+		0.0f, 0.5f, 0.0f
+	};
+	// VAO: its just table which stare links to Vertex Buffer Objects
 	unsigned int VAO;
 	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);
@@ -132,7 +133,6 @@ int main()
 	// draw the object
 	glUseProgram(shaderProgram);
 	glBindVertexArray(VAO);
-	glDrawArrays(GL_TRIANGLES, 0, 3);
 
 	while (!glfwWindowShouldClose(window))
 	{
