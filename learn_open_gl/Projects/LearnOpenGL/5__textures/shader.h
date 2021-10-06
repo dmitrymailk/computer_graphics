@@ -1,4 +1,4 @@
-ï»¿#ifndef SHADER_H
+#ifndef SHADER_H
 #define SHADER_H
 #include <glad/glad.h> // include glad to get the required OpenGL headers
 #include <string>
@@ -29,7 +29,7 @@ public:
 			vShaderFile.open(vertexPath);
 			fShaderFile.open(fragmentPath);
 			std::stringstream vShaderStream, fShaderStream;
-			// read fileâ€™s buffer contents into streams
+			// read file’s buffer contents into streams
 			vShaderStream << vShaderFile.rdbuf();
 			fShaderStream << fShaderFile.rdbuf();
 			// close file handlers
@@ -95,7 +95,7 @@ public:
 			std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" <<
 				infoLog << std::endl;
 		}
-		// delete shaders; theyâ€™re linked into our program and no longer necessary
+		// delete shaders; they’re linked into our program and no longer necessary
 		glDeleteShader(vertex);
 		glDeleteShader(fragment);
 
