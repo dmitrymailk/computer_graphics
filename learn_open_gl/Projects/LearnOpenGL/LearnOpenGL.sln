@@ -11,6 +11,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3__element_buffer_objects",
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "4__shaders", "4__shaders\4__shaders.vcxproj", "{AA74CF47-65FD-45AA-B03A-79A3EF87D989}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "4_1__shader__vertices_with_colors", "4_1__shader__vertices_with_colors\4_1__shader__vertices_with_colors.vcxproj", "{3264B0B6-F265-462F-BE50-893C5423ED05}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "4_2__shader_class", "4_2__shader_class\4_2__shader_class.vcxproj", "{3BC16FAC-DC90-42B7-BD86-E29205CDA71C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -68,6 +72,30 @@ Global
 		{AA74CF47-65FD-45AA-B03A-79A3EF87D989}.test_conf|x64.Build.0 = test_conf|x64
 		{AA74CF47-65FD-45AA-B03A-79A3EF87D989}.test_conf|x86.ActiveCfg = test_conf|Win32
 		{AA74CF47-65FD-45AA-B03A-79A3EF87D989}.test_conf|x86.Build.0 = test_conf|Win32
+		{3264B0B6-F265-462F-BE50-893C5423ED05}.Debug|x64.ActiveCfg = Debug|x64
+		{3264B0B6-F265-462F-BE50-893C5423ED05}.Debug|x64.Build.0 = Debug|x64
+		{3264B0B6-F265-462F-BE50-893C5423ED05}.Debug|x86.ActiveCfg = Debug|Win32
+		{3264B0B6-F265-462F-BE50-893C5423ED05}.Debug|x86.Build.0 = Debug|Win32
+		{3264B0B6-F265-462F-BE50-893C5423ED05}.Release|x64.ActiveCfg = Release|x64
+		{3264B0B6-F265-462F-BE50-893C5423ED05}.Release|x64.Build.0 = Release|x64
+		{3264B0B6-F265-462F-BE50-893C5423ED05}.Release|x86.ActiveCfg = Release|Win32
+		{3264B0B6-F265-462F-BE50-893C5423ED05}.Release|x86.Build.0 = Release|Win32
+		{3264B0B6-F265-462F-BE50-893C5423ED05}.test_conf|x64.ActiveCfg = test_conf|x64
+		{3264B0B6-F265-462F-BE50-893C5423ED05}.test_conf|x64.Build.0 = test_conf|x64
+		{3264B0B6-F265-462F-BE50-893C5423ED05}.test_conf|x86.ActiveCfg = test_conf|Win32
+		{3264B0B6-F265-462F-BE50-893C5423ED05}.test_conf|x86.Build.0 = test_conf|Win32
+		{3BC16FAC-DC90-42B7-BD86-E29205CDA71C}.Debug|x64.ActiveCfg = Debug|x64
+		{3BC16FAC-DC90-42B7-BD86-E29205CDA71C}.Debug|x64.Build.0 = Debug|x64
+		{3BC16FAC-DC90-42B7-BD86-E29205CDA71C}.Debug|x86.ActiveCfg = Debug|Win32
+		{3BC16FAC-DC90-42B7-BD86-E29205CDA71C}.Debug|x86.Build.0 = Debug|Win32
+		{3BC16FAC-DC90-42B7-BD86-E29205CDA71C}.Release|x64.ActiveCfg = Release|x64
+		{3BC16FAC-DC90-42B7-BD86-E29205CDA71C}.Release|x64.Build.0 = Release|x64
+		{3BC16FAC-DC90-42B7-BD86-E29205CDA71C}.Release|x86.ActiveCfg = Release|Win32
+		{3BC16FAC-DC90-42B7-BD86-E29205CDA71C}.Release|x86.Build.0 = Release|Win32
+		{3BC16FAC-DC90-42B7-BD86-E29205CDA71C}.test_conf|x64.ActiveCfg = test_conf|x64
+		{3BC16FAC-DC90-42B7-BD86-E29205CDA71C}.test_conf|x64.Build.0 = test_conf|x64
+		{3BC16FAC-DC90-42B7-BD86-E29205CDA71C}.test_conf|x86.ActiveCfg = test_conf|Win32
+		{3BC16FAC-DC90-42B7-BD86-E29205CDA71C}.test_conf|x86.Build.0 = test_conf|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
