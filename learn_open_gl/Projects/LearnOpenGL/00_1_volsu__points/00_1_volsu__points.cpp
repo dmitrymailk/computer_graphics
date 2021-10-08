@@ -104,7 +104,8 @@ int main()
 		// ------
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
-		glDrawArrays(GL_POINTS, 0, 3);
+
+		glDrawArrays(GL_POINTS, 0, 4);
 
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
@@ -145,8 +146,8 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 {
 	cout
-		<< "xpos " << xpos / (SCR_WIDTH)-0.5f << " "
-		<< "ypos " << ypos / (SCR_HEIGHT)-0.5f << "\n";
+		<< "xpos " << ((double)(xpos / (SCR_WIDTH)) - 0.5f) * 2<< " "
+		<< "ypos " << ((double)((SCR_HEIGHT - ypos) / (SCR_HEIGHT) ) - 0.5f) * 2<< "\n";
 	mousePosX = xpos;
 	mousePosY = ypos;
 }
