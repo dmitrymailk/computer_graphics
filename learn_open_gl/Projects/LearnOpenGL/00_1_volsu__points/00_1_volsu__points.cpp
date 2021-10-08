@@ -52,7 +52,7 @@ vector<float> vertices = {
 	// positions         // colors
 	 0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,  // bottom right
 	-0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,  // bottom left
-	 0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f   // top 
+	 0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f,   // top 
 };
 
 unsigned int VBO, VAO;
@@ -94,6 +94,7 @@ int main()
 	// -----------------------------
 	glEnable(GL_PROGRAM_POINT_SIZE);
 	srand((unsigned)time(NULL));
+	glLineWidth(5.0);
 
 	// build and compile our shader zprogram
 	// ------------------------------------
@@ -131,9 +132,11 @@ int main()
 		// ------
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
-
+		// lab 00
 		glDrawArrays(GL_POINTS, 0, vertices.size() / 6);
-
+		//glEnableClient
+		// lab 01
+		//glDrawArrays(GL_LINE_LOOP, 0, vertices.size() / 6);
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------
@@ -217,6 +220,14 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 		vertices.push_back(0.0);
 		vertices.push_back(0.0);
 		vertices.push_back(0.0);
+
+		/*vertices.push_back(xPos);
+		vertices.push_back(yPos);
+		vertices.push_back(0.0);
+
+		vertices.push_back(0.0);
+		vertices.push_back(0.0);
+		vertices.push_back(0.0);*/
 
 		glBindBuffer(GL_ARRAY_BUFFER, VBO);
 		glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(float), &vertices[0], GL_DYNAMIC_DRAW);
