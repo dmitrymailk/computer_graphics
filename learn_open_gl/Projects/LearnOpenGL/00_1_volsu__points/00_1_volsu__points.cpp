@@ -61,9 +61,6 @@ bool firstMouse = true;
 double mousePosX = 0.0;
 double mousePosY = 0.0;
 
-bool needLines = false;
-bool nextFigure = false;
-
 
 vector<float> vertices = {
 	// positions         // colors
@@ -147,20 +144,8 @@ int main()
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 		// ENABLE FOR LAB 00
-		//glDrawArrays(GL_POINTS, 0, vertices.size() / 6);
+		glDrawArrays(GL_POINTS, 0, vertices.size() / 6);
 		//glEnableClient
-		// ENABLE FOR LAB 01
-		//glDrawArrays(GL_LINE_LOOP, 0, vertices.size() / 6);
-
-		// LAB 1
-		if (needLines)
-		{
-			glDrawArrays(GL_LINE_LOOP, 0, vertices.size() / 6);
-		}
-		else
-		{
-			glDrawArrays(GL_POINTS, 0, vertices.size() / 6);
-		}
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------
@@ -231,19 +216,9 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 
 		glBindBuffer(GL_ARRAY_BUFFER, VBO);
 		glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(float), &vertices[0], GL_DYNAMIC_DRAW);
-
-		needLines = true;
-		nextFigure = true;
 	}
 	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
 	{
-		if (nextFigure)
-		{
-			vertices.clear();
-			nextFigure = false;
-		}
-		needLines = false;
-
 		std::cout << "GLFW_MOUSE_BUTTON_LEFT\n";
 		double xPos = mousePosX;
 		double yPos = mousePosY;
@@ -255,6 +230,13 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 		vertices.push_back(0.0);
 		vertices.push_back(0.0);
 
+		/*vertices.push_back(xPos);
+		vertices.push_back(yPos);
+		vertices.push_back(0.0);
+
+		vertices.push_back(0.0);
+		vertices.push_back(0.0);
+		vertices.push_back(0.0);*/
 
 		glBindBuffer(GL_ARRAY_BUFFER, VBO);
 		glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(float), &vertices[0], GL_DYNAMIC_DRAW);
