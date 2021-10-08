@@ -1,3 +1,12 @@
+//Компьютерная графика.Лабораторная работа №0.
+//Рисование точек, заданных пользователем.
+//Язык реализации : С, С++ или C#.
+//Задача.
+//Реализовать оконное приложение, имеющее следующий функционал :
+//1. По нажатию левой клавиши мыши :
+//В позиции указателя рисуется пиксель черного цвета.
+//2. По нажатию правой кнопки мыши :
+//Все точки меняют цвет на случайный.
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -11,6 +20,10 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include <time.h>
+
+#include <vector>
+
 
 using namespace std;
 
@@ -20,6 +33,12 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
 
+// generate number between 0.0 and 1.0
+float generate_rand_num()
+{
+	return (float)rand() / RAND_MAX;
+}
+
 // settings
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
@@ -28,6 +47,15 @@ bool firstMouse = true;
 double mousePosX = 0.0;
 double mousePosY = 0.0;
 
+
+vector<float> vertices = {
+	// positions         // colors
+	 0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,  // bottom right
+	-0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,  // bottom left
+	 0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f   // top 
+};
+
+unsigned int VBO, VAO;
 
 int main()
 {
@@ -65,31 +93,30 @@ int main()
 	// configure global opengl state
 	// -----------------------------
 	glEnable(GL_PROGRAM_POINT_SIZE);
+	srand((unsigned)time(NULL));
 
 	// build and compile our shader zprogram
 	// ------------------------------------
 	Shader ourShader("shader.vert", "shader.frag");
 
-	float vertices[] = {
-		-0.5f, -0.5f, 0.0f,
-		0.5f, -0.5f, 0.0f,
-		0.0f, 0.5f, 0.0f,
-		0.0f, 0.0f, 0.0f,
-	};
 
 
-	unsigned int VBO, VAO;
+
+
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
 
 	glBindVertexArray(VAO);
 
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(float), &vertices[0], GL_DYNAMIC_DRAW);
 
 	// position attribute
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
+
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
 
 	ourShader.use();
 	// render loop
@@ -105,7 +132,7 @@ int main()
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		glDrawArrays(GL_POINTS, 0, 4);
+		glDrawArrays(GL_POINTS, 0, vertices.size() / 6);
 
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
@@ -141,24 +168,58 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 }
 
 
+
 // glfw: whenever the mouse moves, this callback is called
 // -------------------------------------------------------
 void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 {
-	cout
-		<< "xpos " << ((double)(xpos / (SCR_WIDTH)) - 0.5f) * 2<< " "
-		<< "ypos " << ((double)((SCR_HEIGHT - ypos) / (SCR_HEIGHT) ) - 0.5f) * 2<< "\n";
-	mousePosX = xpos;
-	mousePosY = ypos;
+	/*cout
+		<< "xpos " << ((double)(xpos / (SCR_WIDTH)) - 0.5f) * 2 << " "
+		<< "ypos " << ((double)((SCR_HEIGHT - ypos) / (SCR_HEIGHT)) - 0.5f) * 2 << "\n";*/
+	mousePosX = ((double)(xpos / (SCR_WIDTH)) - 0.5f) * 2;
+	mousePosY = ((double)((SCR_HEIGHT - ypos) / (SCR_HEIGHT)) - 0.5f) * 2;
+}
+
+void copy_vertices_to_memory()
+{
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(float), &vertices[0], GL_DYNAMIC_DRAW);
 }
 
 void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 {
 	if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS)
-		std::cout << "GLFW_MOUSE_BUTTON_RIGHT ";
+	{
+		std::cout << "GLFW_MOUSE_BUTTON_RIGHT \n";
+		std::cout << vertices.size() / 6 << "\n";
+		for (int i = 0; i < vertices.size() / 6; i++)
+		{
+			vertices[i * 6 + 3] = generate_rand_num();
+			vertices[i * 6 + 4] = generate_rand_num();
+			vertices[i * 6 + 5] = generate_rand_num();
+			//for (int j = i; j < i + 6; j++)
+			//	cout << vertices[j] << " ";
+			//cout << "\n";
+		}
+
+		glBindBuffer(GL_ARRAY_BUFFER, VBO);
+		glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(float), &vertices[0], GL_DYNAMIC_DRAW);
+	}
 	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
 	{
-		std::cout << "GLFW_MOUSE_BUTTON_LEFT";
+		std::cout << "GLFW_MOUSE_BUTTON_LEFT\n";
+		double xPos = mousePosX;
+		double yPos = mousePosY;
+		vertices.push_back(xPos);
+		vertices.push_back(yPos);
+		vertices.push_back(0.0);
+
+		vertices.push_back(0.0);
+		vertices.push_back(0.0);
+		vertices.push_back(0.0);
+
+		glBindBuffer(GL_ARRAY_BUFFER, VBO);
+		glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(float), &vertices[0], GL_DYNAMIC_DRAW);
 	}
-	std::cout << "xpos " << mousePosX / (SCR_WIDTH / 2) << " " << "ypos " << mousePosY / (SCR_HEIGHT / 2) << "\n";
+
 }
