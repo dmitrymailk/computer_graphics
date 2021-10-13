@@ -21,6 +21,7 @@ namespace lab_1
             bitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             dots = new List<List<int>>();
             color = Color.FromArgb(246, 45, 71);
+            Console.WriteLine("Start");
         }
 
         private void MouseClickEvent(object sender, MouseEventArgs e)
