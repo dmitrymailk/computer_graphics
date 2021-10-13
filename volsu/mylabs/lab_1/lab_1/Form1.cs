@@ -67,14 +67,17 @@ namespace lab_1
 
             int dy = Math.Abs(yb - ya);
             int dx = Math.Abs(xb - xa);
-            int d = (2 * dy) - dx;
-            int sx = xb >= xa ? 1 : -1; // знак xb-xa
-            int sy = yb >= ya ? 1 : -1; // знак yb-ya
+            int d;
+            int sx = xb >= xa ? 1 : -1; // направление приращения x
+            int sy = yb >= ya ? 1 : -1; // направление приращения y
 
-            // 
+            // если наклон не слишком сильный, то
+            // идет приращение по x, иначе по y
             if (dy <= dx)
             {
                 d = (2 * dy) - dx;
+                // умножение на 2 появляется в результате попытки ухода от float
+                // и чтобы не сравнивать значение ошибки с 0.5, а с 0 мы умножаем на 2
                 int d1 = dy * 2;
                 int d2 = (dy - dx) * 2;
                 int x = xa + sx;
@@ -83,6 +86,7 @@ namespace lab_1
 
                 for (int i = 1; i <= dx; i++, x += sx)
                 {
+                    // считаем ошибку округления
                     if (d > 0)
                     {
                         d += d2;
@@ -105,6 +109,7 @@ namespace lab_1
 
                 for (int i = 1; i <= dy; i++, y += sy)
                 {
+                    // считаем ошибку округления
                     if (d > 0)
                     {
                         d += d2;
