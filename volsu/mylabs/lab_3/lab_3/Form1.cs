@@ -15,6 +15,7 @@ namespace lab_3
         private Bitmap bitmap;
         private List<List<int>> dots;
         private Color color;
+        private Color clearColor;
 
         private List<int> down_loc = new List<int>();
         private List<int> up_loc = new List<int>();
@@ -150,6 +151,11 @@ namespace lab_3
             up_loc.Clear();
         }
 
+        private void ClearScreen(int s_x, int s_y, int e_x, int e_y)
+        {
+
+        }
+
         // попиксельная отрисовка прямоугольника
         private void DrawRectangle(int s_x, int s_y, int e_x, int e_y)
         {
@@ -168,7 +174,6 @@ namespace lab_3
 
             int d_x = s_x - e_x >= 0 ? -1 : 1;
             int d_y = s_y - e_y >= 0 ? -1 : 1;
-
 
             for (int i = x; i < x + width; i += 1)
             {
@@ -244,7 +249,7 @@ namespace lab_3
             int outcode1 = ComputeOutCode(x1, y1);
             Console.WriteLine($"outcode0={outcode0}, outcode1={outcode1}");
 
-            // пока 2 точки не окажутся внутри
+            // пока 2 точки не окажутся внутри прямоугольника
             while ((outcode0 | outcode1) != 0)
             {
                 // обе точки за пределами прямоугольника, выходим их функции
