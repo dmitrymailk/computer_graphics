@@ -14,22 +14,30 @@ namespace lab_6
 {
     public partial class Form1 : Form
     {
+        private Color color;
         private Bitmap bitmap;
+
         private List<Vector3> coords;
         private List<Vector3> projectedCoords;
 
-        private Color color;
         private double angleZ = 0;
         private double angleX = 0;
         private double angleY = 0;
 
-        private double scaleFactor = 150;
+        private double scaleX = 150;
+        private double scaleY = 150;
+        private double scaleZ = 150;
 
         private List<Vector3> projection;
 
         private List<Vector3> rotationZ;
         private List<Vector3> rotationX;
         private List<Vector3> rotationY;
+
+        private Vector3 translation;
+        private double translationX = 1;
+        private double translationY = 1;
+        private double translationZ = 1;
 
         public Form1()
         {
@@ -38,6 +46,10 @@ namespace lab_6
             bitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             coords = new List<Vector3>();
             projectedCoords = new List<Vector3>();
+
+            translationX = 0.57;
+            translationY = 0.57;
+            translationZ = 0.57;
 
             coords.Add(new Vector3(-0.5, -0.5, -0.5));
             coords.Add(new Vector3(0.5, -0.5, -0.5));
@@ -92,10 +104,13 @@ namespace lab_6
         private void UpdateProjection()
         {
             projection = new List<Vector3>();
-            projection.Add(new Vector3(1.0, 0.0, 0.0) * scaleFactor);
-            projection.Add(new Vector3(0.0, 1.0, 0.0) * scaleFactor);
-            projection.Add(new Vector3(0.0, 0.0, 1.0) * scaleFactor);
+
+            projection.Add(new Vector3(1.0, 0.0, 0.0) * scaleX);
+            projection.Add(new Vector3(0.0, 1.0, 0.0) * scaleY);
+            projection.Add(new Vector3(0.0, 0.0, 1.0) * scaleZ);
         }
+
+
 
         private void CustomUpdate()
         {
@@ -108,14 +123,17 @@ namespace lab_6
             foreach (Vector3 item in coords)
             {
                 Vector3 proj2D = item;
+                var trans = new Vector3(translationX, translationY, translationZ);
+
                 proj2D = matMul(projection, proj2D);
                 proj2D = matMul(rotationX, proj2D);
                 proj2D = matMul(rotationZ, proj2D);
                 proj2D = matMul(rotationY, proj2D);
+                proj2D += trans;
 
                 projectedCoords.Add(proj2D);
 
-                point(proj2D.x, proj2D.y);
+                point(proj2D);
             }
 
             for (int i = 0; i < 4; i++)
@@ -146,7 +164,10 @@ namespace lab_6
 
             return proj2D;
         }
-
+        private void point(Vector3 vec3)
+        {
+            point(vec3.x, vec3.y);
+        }
         private void point(double _x, double _y)
         {
             int x = (int)Math.Floor(_x);
@@ -155,8 +176,17 @@ namespace lab_6
             x += pictureBox1.Width / 2;
             y += pictureBox1.Height / 2;
 
-            bitmap.SetPixel(x, y, color);
+            //if (x > 0 && x < pictureBox1.Width && y > 0 && y < pictureBox1.Height)
+            //{
+            //    bitmap.SetPixel(x, y, color);
+            //    pictureBox1.Image = bitmap;
+            //}
+
+
+            bitmap.SetPixel(Math.Max(x % pictureBox1.Width, 0), Math.Max(0, y % pictureBox1.Height), color);
             pictureBox1.Image = bitmap;
+
+
         }
 
         private void KeyDownHandler(object sender, KeyEventArgs e)
@@ -181,10 +211,37 @@ namespace lab_6
                         angleY += 0.1;
                         break;
                     }
+                case Keys.Q:
+                    {
+                        translationX += 10;
+                        break;
+                    }
+                case Keys.W:
+                    {
+                        translationY += 10;
+                        break;
+                    }
+                case Keys.E:
+                    {
+                        translationZ += 10;
+                        break;
+                    }
+                case Keys.A:
+                    {
+                        scaleX += 1;
+                        break;
+                    }
+                case Keys.S:
+                    {
+                        scaleY += 1;
+                        break;
+                    }
+                case Keys.D:
+                    {
+                        scaleZ += 1;
+                        break;
+                    }
             }
-
-
-
 
             CustomUpdate();
         }
@@ -269,6 +326,11 @@ class Vector3
     public double y { get; set; }
     public double z { get; set; }
 
+    public double norm()
+    {
+        return Math.Sqrt(x * x + y * y + z * z);
+    }
+
     public double this[int key]
     {
         get
@@ -291,6 +353,11 @@ class Vector3
     public static Vector3 operator *(Vector3 vec3, double scale)
     {
         return new Vector3(vec3.x * scale, vec3.y * scale, vec3.z * scale);
+    }
+
+    public static Vector3 operator +(Vector3 vec3_1, Vector3 vec3_2)
+    {
+        return new Vector3(vec3_1.x + vec3_2.x, vec3_1.y + vec3_2.y, vec3_1.z + vec3_2.z);
     }
 
     public override string ToString() => $"x={x} y={y} z={z}";
