@@ -296,17 +296,3 @@ class Vector3
     public override string ToString() => $"x={x} y={y} z={z}";
 };
 
-class Vector2
-{
-    public Vector2(double _x = 0, double _y = 0)
-    {
-        x = _x;
-        y = _y;
-    }
-
-    public double x { get; set; }
-    public double y { get; set; }
-
-    public override string ToString() => $"x={x} y={y}";
-}
-
