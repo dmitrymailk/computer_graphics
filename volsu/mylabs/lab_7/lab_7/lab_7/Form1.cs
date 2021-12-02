@@ -17,7 +17,7 @@ namespace lab_7
         public Form1()
         {
             InitializeComponent();
-            Console.WriteLine("");
+            //Console.WriteLine("");
             w = 800;
             h = 600;
             Size = new Size(w, h);
@@ -27,31 +27,45 @@ namespace lab_7
         private void pictureBox1_Click(object sender, EventArgs e)
         {
 
-            const int zoom = 1;
+            const float zoom = 0.5f;
             const int maxiter = 255;
+
+            // двигаем наш центр отрисовки если нужно
             const int moveX = 0;
             const int moveY = 0;
-            const double cX = -0.7;
-            const double cY = 0.27015;
-            double zx, zy, tmp;
-            const int R = 2;
+
+            // устанавливаем параметры нашей функции z + c = z + Cr + CIm 
+            const double realC = -0.1194;
+            const double imaginaryC = 0.6289;
+            double zReal, zIm, tmp;
+            const int Radius = 2;
             int i;
 
-            var colors = (from c in Enumerable.Range(0, 256) select Color.FromArgb(c, c, c)).ToArray();
-            //var color = Color.FromArgb(0, 0, 0);
+            var colors = (from c in Enumerable.Range(0, 256)
+                          select Color.FromArgb(
+                              //(c * 4 + 110) % 255,
+                              //(c * 3 + 150) % 255,
+                              //(c * 7 + 100) % 255)
+                              c, c, c)
+                          ).ToArray();
+
             var bitmap = new Bitmap(w, h);
             for (int x = 0; x < w; x++)
             {
                 for (int y = 0; y < h; y++)
                 {
-                    zx = 1.0 * (x - w / 2) / (0.5 * zoom * w) + moveX;
-                    zy = 1.0 * (y - h / 2) / (0.5 * zoom * h) + moveY;
+                    // центруем координаты
+                    zReal = (x - w / 2) / (0.5 * zoom * w) + moveX;
+                    zIm = (y - h / 2) / (0.5 * zoom * h) + moveY;
                     i = maxiter;
-                    while (zx * zx + zy * zy < R * R && i > 1)
+                    // выполняем наше преобразование до тех пока не 
+                    // достигнем максимума по абсолютному значению воображаемых чисел и реальных 
+                    // либо пока не выполним максимальное количество итераций
+                    while (zReal * zReal + zIm * zIm < Radius * Radius && i > 1)
                     {
-                        tmp = zx * zx - zy * zy + cX;
-                        zy = 2 * zx * zy + cY;
-                        zx = tmp;
+                        tmp = zReal * zReal - zIm * zIm + realC;
+                        zIm = 2 * zReal * zIm + imaginaryC;
+                        zReal = tmp;
                         i -= 1;
                     }
                     bitmap.SetPixel(x, y, colors[i]);

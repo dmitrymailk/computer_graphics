@@ -47,10 +47,6 @@ namespace lab_6
             coords = new List<Vector3>();
             projectedCoords = new List<Vector3>();
 
-            translationX = 0.57;
-            translationY = 0.57;
-            translationZ = 0.57;
-
             coords.Add(new Vector3(-0.5, -0.5, -0.5));
             coords.Add(new Vector3(0.5, -0.5, -0.5));
             coords.Add(new Vector3(0.5, 0.5, -0.5));
@@ -138,8 +134,8 @@ namespace lab_6
 
             for (int i = 0; i < 4; i++)
             {
-                ConnectProjectedDots(i, (i + 1) % 4);
-                ConnectProjectedDots(i + 4, ((i + 1) % 4) + 4);
+                //ConnectProjectedDots(i, (i + 1) % 4);
+                //ConnectProjectedDots(i + 4, ((i + 1) % 4) + 4);
                 ConnectProjectedDots(i, i + 4);
             }
         }
