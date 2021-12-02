@@ -9,7 +9,7 @@
 //------------------------------------------------------------------------------
 
 
-namespace lab_6.Properties
+namespace dimweb_lab_6.Properties
 {
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
