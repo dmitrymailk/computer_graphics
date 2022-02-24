@@ -10,7 +10,8 @@
 <script lang="ts">
 import { ref } from "vue";
 
-import { Lab_1, Canvas } from "./lab1";
+import { Canvas } from "./Canvas";
+import { Lab_1 } from "./lab1";
 
 export default {
   data() {
@@ -20,7 +21,6 @@ export default {
   },
 
   mounted() {
-    console.log("asdadfdsd", this.$refs.canvas_elem);
     const canvas_elem: HTMLCanvasElement = this.$refs.canvas_elem;
     const canvas = new Canvas(canvas_elem);
     const lab_1 = new Lab_1(canvas);
