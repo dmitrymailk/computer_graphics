@@ -21,6 +21,7 @@ export default {
   },
 
   mounted() {
+    // @ts-ignore
     const canvas_elem: HTMLCanvasElement = this.$refs.canvas_elem;
     const canvas = new Canvas(canvas_elem);
     const lab_1 = new Lab_1(canvas);

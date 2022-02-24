@@ -1,7 +1,7 @@
 import type { Canvas } from "./Canvas";
 // import type { Vector3 } from "./Vector3";
 import { Vector3 } from "./Vector3";
-
+// @ts-ignore
 import Papa from "papaparse";
 
 class Lab_1 {
