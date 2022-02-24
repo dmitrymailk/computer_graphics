@@ -30,9 +30,9 @@ class Lab_1 {
   private translation: Vector3 = new Vector3();
 
   // параметр переноса
-  private translationX: number = 100;
-  private translationY: number = 100;
-  private translationZ: number = 100;
+  private translationX: number = 0;
+  private translationY: number = 0;
+  private translationZ: number = 0;
 
   constructor(drawInstance: Canvas) {
     this.canvas = drawInstance;
@@ -40,7 +40,6 @@ class Lab_1 {
   }
 
   init() {
-    this.test();
     const color: string = "#000000";
     this.canvas.color = color;
 
@@ -161,7 +160,6 @@ class Lab_1 {
 
     switch (key) {
       case "KeyZ": {
-        console.log(key);
         this.angleZ += 0.1;
         break;
       }
@@ -198,11 +196,6 @@ class Lab_1 {
         break;
       }
     }
-  }
-
-  test() {
-    this.canvas.setPoint(0, 0);
-    this.canvas.drawLine(100, 100, this.canvas.width, this.canvas.height);
   }
 
   clearScreen() {
