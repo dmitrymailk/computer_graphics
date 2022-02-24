@@ -2,6 +2,8 @@ import type { Canvas } from "./Canvas";
 // import type { Vector3 } from "./Vector3";
 import { Vector3 } from "./Vector3";
 
+import Papa from "papaparse";
+
 class Lab_1 {
   private canvas: Canvas;
 
@@ -36,10 +38,25 @@ class Lab_1 {
 
   constructor(drawInstance: Canvas) {
     this.canvas = drawInstance;
-    this.init();
+    const _this = this;
+    Papa.parse("./cube.csv", {
+      download: true,
+      complete: function (res: any) {
+        const data: Array<Array<string>> = res.data;
+        _this.init(data);
+      },
+    });
   }
 
-  init() {
+  addCoords(data: Array<Array<string>>) {
+    for (let i = 1; i < data.length; i++) {
+      this.coords.push(
+        new Vector3(Number(data[i][0]), Number(data[i][1]), Number(data[i][2]))
+      );
+    }
+  }
+
+  init(data: Array<Array<string>>) {
     const color: string = "#000000";
     this.canvas.color = color;
 
@@ -47,17 +64,17 @@ class Lab_1 {
     this.projectedCoords = [];
 
     // задаем координаты куба в трехмерном пространстве
-    const coords = this.coords;
-    coords.push(new Vector3(-0.5, -0.5, -0.5));
-    coords.push(new Vector3(0.5, -0.5, -0.5));
-    coords.push(new Vector3(0.5, 0.5, -0.5));
-    coords.push(new Vector3(-0.5, 0.5, -0.5));
+    // const coords = this.coords;
+    // coords.push(new Vector3(-0.5, -0.5, -0.5));
+    // coords.push(new Vector3(0.5, -0.5, -0.5));
+    // coords.push(new Vector3(0.5, 0.5, -0.5));
+    // coords.push(new Vector3(-0.5, 0.5, -0.5));
 
-    coords.push(new Vector3(-0.5, -0.5, 0.5));
-    coords.push(new Vector3(0.5, -0.5, 0.5));
-    coords.push(new Vector3(0.5, 0.5, 0.5));
-    coords.push(new Vector3(-0.5, 0.5, 0.5));
-
+    // coords.push(new Vector3(-0.5, -0.5, 0.5));
+    // coords.push(new Vector3(0.5, -0.5, 0.5));
+    // coords.push(new Vector3(0.5, 0.5, 0.5));
+    // coords.push(new Vector3(-0.5, 0.5, 0.5));
+    this.addCoords(data);
     // add events
 
     window.addEventListener("keydown", (e: KeyboardEvent) => {
@@ -175,7 +192,7 @@ class Lab_1 {
         this.translationX += 10;
         break;
       }
-      case "KeyQ": {
+      case "KeyW": {
         this.translationY += 10;
         break;
       }
