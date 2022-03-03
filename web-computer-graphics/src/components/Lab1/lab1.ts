@@ -236,6 +236,10 @@ class Lab_1 {
     this.translationX = 0;
     this.translationY = 0;
     this.translationZ = 0;
+    this.scaleX = this.canvas.width;
+    this.scaleY = this.canvas.width;
+    this.scaleZ = this.canvas.width;
+
     this.clearScreen();
   }
 
