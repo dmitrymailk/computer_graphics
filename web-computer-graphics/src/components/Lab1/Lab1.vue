@@ -7,6 +7,48 @@
     <div class="lab1__controls">
       <button @click="clearScreen">Clear Screen</button>
     </div>
+
+    <div>
+      <input
+        type="range"
+        name="scaleXYZ"
+        min="1"
+        max="100"
+        @input="(e) => changeScale(e, 'X')"
+      />
+      <label for="scaleXYZ">scaleXYZ</label>
+    </div>
+    <div>
+      <input
+        type="range"
+        name="scaleX"
+        min="1"
+        max="100"
+        @input="(e) => changeScale(e, 'X')"
+      />
+      <label for="scaleX">scaleX</label>
+    </div>
+    <div>
+      <input
+        type="range"
+        name="scaleY"
+        min="1"
+        max="100"
+        @change="(e) => changeScale(e, 'Y')"
+      />
+      <label for="scaleY">scaleY</label>
+    </div>
+    <div>
+      <input
+        type="range"
+        id="scaleZ"
+        name="scaleZ"
+        min="1"
+        max="100"
+        @change="(e) => changeScale(e, 'Z')"
+      />
+      <label for="scaleZ">scaleZ</label>
+    </div>
   </div>
 </template>
 
@@ -26,7 +68,12 @@ export default {
 
   methods: {
     clearScreen() {
-      this.lab1.clearScreen();
+      this.lab1.clearCoords();
+    },
+    changeScale(e, type) {
+      console.log(e);
+      const value = e.srcElement.value;
+      this.lab1.changeScale(type, value);
     },
   },
   mounted() {

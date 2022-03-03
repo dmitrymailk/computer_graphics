@@ -2,7 +2,9 @@ import type { Canvas } from "./Canvas";
 // import type { Vector3 } from "./Vector3";
 import { Vector3 } from "./Vector3";
 // @ts-ignore
-import Papa from "papaparse";
+// import Papa from "papaparse";
+
+import { generateRandomFloatInRange } from "./utils";
 
 class Lab_1 {
   private canvas: Canvas;
@@ -16,9 +18,10 @@ class Lab_1 {
   private angleY: number = 0;
 
   // параметры скейла для всех осей
-  private scaleX: number = 150;
-  private scaleY: number = 150;
-  private scaleZ: number = 150;
+  private scaleX: number = 600;
+  private scaleY: number = 600;
+  private scaleZ: number = 600;
+  private maxScale: number = 600;
 
   // матрица проекции
   private projection: Array<Vector3> = [];
@@ -39,6 +42,9 @@ class Lab_1 {
   constructor(drawInstance: Canvas) {
     this.canvas = drawInstance;
     const _this = this;
+    this.scaleX = this.canvas.width;
+    this.scaleY = this.canvas.height;
+    this.scaleZ = this.canvas.width;
     // Papa.parse("./cube.csv", {
     //   download: true,
     //   complete: function (res: any) {
@@ -72,10 +78,6 @@ class Lab_1 {
       this.addCoords(data);
       // add events
 
-      window.addEventListener("keydown", (e: KeyboardEvent) => {
-        this.keyboardEvent(e);
-      });
-
       this.startUpdate();
     } else {
       this.canvas.on("click", (e: PointerEvent) => {
@@ -83,8 +85,17 @@ class Lab_1 {
         const x = e.offsetX;
         const y = e.offsetY;
         this.canvas.setPoint(x, y, 2);
+
+        const normX = x / this.canvas.width - 0.5;
+        const normY = y / this.canvas.height - 0.5;
+        const normZ = generateRandomFloatInRange(-0.2, 0.2);
+
+        this.coords.push(new Vector3(normX, normY, normZ));
       });
     }
+    window.addEventListener("keydown", (e: KeyboardEvent) => {
+      this.keyboardEvent(e);
+    });
 
     this.startUpdate();
   }
@@ -96,9 +107,10 @@ class Lab_1 {
 
   private updated(ts: number) {
     // console.log(ts);
+    if (this.coords.length > 0) this.displayCoords();
   }
 
-  private displayCoords() {
+  displayCoords() {
     this.clearScreen();
     this.updateRotation();
     this.updateProjection();
@@ -127,20 +139,21 @@ class Lab_1 {
       this.canvas.setPoint(convertedCoords.x, convertedCoords.y);
     }
 
-    for (let i = 0; i < 4; i++) {
-      this.connectProjectedDots(i, (i + 1) % 4);
-      this.connectProjectedDots(i + 4, ((i + 1) % 4) + 4);
-      this.connectProjectedDots(i, i + 4);
+    for (let i = 0; i < this.projectedCoords.length - 1; i++) {
+      //   this.connectProjectedDots(i, (i + 1) % 4);
+      //   this.connectProjectedDots(i + 4, ((i + 1) % 4) + 4);
+      //   this.connectProjectedDots(i, i + 4);
+      this.connectProjectedDots(i, i + 1);
     }
   }
 
   convertCoords(x: number, y: number): Vector3 {
     x += this.canvas.width / 2;
     y += this.canvas.height / 2;
-    x = Math.abs(x % this.canvas.width);
-    y = Math.abs(y % this.canvas.height);
-    x = Math.max(x, 0);
-    y = Math.max(y, 0);
+    // x = Math.abs(x % this.canvas.width);
+    // y = Math.abs(y % this.canvas.height);
+    // x = Math.max(x, 0);
+    // y = Math.max(y, 0);
 
     return new Vector3(x, y, 0);
   }
@@ -227,6 +240,17 @@ class Lab_1 {
     this.canvas.clear();
   }
 
+  clearCoords() {
+    this.coords = [];
+    this.angleX = 0;
+    this.angleY = 0;
+    this.angleZ = 0;
+    this.translationX = 0;
+    this.translationY = 0;
+    this.translationZ = 0;
+    this.clearScreen();
+  }
+
   private connectProjectedDots(startNum: number, endNum: number) {
     let start: Vector3 = this.projectedCoords[startNum];
     let end: Vector3 = this.projectedCoords[endNum];
@@ -235,6 +259,29 @@ class Lab_1 {
     end = this.convertCoords(end.x, end.y);
 
     this.canvas.drawLine(start.x, start.y, end.x, end.y);
+  }
+
+  changeScale(type: string, value: number) {
+    console.log(type, value);
+    switch (type) {
+      case "X": {
+        this.scaleX = this.maxScale * (value / 100);
+        break;
+      }
+      case "Y": {
+        this.scaleY = this.maxScale * (value / 100);
+        break;
+      }
+      case "Z": {
+        this.scaleZ = this.maxScale * (value / 100);
+        break;
+      }
+      case "XYZ": {
+        this.scaleX = this.maxScale * (value / 100);
+        this.scaleY = this.maxScale * (value / 100);
+        this.scaleZ = this.maxScale * (value / 100);
+      }
+    }
   }
 }
 
