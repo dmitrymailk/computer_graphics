@@ -6,48 +6,52 @@
     </div>
     <div class="lab1__controls">
       <button @click="clearScreen">Clear Screen</button>
-    </div>
-
-    <div>
-      <input
-        type="range"
-        name="scaleXYZ"
-        min="1"
-        max="100"
-        @input="(e) => changeScale(e, 'X')"
-      />
-      <label for="scaleXYZ">scaleXYZ</label>
-    </div>
-    <div>
-      <input
-        type="range"
-        name="scaleX"
-        min="1"
-        max="100"
-        @input="(e) => changeScale(e, 'X')"
-      />
-      <label for="scaleX">scaleX</label>
-    </div>
-    <div>
-      <input
-        type="range"
-        name="scaleY"
-        min="1"
-        max="100"
-        @change="(e) => changeScale(e, 'Y')"
-      />
-      <label for="scaleY">scaleY</label>
-    </div>
-    <div>
-      <input
-        type="range"
-        id="scaleZ"
-        name="scaleZ"
-        min="1"
-        max="100"
-        @change="(e) => changeScale(e, 'Z')"
-      />
-      <label for="scaleZ">scaleZ</label>
+      <button @click="saveFigure">Save Figure</button>
+      <div>
+        <input type="file" name="file" @change="loadFigure" />
+        <label for="file">Load figure</label>
+      </div>
+      <div>
+        <input
+          type="range"
+          name="scaleXYZ"
+          min="1"
+          max="100"
+          @input="(e) => changeScale(e, 'X')"
+        />
+        <label for="scaleXYZ">scaleXYZ</label>
+      </div>
+      <div>
+        <input
+          type="range"
+          name="scaleX"
+          min="1"
+          max="100"
+          @input="(e) => changeScale(e, 'X')"
+        />
+        <label for="scaleX">scaleX</label>
+      </div>
+      <div>
+        <input
+          type="range"
+          name="scaleY"
+          min="1"
+          max="100"
+          @change="(e) => changeScale(e, 'Y')"
+        />
+        <label for="scaleY">scaleY</label>
+      </div>
+      <div>
+        <input
+          type="range"
+          id="scaleZ"
+          name="scaleZ"
+          min="1"
+          max="100"
+          @change="(e) => changeScale(e, 'Z')"
+        />
+        <label for="scaleZ">scaleZ</label>
+      </div>
     </div>
   </div>
 </template>
@@ -74,6 +78,12 @@ export default {
       console.log(e);
       const value = e.srcElement.value;
       this.lab1.changeScale(type, value);
+    },
+    saveFigure() {
+      this.lab1.saveFigure();
+    },
+    loadFigure(e) {
+      this.lab1.loadFigure(e);
     },
   },
   mounted() {

@@ -2,9 +2,9 @@ import type { Canvas } from "./Canvas";
 // import type { Vector3 } from "./Vector3";
 import { Vector3 } from "./Vector3";
 // @ts-ignore
-// import Papa from "papaparse";
+import Papa from "papaparse";
 
-import { generateRandomFloatInRange } from "./utils";
+import { generateRandomFloatInRange, download } from "./utils";
 
 class Lab_1 {
   private canvas: Canvas;
@@ -45,13 +45,6 @@ class Lab_1 {
     this.scaleX = this.canvas.width;
     this.scaleY = this.canvas.height;
     this.scaleZ = this.canvas.width;
-    // Papa.parse("./cube.csv", {
-    //   download: true,
-    //   complete: function (res: any) {
-    //     const data: Array<Array<string>> = res.data;
-    //     _this.init(data);
-    //   },
-    // });
     this.init();
   }
 
@@ -150,11 +143,6 @@ class Lab_1 {
   convertCoords(x: number, y: number): Vector3 {
     x += this.canvas.width / 2;
     y += this.canvas.height / 2;
-    // x = Math.abs(x % this.canvas.width);
-    // y = Math.abs(y % this.canvas.height);
-    // x = Math.max(x, 0);
-    // y = Math.max(y, 0);
-
     return new Vector3(x, y, 0);
   }
 
@@ -262,7 +250,6 @@ class Lab_1 {
   }
 
   changeScale(type: string, value: number) {
-    console.log(type, value);
     switch (type) {
       case "X": {
         this.scaleX = this.maxScale * (value / 100);
@@ -281,6 +268,31 @@ class Lab_1 {
         this.scaleY = this.maxScale * (value / 100);
         this.scaleZ = this.maxScale * (value / 100);
       }
+    }
+  }
+
+  saveFigure() {
+    // this.coords
+    let csv = Papa.unparse(this.coords);
+
+    download(csv, "figure.csv", "text/csv");
+  }
+  loadFigure(e: Event) {
+    if (e) {
+      // @ts-ignore
+      const file = e.target?.files[0];
+      //   console.log(fileList);
+      const reader = new FileReader();
+      reader.addEventListener("load", (e) => {
+        // @ts-ignore
+        const result = e.currentTarget.result;
+
+        let parsedCSV = Papa.parse(result);
+        parsedCSV = parsedCSV.data;
+        this.addCoords(parsedCSV);
+      });
+
+      reader.readAsText(file);
     }
   }
 }
