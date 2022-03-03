@@ -272,28 +272,23 @@ class Lab_1 {
   }
 
   saveFigure() {
-    // this.coords
     let csv = Papa.unparse(this.coords);
-
     download(csv, "figure.csv", "text/csv");
   }
   loadFigure(e: Event) {
-    if (e) {
+    // @ts-ignore
+    const file = e.target?.files[0];
+    const reader = new FileReader();
+    reader.addEventListener("load", (e) => {
       // @ts-ignore
-      const file = e.target?.files[0];
-      //   console.log(fileList);
-      const reader = new FileReader();
-      reader.addEventListener("load", (e) => {
-        // @ts-ignore
-        const result = e.currentTarget.result;
+      const result = e.currentTarget.result;
 
-        let parsedCSV = Papa.parse(result);
-        parsedCSV = parsedCSV.data;
-        this.addCoords(parsedCSV);
-      });
+      let parsedCSV = Papa.parse(result);
+      parsedCSV = parsedCSV.data;
+      this.addCoords(parsedCSV);
+    });
 
-      reader.readAsText(file);
-    }
+    reader.readAsText(file);
   }
 }
 

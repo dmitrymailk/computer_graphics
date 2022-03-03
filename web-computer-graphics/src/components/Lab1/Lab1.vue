@@ -4,53 +4,65 @@
     <div class="lab_1__field">
       <canvas class="lab_1__canvas" ref="canvas_elem"></canvas>
     </div>
-    <div class="lab1__controls">
-      <button @click="clearScreen">Clear Screen</button>
-      <button @click="saveFigure">Save Figure</button>
-      <div>
-        <input type="file" name="file" @change="loadFigure" />
-        <label for="file">Load figure</label>
+    <div class="lab_1__controls">
+      <button @click="clearScreen" class="btn btn-primary me-2">
+        Clear Screen
+      </button>
+      <button @click="saveFigure" class="btn btn-primary">Save Figure</button>
+
+      <div class="my-3">
+        <label for="formFile" class="form-label">Load figure</label>
+        <input
+          class="form-control"
+          type="file"
+          id="formFile"
+          @change="loadFigure"
+        />
       </div>
-      <div>
+
+      <div class="lab_1__range">
+        <label for="scaleXYZ" class="form-label">scaleXYZ</label>
         <input
           type="range"
           name="scaleXYZ"
           min="1"
           max="100"
-          @input="(e) => changeScale(e, 'X')"
+          @input="(e) => changeScale(e, 'XYZ')"
+          class="form-range"
         />
-        <label for="scaleXYZ">scaleXYZ</label>
       </div>
-      <div>
+      <div class="lab_1__range">
+        <label for="scaleX" class="form-label">scaleX</label>
         <input
           type="range"
           name="scaleX"
           min="1"
           max="100"
           @input="(e) => changeScale(e, 'X')"
+          class="form-range"
         />
-        <label for="scaleX">scaleX</label>
       </div>
-      <div>
+      <div class="lab_1__range">
+        <label for="scaleY" class="form-label">scaleY</label>
         <input
           type="range"
           name="scaleY"
           min="1"
           max="100"
           @change="(e) => changeScale(e, 'Y')"
+          class="form-range"
         />
-        <label for="scaleY">scaleY</label>
       </div>
-      <div>
+      <div class="lab_1__range">
+        <label for="scaleZ" class="form-label">scaleZ</label>
         <input
           type="range"
-          id="scaleZ"
           name="scaleZ"
           min="1"
           max="100"
           @change="(e) => changeScale(e, 'Z')"
+          class="form-range"
         />
-        <label for="scaleZ">scaleZ</label>
       </div>
     </div>
   </div>
@@ -109,4 +121,6 @@ export default {
 		width: 600px
 		height: 600px
 		border: 1px solid #222
+	&__range
+		width: 300px
 </style>
