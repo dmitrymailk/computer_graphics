@@ -1,6 +1,7 @@
 import { Vector3 } from "./Vector3";
 
 class Canvas {
+  /** html dom canvas element */
   canvas: HTMLCanvasElement;
   ctx!: CanvasRenderingContext2D;
   width: number = 600;
@@ -60,6 +61,10 @@ class Canvas {
 
   clear() {
     this.ctx.clearRect(0, 0, this.width, this.height);
+  }
+
+  on(eventType: keyof HTMLElementEventMap, callback: any) {
+    this.canvas.addEventListener(eventType, callback);
   }
 }
 

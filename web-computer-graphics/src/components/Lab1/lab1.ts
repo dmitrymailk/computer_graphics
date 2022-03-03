@@ -39,16 +39,17 @@ class Lab_1 {
   constructor(drawInstance: Canvas) {
     this.canvas = drawInstance;
     const _this = this;
-    Papa.parse("./cube.csv", {
-      download: true,
-      complete: function (res: any) {
-        const data: Array<Array<string>> = res.data;
-        _this.init(data);
-      },
-    });
+    // Papa.parse("./cube.csv", {
+    //   download: true,
+    //   complete: function (res: any) {
+    //     const data: Array<Array<string>> = res.data;
+    //     _this.init(data);
+    //   },
+    // });
+    this.init();
   }
 
-  addCoords(data: Array<Array<string>>) {
+  private addCoords(data: Array<Array<string>>) {
     for (let i = 1; i < data.length; i++) {
       this.coords.push(
         new Vector3(Number(data[i][0]), Number(data[i][1]), Number(data[i][2]))
@@ -56,32 +57,36 @@ class Lab_1 {
     }
   }
 
-  init(data: Array<Array<string>>) {
+  private startUpdate() {
+    window.requestAnimationFrame(this.update.bind(this));
+  }
+
+  init(data?: Array<Array<string>>) {
     const color: string = "#000000";
     this.canvas.color = color;
 
     this.coords = [];
     this.projectedCoords = [];
+    if (data) {
+      // задаем координаты объекта в трехмерном пространстве
+      this.addCoords(data);
+      // add events
 
-    // задаем координаты куба в трехмерном пространстве
-    // const coords = this.coords;
-    // coords.push(new Vector3(-0.5, -0.5, -0.5));
-    // coords.push(new Vector3(0.5, -0.5, -0.5));
-    // coords.push(new Vector3(0.5, 0.5, -0.5));
-    // coords.push(new Vector3(-0.5, 0.5, -0.5));
+      window.addEventListener("keydown", (e: KeyboardEvent) => {
+        this.keyboardEvent(e);
+      });
 
-    // coords.push(new Vector3(-0.5, -0.5, 0.5));
-    // coords.push(new Vector3(0.5, -0.5, 0.5));
-    // coords.push(new Vector3(0.5, 0.5, 0.5));
-    // coords.push(new Vector3(-0.5, 0.5, 0.5));
-    this.addCoords(data);
-    // add events
+      this.startUpdate();
+    } else {
+      this.canvas.on("click", (e: PointerEvent) => {
+        // console.log(e.offsetX, e.offsetY);
+        const x = e.offsetX;
+        const y = e.offsetY;
+        this.canvas.setPoint(x, y, 2);
+      });
+    }
 
-    window.addEventListener("keydown", (e: KeyboardEvent) => {
-      this.keyboardEvent(e);
-    });
-
-    window.requestAnimationFrame(this.update.bind(this));
+    this.startUpdate();
   }
 
   private update(ts: number) {
@@ -91,6 +96,9 @@ class Lab_1 {
 
   private updated(ts: number) {
     // console.log(ts);
+  }
+
+  private displayCoords() {
     this.clearScreen();
     this.updateRotation();
     this.updateProjection();
@@ -172,7 +180,7 @@ class Lab_1 {
     this.projection.push(Vector3.mul(new Vector3(0.0, 0.0, 1.0), scaleZ));
   }
 
-  keyboardEvent(e: KeyboardEvent) {
+  private keyboardEvent(e: KeyboardEvent) {
     const key = e.code;
 
     switch (key) {
@@ -219,7 +227,7 @@ class Lab_1 {
     this.canvas.clear();
   }
 
-  connectProjectedDots(startNum: number, endNum: number) {
+  private connectProjectedDots(startNum: number, endNum: number) {
     let start: Vector3 = this.projectedCoords[startNum];
     let end: Vector3 = this.projectedCoords[endNum];
 
