@@ -109,23 +109,44 @@ class Lab_1 {
     this.updateProjection();
 
     this.projectedCoords = [];
+    let centerVec = new Vector3(0, 0, 0);
+
+    for (let i = 0; i < this.coords.length; i++) {
+      let vec: Vector3 = this.coords[i];
+      centerVec.add(vec);
+    }
+
+    centerVec = Vector3.mul(centerVec, 1 / this.coords.length);
 
     // трансформация всех координат куба
-    for (let item of this.coords) {
-      let proj2D = new Vector3(item.x, item.y, item.z);
+    for (let coord of this.coords) {
+      let proj2D = new Vector3(coord.x, coord.y, coord.z);
 
-      var trans = new Vector3(
+      //   перенос пространства
+      let trans = new Vector3(
         this.translationX,
         this.translationY,
         this.translationZ
       );
-      //   debugger;
+
+      //   перенос объекта
+      let transObject = new Vector3(
+        this.translationX,
+        this.translationY,
+        this.translationZ
+      );
+
+      proj2D = Vector3.add(proj2D, Vector3.mul(centerVec, -1));
+
       proj2D = Vector3.matMul(this.projection, proj2D);
       proj2D = Vector3.matMul(this.rotationX, proj2D);
       proj2D = Vector3.matMul(this.rotationZ, proj2D);
       proj2D = Vector3.matMul(this.rotationY, proj2D);
-      proj2D = Vector3.add(proj2D, trans);
 
+      proj2D = Vector3.add(proj2D, transObject);
+      //   proj2D = Vector3.add(proj2D, trans);
+
+      proj2D = Vector3.add(proj2D, centerVec);
       this.projectedCoords.push(proj2D);
 
       let convertedCoords: Vector3 = this.convertCoords(proj2D.x, proj2D.y);
@@ -133,9 +154,6 @@ class Lab_1 {
     }
 
     for (let i = 0; i < this.projectedCoords.length - 1; i++) {
-      //   this.connectProjectedDots(i, (i + 1) % 4);
-      //   this.connectProjectedDots(i + 4, ((i + 1) % 4) + 4);
-      //   this.connectProjectedDots(i, i + 4);
       this.connectProjectedDots(i, i + 1);
     }
   }
