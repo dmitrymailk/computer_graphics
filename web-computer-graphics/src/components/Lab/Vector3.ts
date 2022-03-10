@@ -20,6 +20,15 @@ class Vector3 {
     return new Vector3(x * scale, y * scale, z * scale);
   }
 
+  public static lepr(v1: Vector3, v2: Vector3, t: number) {
+    const negV1 = Vector3.mul(v1, -1);
+    let difference = Vector3.add(v2, negV1);
+    difference = Vector3.mul(difference, t);
+    const result = Vector3.add(v1, difference);
+
+    return result;
+  }
+
   public add(vec: Vector3) {
     this.x += vec.x;
     this.y += vec.y;

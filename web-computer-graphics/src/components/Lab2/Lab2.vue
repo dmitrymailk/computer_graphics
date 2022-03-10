@@ -6,6 +6,10 @@
     <div class="container">
       <h3>2.1 обычный алгоритм (4)</h3>
       <canvas class="lab_2__canvas" ref="canvas_elem"></canvas>
+      <br />
+      <button class="btn btn-primary" type="submit" @click="setDrawCurve">
+        Draw Curve
+      </button>
       <hr />
     </div>
   </div>
@@ -21,13 +25,17 @@ import VueMarkdown from "vue-markdown-render";
 export default {
   data() {
     return {
-      lab1: null,
+      lab: null,
     };
   },
   components: {
     VueMarkdown,
   },
-  methods: {},
+  methods: {
+    setDrawCurve() {
+      this.lab.setDrawCurve();
+    },
+  },
   setup(props, ctx) {
     const src = ref(`## Лабораторная №1
     2. Рисование кривой Безье
@@ -44,7 +52,7 @@ export default {
     const canvas_elem: HTMLCanvasElement = this.$refs.canvas_elem;
     const canvas = new Canvas(canvas_elem);
     const lab_2 = new Lab_2(canvas);
-    this.lab1 = lab_2;
+    this.lab = lab_2;
   },
 };
 </script>
