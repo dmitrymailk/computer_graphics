@@ -117,6 +117,8 @@ class Lab_1 {
     }
 
     centerVec = Vector3.mul(centerVec, 1 / this.coords.length);
+    this.projectedCoords.push(centerVec);
+    // this.canvas.setPoint(centerVec.x, centerVec.y, centerVec.z);
 
     // трансформация всех координат куба
     for (let coord of this.coords) {
