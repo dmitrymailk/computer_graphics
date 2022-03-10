@@ -115,10 +115,8 @@ class Lab_1 {
       let vec: Vector3 = this.coords[i];
       centerVec.add(vec);
     }
-
+    // центр по всем проекциям
     centerVec = Vector3.mul(centerVec, 1 / this.coords.length);
-    this.projectedCoords.push(centerVec);
-    // this.canvas.setPoint(centerVec.x, centerVec.y, centerVec.z);
 
     // трансформация всех координат куба
     for (let coord of this.coords) {
@@ -138,17 +136,20 @@ class Lab_1 {
         this.translationZ
       );
 
+      // центрируем координаты фигуры
       proj2D = Vector3.add(proj2D, Vector3.mul(centerVec, -1));
 
-      proj2D = Vector3.matMul(this.projection, proj2D);
       proj2D = Vector3.matMul(this.rotationX, proj2D);
       proj2D = Vector3.matMul(this.rotationZ, proj2D);
       proj2D = Vector3.matMul(this.rotationY, proj2D);
 
-      proj2D = Vector3.add(proj2D, transObject);
-      //   proj2D = Vector3.add(proj2D, trans);
-
       proj2D = Vector3.add(proj2D, centerVec);
+
+      // переводим кординаты в размерность экрана, потому что раньше они были от -1 до 1
+      proj2D = Vector3.matMul(this.projection, proj2D);
+      // перенос объекта
+      proj2D = Vector3.add(proj2D, transObject);
+
       this.projectedCoords.push(proj2D);
 
       let convertedCoords: Vector3 = this.convertCoords(proj2D.x, proj2D.y);

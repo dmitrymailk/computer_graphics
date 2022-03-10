@@ -1,6 +1,8 @@
 <template>
   <div class="lab_1">
-    <div class="lab_1__title">Lab 1</div>
+    <div class="lab_1__title">
+      <vue-markdown :source="src" />
+    </div>
     <div class="lab_1__field">
       <canvas class="lab_1__canvas" ref="canvas_elem"></canvas>
     </div>
@@ -73,6 +75,7 @@ import { ref } from "vue";
 
 import { Canvas } from "./Canvas";
 import { Lab_1 } from "./lab1";
+import VueMarkdown from "vue-markdown-render";
 
 export default {
   data() {
@@ -81,7 +84,9 @@ export default {
       lab1: null,
     };
   },
-
+  components: {
+    VueMarkdown,
+  },
   methods: {
     clearScreen() {
       this.lab1.clearCoords();
@@ -97,6 +102,17 @@ export default {
     loadFigure(e) {
       this.lab1.loadFigure(e);
     },
+  },
+  setup(props, ctx) {
+    const src = ref(`## Лабораторная №1
+    1. Рисование замкнутой ломаной по точкам, заданным пользователем.
+    2. Поворот, сдвиг, копирование, сжатие. 
+    3. Сохранение данных в файл.
+    4. Загрузка кривой из файла.`);
+
+    return {
+      src,
+    };
   },
   mounted() {
     // @ts-ignore
