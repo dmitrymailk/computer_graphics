@@ -1,19 +1,20 @@
 <template>
-  <div class="lab_2">
-    <div class="lab_2__title">
+  <div class="container">
+    <div class="p-2">
       <vue-markdown :source="src" />
     </div>
-    <div class="lab_2__field">
+    <div class="container">
+      <h3>2.1 обычный алгоритм (4)</h3>
       <canvas class="lab_2__canvas" ref="canvas_elem"></canvas>
+      <hr />
     </div>
-    <div class="lab_2__controls"></div>
   </div>
 </template>
 
 <script lang="ts">
 import { ref } from "vue";
 
-// import { Canvas } from "../Lab/Canvas";
+import { Canvas } from "../Lab/Canvas";
 import { Lab_2 } from "./lab2";
 import VueMarkdown from "vue-markdown-render";
 
@@ -50,17 +51,8 @@ export default {
 
 <style lang="sass">
 .lab_2
-	// width: 100%
-	margin: 0 auto
-	max-width: 860px
-	&__field
-		width: 100%
-		display: flex
 	&__canvas
-		margin: 0 auto
 		width: 600px
 		height: 600px
 		border: 1px solid #222
-	&__range
-		width: 300px
 </style>
