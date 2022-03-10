@@ -1,10 +1,10 @@
-import type { Canvas } from "./Canvas";
+import type { Canvas } from "../Lab/Canvas";
 // import type { Vector3 } from "./Vector3";
-import { Vector3 } from "./Vector3";
+import { Vector3 } from "../Lab/Vector3";
 // @ts-ignore
 import Papa from "papaparse";
 
-import { generateRandomFloatInRange, download } from "./utils";
+import { generateRandomFloatInRange, download } from "../Lab/utils";
 
 class Lab_1 {
   private canvas: Canvas;

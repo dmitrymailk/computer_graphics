@@ -73,7 +73,7 @@
 <script lang="ts">
 import { ref } from "vue";
 
-import { Canvas } from "./Canvas";
+import { Canvas } from "../Lab/Canvas";
 import { Lab_1 } from "./lab1";
 import VueMarkdown from "vue-markdown-render";
 
