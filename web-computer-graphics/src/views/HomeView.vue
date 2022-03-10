@@ -1,13 +1,18 @@
 <template>
-  <div class="container">
-    <h1>Lab list</h1>
-    <router-link to="/lab_1">Lab 1</router-link>
+  <div class="container mt-4">
+    <h2>Список лабораторных</h2>
+    <ul class="list-group">
+      <router-link class="list-group-item text-center w-25" to="/lab_1"
+        >Лабораторная 1</router-link
+      >
+      <router-link class="list-group-item text-center w-25" to="/lab_2"
+        >Лабораторная 2</router-link
+      >
+    </ul>
   </div>
 </template>
 
 <style lang="sass">
-.container
-	width: 100%
-	text-align: center
-	// background: #ccc
+.mycontainer
+  margin-top: 200px
 </style>
