@@ -4,12 +4,13 @@ import { Vector3 } from "../Lab/Vector3";
 
 class Lab_2 {
   private canvas: Canvas;
-  private coords: Array<Vector3> = [];
+  public coords: Array<Vector3> = [];
   private isDrawCurve: boolean = false;
+  private vueComponent: any = null;
 
-  constructor(drawInstance: Canvas) {
+  constructor(drawInstance: Canvas, vueComponent: any) {
     this.canvas = drawInstance;
-
+    this.vueComponent = vueComponent;
     this.init();
   }
 
@@ -18,12 +19,14 @@ class Lab_2 {
   }
 
   init() {
+    console.log("vueComponent", this.vueComponent?.$data);
     this.canvas.on("click", (e: PointerEvent) => {
       // console.log(e.offsetX, e.offsetY);
       const x = e.offsetX;
       const y = e.offsetY;
 
       this.coords.push(new Vector3(x, y, 0));
+      this.vueComponent.coords.push([x, y]);
     });
     this.startUpdate();
   }
@@ -39,7 +42,7 @@ class Lab_2 {
   }
 
   private displayCoords() {
-    // this.clearScreen();
+    this.clearScreen();
     this.setPoints();
     this.drawCurve();
   }
@@ -50,31 +53,42 @@ class Lab_2 {
     }
   }
 
+  public changeCoordsPos(pos: number, coordType: string, value: number) {
+    // @ts-ignore
+    this.coords[pos][coordType] = Number(value);
+  }
+
   private drawCurve() {
-    if (this.isDrawCurve) {
-      for (let t = 0; t < 1.0001; t += 0.001) {
+    if (this.coords.length >= 3) {
+      const points: Array<Vector3> = [];
+      const delta = 0.05;
+      for (let t = 0; t < 1.0001; t += delta) {
         let queue = this.coords.slice();
-        const power = 1;
-        // debugger;
-        while (queue.length != power) {
+        // @ts-ignore
+        const start: Vector3 = queue.shift();
+        // @ts-ignore
+        const end: Vector3 = queue.shift();
+        queue.unshift(start);
+        queue.push(end);
+
+        while (queue.length != 1) {
           queue = this.dublicate(queue);
           for (let i = 0; i < queue.length; i++) {
             // @ts-ignore
             const p1: Vector3 = queue.shift();
             // @ts-ignore
             const p2: Vector3 = queue.shift();
-            // const p3: Vector3 = queue.pop();
-            const p_1_2: Vector3 = Vector3.lepr(p1, p2, t);
-            queue.push(p_1_2);
+            const p: Vector3 = Vector3.lepr(p1, p2, t);
+            queue.push(p);
           }
         }
-
-        for (let coord of queue) {
-          this.canvas.setPoint(coord.x, coord.y, 1);
-        }
+        points.push(queue[0]);
       }
-
-      this.isDrawCurve = false;
+      for (let i = 0; i < points.length - 1; i++) {
+        const v1: Vector3 = points[i];
+        const v2: Vector3 = points[i + 1];
+        this.canvas.drawLine(v1.x, v1.y, v2.x, v2.y);
+      }
     }
   }
 
@@ -95,16 +109,17 @@ class Lab_2 {
     if (this.coords.length >= 3) {
       this.isDrawCurve = true;
       // @ts-ignore
-      const start: Vector3 = this.coords.shift();
-      // @ts-ignore
-      const end: Vector3 = this.coords.shift();
-      this.coords.unshift(start);
-      this.coords.push(end);
+      // const start: Vector3 = this.coords.shift();
+      // // @ts-ignore
+      // const end: Vector3 = this.coords.shift();
+      // this.coords.unshift(start);
+      // this.coords.push(end);
     }
   }
 
   clearScreen() {
     this.canvas.clear();
+    // console.log("clear");
   }
 }
 
