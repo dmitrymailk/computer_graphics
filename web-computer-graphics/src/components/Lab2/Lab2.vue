@@ -87,6 +87,7 @@ import { ref } from "vue";
 
 import { Canvas } from "../Lab/Canvas";
 import { Lab_2_2 } from "./lab2_2";
+import { Lab_2_1 } from "./lab2_1";
 import VueMarkdown from "vue-markdown-render";
 import { defineComponent } from "vue";
 
@@ -124,7 +125,7 @@ export default defineComponent({
 
     const canvas_elem_2_1: HTMLCanvasElement = this.$refs.canvas_elem_2_1;
     const canvas_2_1 = new Canvas(canvas_elem_2_1);
-    const lab_2_1 = new Lab_2_2(canvas_2_1, this);
+    const lab_2_1 = new Lab_2_1(canvas_2_1, this);
     this.lab_2_1 = lab_2_1;
   },
 });
