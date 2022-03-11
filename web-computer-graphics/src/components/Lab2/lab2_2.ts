@@ -2,9 +2,9 @@ import type { Canvas } from "../Lab/Canvas";
 // import type { Vector3 } from "./Vector3";
 import { Vector3 } from "../Lab/Vector3";
 
-class Lab_2 {
+class Lab_2_2 {
   private canvas: Canvas;
-  public coords: Array<Vector3> = [];
+  public coords_2_2: Array<Vector3> = [];
   private isDrawCurve: boolean = false;
   private vueComponent: any = null;
 
@@ -19,14 +19,14 @@ class Lab_2 {
   }
 
   init() {
-    console.log("vueComponent", this.vueComponent?.$data);
+    // console.log("vueComponent", this.vueComponent?.$data);
     this.canvas.on("click", (e: PointerEvent) => {
       // console.log(e.offsetX, e.offsetY);
       const x = e.offsetX;
       const y = e.offsetY;
 
-      this.coords.push(new Vector3(x, y, 0));
-      this.vueComponent.coords.push([x, y]);
+      this.coords_2_2.push(new Vector3(x, y, 0));
+      this.vueComponent.coords_2_2.push([x, y]);
     });
     this.startUpdate();
   }
@@ -38,7 +38,7 @@ class Lab_2 {
 
   private updated(ts: number) {
     // console.log(ts);
-    if (this.coords.length > 0) this.displayCoords();
+    if (this.coords_2_2.length > 0) this.displayCoords();
   }
 
   private displayCoords() {
@@ -48,22 +48,22 @@ class Lab_2 {
   }
 
   private setPoints() {
-    for (let coord of this.coords) {
-      this.canvas.setPoint(coord.x, coord.y, 3);
+    for (let coord of this.coords_2_2) {
+      this.canvas.setPoint(coord.x, coord.y, 1);
     }
   }
 
   public changeCoordsPos(pos: number, coordType: string, value: number) {
     // @ts-ignore
-    this.coords[pos][coordType] = Number(value);
+    this.coords_2_2[pos][coordType] = Number(value);
   }
 
   private drawCurve() {
-    if (this.coords.length >= 3) {
+    if (this.coords_2_2.length >= 3) {
       const points: Array<Vector3> = [];
-      const delta = 0.05;
+      const delta = 0.01;
       for (let t = 0; t < 1.0001; t += delta) {
-        let queue = this.coords.slice();
+        let queue = this.coords_2_2.slice();
         // @ts-ignore
         const start: Vector3 = queue.shift();
         // @ts-ignore
@@ -84,9 +84,24 @@ class Lab_2 {
         }
         points.push(queue[0]);
       }
+
       for (let i = 0; i < points.length - 1; i++) {
         const v1: Vector3 = points[i];
         const v2: Vector3 = points[i + 1];
+        this.canvas.drawLine(v1.x, v1.y, v2.x, v2.y);
+      }
+
+      let queue = this.coords_2_2.slice();
+      // @ts-ignore
+      const start: Vector3 = queue.shift();
+      // @ts-ignore
+      const end: Vector3 = queue.shift();
+      queue.unshift(start);
+      queue.push(end);
+
+      for (let i = 0; i < queue.length - 1; i++) {
+        const v1: Vector3 = queue[i];
+        const v2: Vector3 = queue[i + 1];
         this.canvas.drawLine(v1.x, v1.y, v2.x, v2.y);
       }
     }
@@ -106,7 +121,7 @@ class Lab_2 {
 
   public setDrawCurve() {
     console.log("draw curve");
-    if (this.coords.length >= 3) {
+    if (this.coords_2_2.length >= 3) {
       this.isDrawCurve = true;
       // @ts-ignore
       // const start: Vector3 = this.coords.shift();
@@ -123,4 +138,4 @@ class Lab_2 {
   }
 }
 
-export { Lab_2 };
+export { Lab_2_2 };
