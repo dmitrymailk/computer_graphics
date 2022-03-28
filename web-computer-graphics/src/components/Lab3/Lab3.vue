@@ -36,9 +36,9 @@ export default defineComponent({
   methods: {},
   mounted() {
     // @ts-ignore
-    const canvas_elem_3_1: HTMLCanvasElement = this.$refs.canvas_elem_2_2;
+    const canvas_elem_3_1: HTMLCanvasElement = this.$refs.canvas_elem_3_1;
     const canvas_3_1 = new Canvas(canvas_elem_3_1);
-    const lab_3_1 = new Lab_3_1(canvas_elem_3_1, this);
+    const lab_3_1 = new Lab_3_1(canvas_3_1, this);
     this.lab_3_1 = lab_3_1;
   },
 });
