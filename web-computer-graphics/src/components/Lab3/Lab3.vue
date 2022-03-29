@@ -13,7 +13,11 @@
       <h3>2.1 обычный алгоритм (4)</h3>
       <canvas class="lab_3__canvas" ref="canvas_elem_3_1"></canvas>
       <br />
-      <button @click="test_func">test button</button>
+      <h4>Points amount: {{ pointsAmount }}</h4>
+      <div class="input-group mt-3 w-50 mb-5">
+        <span class="input-group-text">B-spline degree</span>
+        <input type="text" class="form-control" value="2" @input="setDegree" />
+      </div>
     </div>
   </div>
 </template>
@@ -30,14 +34,19 @@ export default defineComponent({
   data() {
     return {
       lab_3_1: null,
+      pointsAmount: 0,
     };
   },
   components: {
     VueMarkdown,
   },
   methods: {
-    test_func() {
-      this.lab_3_1.debug_func();
+    setDegree(e) {
+      // console.log(e);
+      if (e.data && !isNaN(e.data)) {
+        let degree = Number(e.data);
+        this.lab_3_1.setDegree(degree);
+      }
     },
   },
   mounted() {

@@ -1,0 +1,2 @@
+- [non recursive spline implementation](https://github.com/thibauts/b-spline/blob/master/index.js)
+- [opengl b spline](https://wrf.ecse.rpi.edu/wiki/ComputerGraphicsFall2013/guha/Code/bSplines.cpp)
