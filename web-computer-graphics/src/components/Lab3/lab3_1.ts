@@ -111,6 +111,12 @@ class Lab_3_1 {
       const v2 = points[i + 1];
       this.canvas.drawLine(v1[0], v1[1], v2[0], v2[1]);
     }
+    this.canvas.drawLine(
+      points[points.length - 1][0],
+      points[points.length - 1][1],
+      this.coords_3_1[this.coords_3_1.length - 1].x,
+      this.coords_3_1[this.coords_3_1.length - 1].y
+    );
   }
 
   drawB_Spline_2() {
