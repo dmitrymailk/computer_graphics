@@ -12,6 +12,8 @@
     <div class="container">
       <h3>2.1 обычный алгоритм (4)</h3>
       <canvas class="lab_3__canvas" ref="canvas_elem_3_1"></canvas>
+      <br />
+      <button @click="test_func">test button</button>
     </div>
   </div>
 </template>
@@ -33,7 +35,11 @@ export default defineComponent({
   components: {
     VueMarkdown,
   },
-  methods: {},
+  methods: {
+    test_func() {
+      this.lab_3_1.debug_func();
+    },
+  },
   mounted() {
     // @ts-ignore
     const canvas_elem_3_1: HTMLCanvasElement = this.$refs.canvas_elem_3_1;

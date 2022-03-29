@@ -1,4 +1,10 @@
-function interpolate(t, degree, points, knots, weights, result) {
+function interpolate(
+  t: number,
+  degree: number,
+  points: Array<Array<number>>,
+  knots: Array<number>,
+  weights: Array<number>
+) {
   var i, j, s, l; // function-scoped iteration variables
   var n = points.length; // points count
   var d = points[0].length; // point dimensionality
@@ -17,7 +23,7 @@ function interpolate(t, degree, points, knots, weights, result) {
 
   if (!knots) {
     // build knot vector of length [n + degree + 1]
-    var knots = [];
+    let knots = [];
     for (i = 0; i < n + degree + 1; i++) {
       knots[i] = i;
     }
