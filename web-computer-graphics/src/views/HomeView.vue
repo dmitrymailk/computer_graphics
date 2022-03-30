@@ -11,6 +11,9 @@
       <router-link class="list-group-item text-center w-25" to="/lab_3"
         >Лабораторная 3</router-link
       >
+      <router-link class="list-group-item text-center w-25" to="/lab_4"
+        >Лабораторная 4</router-link
+      >
     </ul>
   </div>
 </template>
