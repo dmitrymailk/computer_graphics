@@ -79,6 +79,14 @@
       </div>
       <hr />
     </div>
+    <div class="container">
+      <h3>2.3 составная кривая</h3>
+      <canvas class="lab_2__canvas" ref="canvas_elem_2_3"></canvas>
+      <br />
+      <button type="button" class="btn btn-primary" @click="setPartsIsOn">
+        Turn off parts
+      </button>
+    </div>
   </div>
 </template>
 
@@ -88,6 +96,7 @@ import { ref } from "vue";
 import { Canvas } from "../Lab/Canvas";
 import { Lab_2_2 } from "./lab2_2";
 import { Lab_2_1 } from "./lab2_1";
+import { Lab_2_3 } from "./lab2_3";
 import VueMarkdown from "vue-markdown-render";
 import { defineComponent } from "vue";
 
@@ -98,6 +107,8 @@ export default defineComponent({
       coords_2_1: [],
       lab_2_2: null,
       coords_2_2: [],
+      lab_2_3: null,
+      coords_2_3: [],
     };
   },
   components: {
@@ -115,6 +126,9 @@ export default defineComponent({
       let value = e.srcElement.value;
       this.lab_2_1.changeCoordsPos(pos, typePos, value);
     },
+    setPartsIsOn() {
+      this.lab_2_3.setPartsIsOn();
+    },
   },
   mounted() {
     // @ts-ignore
@@ -127,6 +141,11 @@ export default defineComponent({
     const canvas_2_1 = new Canvas(canvas_elem_2_1);
     const lab_2_1 = new Lab_2_1(canvas_2_1, this);
     this.lab_2_1 = lab_2_1;
+
+    const canvas_elem_2_3: HTMLCanvasElement = this.$refs.canvas_elem_2_3;
+    const canvas_2_3 = new Canvas(canvas_elem_2_3);
+    const lab_2_3 = new Lab_2_3(canvas_2_3, this);
+    this.lab_2_3 = lab_2_3;
   },
 });
 </script>

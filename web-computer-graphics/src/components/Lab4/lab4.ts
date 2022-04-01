@@ -4,12 +4,13 @@ import { Vector3 } from "../Lab/Vector3";
 // @ts-ignore
 import Papa from "papaparse";
 
-import { generateRandomFloatInRange, download } from "../Lab/utils";
+import { generateRandomFloatInRange, download, copyCoords } from "../Lab/utils";
 
 class Lab_4 {
   private canvas: Canvas;
 
-  private coords: Array<Vector3> = [];
+  private originalCoords: Array<Vector3> = [];
+  private transformedCoords: Array<Vector3> = [];
   private projectedCoords: Array<Vector3> = [];
 
   // параметры поворота для всех осей
@@ -41,7 +42,6 @@ class Lab_4 {
 
   constructor(drawInstance: Canvas) {
     this.canvas = drawInstance;
-    const _this = this;
     this.scaleX = this.canvas.width;
     this.scaleY = this.canvas.height;
     this.scaleZ = this.canvas.width;
@@ -50,7 +50,7 @@ class Lab_4 {
 
   private addCoords(data: Array<Array<string>>) {
     for (let i = 1; i < data.length; i++) {
-      this.coords.push(
+      this.originalCoords.push(
         new Vector3(Number(data[i][0]), Number(data[i][1]), Number(data[i][2]))
       );
     }
@@ -64,7 +64,7 @@ class Lab_4 {
     const color: string = "#000000";
     this.canvas.color = color;
 
-    this.coords = [];
+    this.originalCoords = [];
     this.projectedCoords = [];
     if (data) {
       // задаем координаты объекта в трехмерном пространстве
@@ -81,9 +81,13 @@ class Lab_4 {
 
         const normX = x / this.canvas.width - 0.5;
         const normY = y / this.canvas.height - 0.5;
-        const normZ = generateRandomFloatInRange(-0.2, 0.2);
+        const normZ_1 = 0;
+        const normZ_2 = 0.2;
 
-        this.coords.push(new Vector3(normX, normY, normZ));
+        const vec_1 = new Vector3(normX, normY, normZ_1);
+        const vec_2 = new Vector3(normX, normY, normZ_2);
+        this.originalCoords.push(vec_1);
+        this.originalCoords.push(vec_2);
       });
     }
     window.addEventListener("keydown", (e: KeyboardEvent) => {
@@ -100,7 +104,7 @@ class Lab_4 {
 
   private updated(ts: number) {
     // console.log(ts);
-    if (this.coords.length > 0) this.displayCoords();
+    if (this.originalCoords.length > 0) this.displayCoords();
   }
 
   displayCoords() {
@@ -111,15 +115,15 @@ class Lab_4 {
     this.projectedCoords = [];
     let centerVec = new Vector3(0, 0, 0);
 
-    for (let i = 0; i < this.coords.length; i++) {
-      let vec: Vector3 = this.coords[i];
+    for (let i = 0; i < this.originalCoords.length; i++) {
+      let vec: Vector3 = this.originalCoords[i];
       centerVec.add(vec);
     }
     // центр по всем проекциям
-    centerVec = Vector3.mul(centerVec, 1 / this.coords.length);
+    centerVec = Vector3.mul(centerVec, 1 / this.originalCoords.length);
 
     // трансформация всех координат куба
-    for (let coord of this.coords) {
+    for (let coord of this.originalCoords) {
       let proj2D = new Vector3(coord.x, coord.y, coord.z);
 
       //   перенос пространства
@@ -156,8 +160,8 @@ class Lab_4 {
       this.canvas.setPoint(convertedCoords.x, convertedCoords.y);
     }
 
-    for (let i = 0; i < this.projectedCoords.length - 1; i++) {
-      this.connectProjectedDots(i, i + 1);
+    for (let i = 0; i < this.projectedCoords.length - 1; i += 2) {
+      this.connectProjectedDots(i, i + 2);
     }
   }
 
@@ -250,7 +254,7 @@ class Lab_4 {
   }
 
   clearCoords() {
-    this.coords = [];
+    this.originalCoords = [];
     this.angleX = 0;
     this.angleY = 0;
     this.angleZ = 0;
@@ -297,7 +301,7 @@ class Lab_4 {
   }
 
   saveFigure() {
-    let csv = Papa.unparse(this.coords);
+    let csv = Papa.unparse(this.originalCoords);
     download(csv, "figure.csv", "text/csv");
   }
   loadFigure(e: Event) {

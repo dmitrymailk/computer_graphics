@@ -1,3 +1,5 @@
+import type { Vector3 } from "./Vector3";
+
 function generateRandomFloatInRange(min: number, max: number) {
   return Math.random() * (max - min + 1) + min;
 }
@@ -15,6 +17,12 @@ function download(text: string, name: string, type: string) {
   anchor.remove();
 }
 
+function copyCoords(source: Array<Vector3>, dest: Array<Vector3>) {
+  for (let item of source) {
+    dest.push(item);
+  }
+}
+
 function factorial(n: number) {
   let answer = 1;
   if (n == 0 || n == 1) {
@@ -27,4 +35,4 @@ function factorial(n: number) {
   }
 }
 
-export { generateRandomFloatInRange, download, factorial };
+export { generateRandomFloatInRange, download, factorial, copyCoords };
