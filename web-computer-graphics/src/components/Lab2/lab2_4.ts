@@ -81,8 +81,6 @@ class Lab_2_4 {
     return B / Sigma;
   }
 
-  // C()
-
   private drawCurve() {
     if (this.coords_2_4.length >= 3) {
       let points: Array<Vector3> = [];
@@ -94,7 +92,7 @@ class Lab_2_4 {
       // @ts-ignore
       let queue = this.coords_2_4.slice();
       console.log(this.weights);
-      for (let t = delta; t < 1; t += delta) {
+      for (let t = 0; t <= 1 + delta; t += delta) {
         let point: Vector3 = new Vector3(0, 0, 0);
         // debugger;
         for (let i = 0; i <= degree; i++) {
@@ -122,7 +120,7 @@ class Lab_2_4 {
     }
   }
   changeWeights(pos: number, value: number) {
-    this.weights[pos] = 1 + 5 * (Number(value) / 100);
+    this.weights[pos] = 1 + 10 * (Number(value) / 100);
   }
 
   clearScreen() {

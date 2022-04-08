@@ -78,11 +78,12 @@ class Lab_2_3 {
         for (let i = 0; i < controlLen; i++) {
           newControlPoints.push(controlPoints[i]);
           if (i < controlLen - 1) {
-            let point_1: Vector3 = controlPoints[i];
+            // let point_1: Vector3 = controlPoints[i];
             let point_2: Vector3 = controlPoints[i + 1];
-            let sum: Vector3 = Vector3.add(point_1, point_2);
-            sum = Vector3.mul(sum, 0.5);
-            newControlPoints.push(sum);
+            // let sum: Vector3 = Vector3.add(point_1, point_2);
+            // sum = Vector3.mul(sum, 1);
+            // newControlPoints.push(sum);
+            newControlPoints.push(point_2);
           }
         }
         // debugger;
@@ -95,7 +96,7 @@ class Lab_2_3 {
 
       const degree = 3 - 1;
       const degreeFac = factorial(degree);
-      for (let j = 1; j < controlPoints.length - degree; j += degree) {
+      for (let j = 0; j < controlPoints.length - degree; j += degree) {
         for (let t = delta; t < 1; t += delta) {
           let point: Vector3 = new Vector3(0, 0, 0);
           // debugger;
@@ -119,24 +120,24 @@ class Lab_2_3 {
       }
       // points.push(end);
 
-      this.canvas.drawLine(
-        this.coords_2_3[0].x,
-        this.coords_2_3[0].y,
-        points[0].x,
-        points[0].y
-      );
+      // this.canvas.drawLine(
+      //   this.coords_2_3[0].x,
+      //   this.coords_2_3[0].y,
+      //   points[0].x,
+      //   points[0].y
+      // );
       for (let i = 0; i < points.length - 1; i++) {
         const v1: Vector3 = points[i];
         this.canvas.setPoint(v1.x, v1.y);
         const v2: Vector3 = points[i + 1];
         this.canvas.drawLine(v1.x, v1.y, v2.x, v2.y);
       }
-      this.canvas.drawLine(
-        points[points.length - 1].x,
-        points[points.length - 1].y,
-        this.coords_2_3[this.coords_2_3.length - 1].x,
-        this.coords_2_3[this.coords_2_3.length - 1].y
-      );
+      // this.canvas.drawLine(
+      //   points[points.length - 1].x,
+      //   points[points.length - 1].y,
+      //   this.coords_2_3[this.coords_2_3.length - 1].x,
+      //   this.coords_2_3[this.coords_2_3.length - 1].y
+      // );
 
       // for (let i = 0; i < this.coords_2_3.length - 1; i++) {
       //   const v1: Vector3 = this.coords_2_3[i];
