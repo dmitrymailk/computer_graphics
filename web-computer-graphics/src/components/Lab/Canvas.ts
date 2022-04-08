@@ -28,7 +28,10 @@ class Canvas {
 
   private setupCtx() {
     const context = this.canvas.getContext("2d");
-    if (context) this.ctx = context;
+    if (context) {
+      this.ctx = context;
+      this.ctx.font = "18px serif";
+    }
     this.ctx.imageSmoothingEnabled = false;
   }
 

@@ -12,6 +12,7 @@ class Lab_4 {
   private originalCoords: Array<Vector3> = [];
   private transformedCoords: Array<Vector3> = [];
   private projectedCoords: Array<Vector3> = [];
+  private traversalIndexes: Array<Array<number>> = [];
 
   // параметры поворота для всех осей
   private angleZ: number = 0;
@@ -19,9 +20,9 @@ class Lab_4 {
   private angleY: number = 0;
 
   // параметры скейла для всех осей
-  private scaleX: number = 600;
-  private scaleY: number = 600;
-  private scaleZ: number = 600;
+  private scaleX: number = 150;
+  private scaleY: number = 150;
+  private scaleZ: number = 150;
   private maxScale: number = 600;
 
   // матрица проекции
@@ -42,9 +43,9 @@ class Lab_4 {
 
   constructor(drawInstance: Canvas) {
     this.canvas = drawInstance;
-    this.scaleX = this.canvas.width;
-    this.scaleY = this.canvas.height;
-    this.scaleZ = this.canvas.width;
+    // this.scaleX = this.canvas.width;
+    // this.scaleY = this.canvas.height;
+    // this.scaleZ = this.canvas.width;
     this.init();
   }
 
@@ -73,28 +74,77 @@ class Lab_4 {
 
       this.startUpdate();
     } else {
-      this.canvas.on("click", (e: PointerEvent) => {
-        // console.log(e.offsetX, e.offsetY);
-        const x = e.offsetX;
-        const y = e.offsetY;
-        this.canvas.setPoint(x, y, 2);
+      // this.canvas.on("click", (e: PointerEvent) => {
+      //   // console.log(e.offsetX, e.offsetY);
+      //   const x = e.offsetX;
+      //   const y = e.offsetY;
+      //   this.canvas.setPoint(x, y, 2);
 
-        const normX = x / this.canvas.width - 0.5;
-        const normY = y / this.canvas.height - 0.5;
-        const normZ_1 = 0;
-        const normZ_2 = 0.2;
+      //   const normX = x / this.canvas.width - 0.5;
+      //   const normY = y / this.canvas.height - 0.5;
+      //   const normZ_1 = 0;
+      //   const normZ_2 = 0.2;
 
-        const vec_1 = new Vector3(normX, normY, normZ_1);
-        const vec_2 = new Vector3(normX, normY, normZ_2);
-        this.originalCoords.push(vec_1);
-        this.originalCoords.push(vec_2);
-      });
+      //   const vec_1 = new Vector3(normX, normY, normZ_1);
+      //   const vec_2 = new Vector3(normX, normY, normZ_2);
+      //   this.originalCoords.push(vec_1);
+      //   this.originalCoords.push(vec_2);
+      // });
+
+      this.addCoordsManually();
     }
     window.addEventListener("keydown", (e: KeyboardEvent) => {
       this.keyboardEvent(e);
     });
 
     this.startUpdate();
+  }
+
+  private addCoordsManually() {
+    let coords = [
+      [-0.5, -0.5, -0.5],
+      [0.5, -0.5, -0.5],
+      [0.5, 0.5, -0.5],
+      [-0.5, 0.5, -0.5],
+
+      [-0.5, -0.5, 0.5],
+      [0.5, -0.5, 0.5],
+      [0.5, 0.5, 0.5],
+      [-0.5, 0.5, 0.5],
+
+      // new coord
+      [-0.25, -0.25, -0.25],
+    ];
+
+    for (const item of coords) {
+      this.originalCoords.push(new Vector3(item[0], item[1], item[2]));
+    }
+
+    const traversalIndexes = [
+      // первая сторона
+      // [0, 1],
+      [1, 2],
+      [2, 3],
+      [3, 0],
+
+      // вторая сторона
+      [4, 5],
+      [5, 6],
+      [6, 7],
+      [7, 4],
+
+      // боковые стороны
+      [0, 4],
+      [1, 5],
+      [2, 6],
+      [3, 7],
+
+      // создание невыпуклости
+      [0, 8],
+      [8, 1],
+    ];
+
+    this.traversalIndexes = traversalIndexes;
   }
 
   private update(ts: number) {
@@ -123,6 +173,7 @@ class Lab_4 {
     centerVec = Vector3.mul(centerVec, 1 / this.originalCoords.length);
 
     // трансформация всех координат куба
+    let i = 0;
     for (let coord of this.originalCoords) {
       let proj2D = new Vector3(coord.x, coord.y, coord.z);
 
@@ -157,11 +208,16 @@ class Lab_4 {
       this.projectedCoords.push(proj2D);
 
       let convertedCoords: Vector3 = this.convertCoords(proj2D.x, proj2D.y);
+      this.canvas.ctx.fillText(`${i}`, convertedCoords.x, convertedCoords.y);
       this.canvas.setPoint(convertedCoords.x, convertedCoords.y);
+      i += 1;
     }
 
-    for (let i = 0; i < this.projectedCoords.length - 1; i += 2) {
-      this.connectProjectedDots(i, i + 2);
+    // for (let i = 0; i < this.projectedCoords.length - 1; i += 2) {
+    //   this.connectProjectedDots(i, i + 1);
+    // }
+    for (const traversal of this.traversalIndexes) {
+      this.connectProjectedDots(traversal[0], traversal[1]);
     }
   }
 
