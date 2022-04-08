@@ -3,10 +3,12 @@ import type { Canvas } from "../Lab/Canvas";
 import { Vector3 } from "../Lab/Vector3";
 import { factorial } from "../Lab/utils";
 
-class Lab_2_1 {
+class Lab_2_4 {
   private canvas: Canvas;
-  public coords_2_1: Array<Vector3> = [];
+  public coords_2_4: Array<Vector3> = [];
   private vueComponent: any = null;
+  private partsIsOn = true;
+  private weights: Array<number> = [];
 
   constructor(drawInstance: Canvas, vueComponent: any) {
     this.canvas = drawInstance;
@@ -25,10 +27,15 @@ class Lab_2_1 {
       const x = e.offsetX;
       const y = e.offsetY;
 
-      this.coords_2_1.push(new Vector3(x, y, 0));
-      this.vueComponent.coords_2_1.push([x, y]);
+      this.coords_2_4.push(new Vector3(x, y, 0));
+      this.vueComponent.coords_2_4.push([x, y]);
+      this.weights.push(1);
     });
     this.startUpdate();
+  }
+
+  setPartsIsOn() {
+    this.partsIsOn = !this.partsIsOn;
   }
 
   private update(ts: number) {
@@ -38,7 +45,7 @@ class Lab_2_1 {
 
   private updated(ts: number) {
     // console.log(ts);
-    if (this.coords_2_1.length > 0) this.displayCoords();
+    if (this.coords_2_4.length > 0) this.displayCoords();
   }
 
   private displayCoords() {
@@ -48,42 +55,52 @@ class Lab_2_1 {
   }
 
   private setPoints() {
-    for (let coord of this.coords_2_1) {
+    for (let coord of this.coords_2_4) {
       this.canvas.setPoint(coord.x, coord.y, 3);
     }
   }
 
-  public changeCoordsPos(pos: number, coordType: string, value: number) {
-    // @ts-ignore
-    this.coords_2_1[pos][coordType] = Number(value);
+  B(t: number, i: number, degreeFac: number, degree: number) {
+    let factor = degreeFac / (factorial(i) * factorial(degree - i));
+    let power = Math.pow(1 - t, degree - i);
+    let power_t = Math.pow(t, i);
+    return factor * power * power_t;
   }
 
+  Sigma(t: number, degreeFac: number, degree: number) {
+    let totalSum: number = 0;
+    for (let j = 0; j < this.coords_2_4.length; j++) {
+      totalSum += this.B(t, j, degreeFac, degree) * this.weights[j];
+    }
+    return totalSum;
+  }
+
+  R(t: number, i: number, degreeFac: number, degree: number) {
+    const B = this.B(t, i, degreeFac, degree) * this.weights[i];
+    const Sigma = this.Sigma(t, degreeFac, degree);
+    return B / Sigma;
+  }
+
+  // C()
+
   private drawCurve() {
-    if (this.coords_2_1.length >= 3) {
+    if (this.coords_2_4.length >= 3) {
       let points: Array<Vector3> = [];
       // compute point coordinate
       let delta = 0.01;
-      const degree = this.coords_2_1.length - 1;
+      const degree = this.coords_2_4.length - 1;
       const degreeFac = factorial(degree);
 
       // @ts-ignore
-      let queue = this.coords_2_1.slice();
-      // // @ts-ignore
-      // const start: Vector3 = queue.shift();
-      // // @ts-ignore
-      // const end: Vector3 = queue.shift();
-      // queue.unshift(start);
-      // queue.push(end);
-
+      let queue = this.coords_2_4.slice();
+      console.log(this.weights);
       for (let t = delta; t < 1; t += delta) {
         let point: Vector3 = new Vector3(0, 0, 0);
         // debugger;
         for (let i = 0; i <= degree; i++) {
           let vec: Vector3 = new Vector3(queue[i].x, queue[i].y, 0);
-          let factor = degreeFac / (factorial(i) * factorial(degree - i));
-          let power = Math.pow(1 - t, degree - i);
-          let power_t = Math.pow(t, i);
-          vec = Vector3.mul(vec, factor * power * power_t);
+          const R = this.R(t, i, degreeFac, degree);
+          vec = Vector3.mul(vec, R);
           point.add(vec);
         }
 
@@ -97,12 +114,15 @@ class Lab_2_1 {
         this.canvas.drawLine(v1.x, v1.y, v2.x, v2.y);
       }
 
-      for (let i = 0; i < queue.length - 1; i++) {
-        const v1: Vector3 = queue[i];
-        const v2: Vector3 = queue[i + 1];
-        this.canvas.drawLine(v1.x, v1.y, v2.x, v2.y);
-      }
+      // for (let i = 0; i < queue.length - 1; i++) {
+      //   const v1: Vector3 = queue[i];
+      //   const v2: Vector3 = queue[i + 1];
+      //   this.canvas.drawLine(v1.x, v1.y, v2.x, v2.y);
+      // }
     }
+  }
+  changeWeights(pos: number, value: number) {
+    this.weights[pos] = 1 + 5 * (Number(value) / 100);
   }
 
   clearScreen() {
@@ -111,4 +131,4 @@ class Lab_2_1 {
   }
 }
 
-export { Lab_2_1 };
+export { Lab_2_4 };

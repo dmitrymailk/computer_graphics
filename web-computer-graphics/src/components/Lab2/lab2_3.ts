@@ -7,7 +7,7 @@ class Lab_2_3 {
   private canvas: Canvas;
   public coords_2_3: Array<Vector3> = [];
   private vueComponent: any = null;
-  private partsIsOn: boolean = true;
+  private partsIsOn = true;
 
   constructor(drawInstance: Canvas, vueComponent: any) {
     this.canvas = drawInstance;

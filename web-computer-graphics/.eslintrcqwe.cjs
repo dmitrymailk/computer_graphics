@@ -14,5 +14,12 @@ module.exports = {
   },
   rules: {
     "vue/no-multiple-template-root": "off",
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      },
+    ],
   },
+  
 };
