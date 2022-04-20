@@ -74,23 +74,6 @@ class Lab_4 {
 
       this.startUpdate();
     } else {
-      // this.canvas.on("click", (e: PointerEvent) => {
-      //   // console.log(e.offsetX, e.offsetY);
-      //   const x = e.offsetX;
-      //   const y = e.offsetY;
-      //   this.canvas.setPoint(x, y, 2);
-
-      //   const normX = x / this.canvas.width - 0.5;
-      //   const normY = y / this.canvas.height - 0.5;
-      //   const normZ_1 = 0;
-      //   const normZ_2 = 0.2;
-
-      //   const vec_1 = new Vector3(normX, normY, normZ_1);
-      //   const vec_2 = new Vector3(normX, normY, normZ_2);
-      //   this.originalCoords.push(vec_1);
-      //   this.originalCoords.push(vec_2);
-      // });
-
       this.addCoordsManually();
     }
     window.addEventListener("keydown", (e: KeyboardEvent) => {
