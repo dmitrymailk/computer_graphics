@@ -1,8 +1,8 @@
 <template>
   <div class="container">
     <div class="p-2">
-      <h3>Лабораторная №4</h3>
-      5.Рисование поверхности в пространстве.
+      <h3>Лабораторная №5</h3>
+      <h4>Рисование поверхности в пространстве.</h4>
       <ul>
         <li>а) поверхность, заданная формулой. (6)</li>
         <li>б) поверхность Безье (8)</li>
@@ -108,7 +108,7 @@ export default {
   mounted() {
     // @ts-ignore
     const canvas_elem: HTMLCanvasElement = this.$refs.canvas_elem;
-    const canvas = new Canvas(canvas_elem);
+    const canvas = new Canvas(canvas_elem, 600, 600);
     const lab_5 = new Lab_5(canvas);
     this.lab1 = lab_5;
   },
@@ -125,8 +125,8 @@ export default {
 		display: flex
 	&__canvas
 		margin: 0 auto
-		width: 600px
-		height: 600px
+		width: 800px
+		height: 800px
 		border: 1px solid #222
 	&__range
 		width: 300px

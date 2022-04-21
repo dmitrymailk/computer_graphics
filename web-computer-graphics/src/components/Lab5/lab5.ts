@@ -20,10 +20,10 @@ class Lab_5 {
   private angleY: number = 0;
 
   // параметры скейла для всех осей
-  private scaleX: number = 150;
-  private scaleY: number = 150;
-  private scaleZ: number = 150;
-  private maxScale: number = 600;
+  private scaleX: number = 100;
+  private scaleY: number = 100;
+  private scaleZ: number = 100;
+  private maxScale: number = 100;
 
   // матрица проекции
   private projection: Array<Vector3> = [];
@@ -41,11 +41,18 @@ class Lab_5 {
   private translationY: number = 0;
   private translationZ: number = 0;
 
+  // параметры поверхности
+  private surfaceWidth: number = 3;
+  private surfaceHeight: number = 3;
+  private surfaceStepX = 0.1;
+  private surfaceStepY = 0.1;
+  private surfaceInitialShiftX = 0;
+  private surfaceInitialShiftY = 0;
+
+  // private gridCoords: Array<Array>
+
   constructor(drawInstance: Canvas) {
     this.canvas = drawInstance;
-    // this.scaleX = this.canvas.width;
-    // this.scaleY = this.canvas.height;
-    // this.scaleZ = this.canvas.width;
     this.init();
   }
 
@@ -85,16 +92,21 @@ class Lab_5 {
 
   private addCoordsManually() {
     // добавляем координаты в originalCoords
-    const width = 500;
-    const height = 600;
-    const stepX = 1;
-    const stepY = 1;
-    const initialShiftX = 50;
-    const initialShiftY = 50;
-    for (let x = initialShiftX; x < width; x += stepX) {
-      for (let y = initialShiftY; y < height; y += stepY) {
+    console.log("add");
+
+    for (
+      let x = this.surfaceInitialShiftX;
+      x < this.surfaceWidth;
+      x += this.surfaceStepX
+    ) {
+      for (
+        let y = this.surfaceInitialShiftY;
+        y < this.surfaceHeight;
+        y += this.surfaceStepY
+      ) {
         const z = this.surfaceFunction(x, y);
         const surfacePoint = new Vector3(x, y, z);
+        this.originalCoords.push(surfacePoint);
       }
     }
   }
@@ -110,7 +122,8 @@ class Lab_5 {
   }
 
   private surfaceFunction(x: number, y: number): number {
-    return Math.pow(x, 2) + Math.pow(y, 2);
+    return Math.sin(2 * y) + Math.sin(2 * x);
+    // return Math.pow(x / (x + y + 1) + 1, 2) + Math.pow(y / (x + y + 1) + 1, 2);
   }
 
   displayCoords() {
@@ -164,19 +177,28 @@ class Lab_5 {
       this.projectedCoords.push(proj2D);
 
       let convertedCoords: Vector3 = this.convertCoords(proj2D.x, proj2D.y);
-      this.canvas.ctx.fillText(`${i}`, convertedCoords.x, convertedCoords.y);
+      // this.canvas.ctx.fillText(`${i}`, convertedCoords.x, convertedCoords.y);
+      // console.log(convertedCoords);
       this.canvas.setPoint(convertedCoords.x, convertedCoords.y);
       i += 1;
     }
 
-    for (let i = 0; i < this.projectedCoords.length - 1; i += 2) {
-      this.connectProjectedDots(i, i + 1);
+    const height = Math.floor(this.surfaceHeight / this.surfaceStepY);
+    const width = Math.floor(this.surfaceWidth / this.surfaceStepX) - 1;
+    for (let xi = 0; xi < width; xi++) {
+      for (let yi = 0; yi < height; yi++) {
+        // this.connectProjectedDots(
+        //   height * xi + xi + yi,
+        //   height * xi + yi + (yi + 1)
+        // );
+        // this.connectProjectedDots(yi, yi + 1);
+      }
     }
   }
 
   convertCoords(x: number, y: number): Vector3 {
-    x += this.canvas.width / 2;
-    y += this.canvas.height / 2;
+    x += this.canvas.width / 2 - (this.surfaceWidth * this.scaleX) / 2;
+    y += this.canvas.height / 2 - (this.surfaceHeight * this.scaleY) / 2;
     return new Vector3(x, y, 0);
   }
 
@@ -221,10 +243,12 @@ class Lab_5 {
     switch (key) {
       case "KeyZ": {
         this.angleZ += 0.1;
+        console.log("rotate z");
         break;
       }
       case "KeyX": {
         this.angleX += 0.1;
+        console.log("rotate x");
         break;
       }
       case "KeyY": {
