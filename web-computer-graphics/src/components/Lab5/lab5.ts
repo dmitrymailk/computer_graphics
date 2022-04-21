@@ -10,9 +10,7 @@ class Lab_5 {
   private canvas: Canvas;
 
   private originalCoords: Array<Vector3> = [];
-  private transformedCoords: Array<Vector3> = [];
   private projectedCoords: Array<Vector3> = [];
-  private traversalIndexes: Array<Array<number>> = [];
 
   // параметры поворота для всех осей
   private angleZ: number = 0;
@@ -20,10 +18,10 @@ class Lab_5 {
   private angleY: number = 0;
 
   // параметры скейла для всех осей
-  private scaleX: number = 100;
-  private scaleY: number = 100;
-  private scaleZ: number = 100;
-  private maxScale: number = 100;
+  private scaleX: number = 200;
+  private scaleY: number = 200;
+  private scaleZ: number = 200;
+  private maxScale: number = 600;
 
   // матрица проекции
   private projection: Array<Vector3> = [];
@@ -42,14 +40,16 @@ class Lab_5 {
   private translationZ: number = 0;
 
   // параметры поверхности
-  private surfaceWidth: number = 3;
-  private surfaceHeight: number = 3;
-  private surfaceStepX = 0.1;
-  private surfaceStepY = 0.1;
+  // private surfaceWidth: number = 5;
+  // private surfaceHeight: number = 5;
+  private surfaceWidth: number = 2 * Math.PI;
+  private surfaceHeight: number = 2 * Math.PI;
+  private surfaceStepX = 0.2;
+  private surfaceStepY = 0.2;
   private surfaceInitialShiftX = 0;
   private surfaceInitialShiftY = 0;
 
-  // private gridCoords: Array<Array>
+  private gridCoords: Array<Array<Vector3>> = [];
 
   constructor(drawInstance: Canvas) {
     this.canvas = drawInstance;
@@ -93,20 +93,31 @@ class Lab_5 {
   private addCoordsManually() {
     // добавляем координаты в originalCoords
     console.log("add");
+    for (
+      let i = 0;
+      i < Math.ceil(this.surfaceHeight / this.surfaceStepY);
+      i++
+    ) {
+      this.gridCoords.push([]);
+    }
 
     for (
-      let x = this.surfaceInitialShiftX;
+      let x = this.surfaceInitialShiftX, i = 0;
       x < this.surfaceWidth;
-      x += this.surfaceStepX
+      x += this.surfaceStepX, i += 1
     ) {
       for (
-        let y = this.surfaceInitialShiftY;
+        let y = this.surfaceInitialShiftY, j = 0;
         y < this.surfaceHeight;
-        y += this.surfaceStepY
+        y += this.surfaceStepY, j += 1
       ) {
-        const z = this.surfaceFunction(x, y);
-        const surfacePoint = new Vector3(x, y, z);
+        const _x = this.fx(x, y);
+        const _y = this.fy(x, y);
+        const _z = this.fz(x, y);
+        const surfacePoint = new Vector3(_x, _y, _z);
         this.originalCoords.push(surfacePoint);
+
+        this.gridCoords[j].push(surfacePoint);
       }
     }
   }
@@ -118,13 +129,55 @@ class Lab_5 {
 
   private updated(ts: number) {
     // console.log(ts);
-    if (this.originalCoords.length > 0) this.displayCoords();
+    if (this.originalCoords.length > 0) this.displayCoords2();
   }
 
   private surfaceFunction(x: number, y: number): number {
     return Math.sin(2 * y) + Math.sin(2 * x);
     // return Math.pow(x / (x + y + 1) + 1, 2) + Math.pow(y / (x + y + 1) + 1, 2);
   }
+
+  // RENDER TORUS OBJECT https://en.wikipedia.org/wiki/Torus
+  private fx(u: number, v: number): number {
+    const R = 0.5;
+    const r = 0.4;
+    return (R + r * Math.cos(v)) * Math.cos(u);
+  }
+  private fy(u: number, v: number): number {
+    const R = 0.5;
+    const r = 0.4;
+    return (R + r * Math.cos(v)) * Math.sin(u);
+  }
+  private fz(u: number, v: number) {
+    const R = 0.5;
+    const r = 0.4;
+    return r * Math.sin(v);
+  }
+
+  // RENDER  another object https://docs.exponenta.ru/symbolic/ezsurf.html
+  // private fx(u: number, v: number): number {
+  //   const r = 2 + Math.sin(7 * u + 5 * v);
+  //   return r * Math.cos(u) * Math.sin(v);
+  // }
+  // private fy(u: number, v: number): number {
+  //   const r = 2 + Math.sin(7 * u + 5 * v);
+  //   return r * Math.sin(u) * Math.sin(v);
+  // }
+  // private fz(u: number, v: number) {
+  //   const r = 2 + Math.sin(7 * u + 5 * v);
+  //   return r * Math.cos(v);
+  // }
+
+  // RENDER cos sin surface
+  // private fx(u: number, v: number): number {
+  //   return u;
+  // }
+  // private fy(u: number, v: number): number {
+  //   return v;
+  // }
+  // private fz(u: number, v: number) {
+  //   return Math.cos(2 * u) + Math.sin(2 * v);
+  // }
 
   displayCoords() {
     this.clearScreen();
@@ -196,9 +249,93 @@ class Lab_5 {
     }
   }
 
+  displayCoords2() {
+    this.clearScreen();
+    this.updateRotation();
+    this.updateProjection();
+
+    let centerVec = new Vector3(0, 0, 0);
+
+    for (let i = 0; i < this.originalCoords.length; i++) {
+      let vec: Vector3 = this.originalCoords[i];
+      centerVec.add(vec);
+    }
+    // центр по всем проекциям
+    centerVec = Vector3.mul(centerVec, 1 / this.originalCoords.length);
+
+    // трансформация всех координат куба
+    let i = 0;
+    let projectedGridCoords: Array<Array<Vector3>> = [];
+    for (let i = 0; i < this.gridCoords.length; i++)
+      projectedGridCoords.push([]);
+
+    for (let i = 0; i < this.gridCoords.length; i++)
+      for (let j = 0; j < this.gridCoords[0].length; j++) {
+        let coord = JSON.parse(JSON.stringify(this.gridCoords[i][j]));
+        let proj2D = new Vector3(coord.x, coord.y, coord.z);
+
+        //   перенос пространства
+        let trans = new Vector3(
+          this.translationX,
+          this.translationY,
+          this.translationZ
+        );
+
+        //   перенос объекта
+        let transObject = new Vector3(
+          this.translationX,
+          this.translationY,
+          this.translationZ
+        );
+
+        // центрируем координаты фигуры
+        proj2D = Vector3.add(proj2D, Vector3.mul(centerVec, -1));
+
+        proj2D = Vector3.matMul(this.rotationX, proj2D);
+        proj2D = Vector3.matMul(this.rotationZ, proj2D);
+        proj2D = Vector3.matMul(this.rotationY, proj2D);
+
+        proj2D = Vector3.add(proj2D, centerVec);
+
+        // переводим кординаты в размерность экрана, потому что раньше они были от -1 до 1
+        proj2D = Vector3.matMul(this.projection, proj2D);
+        // перенос объекта
+        proj2D = Vector3.add(proj2D, transObject);
+
+        this.projectedCoords.push(proj2D);
+
+        let convertedCoords: Vector3 = this.convertCoords(proj2D.x, proj2D.y);
+
+        this.canvas.setPoint(convertedCoords.x, convertedCoords.y);
+        projectedGridCoords[i].push(convertedCoords);
+      }
+
+    const relu = (x: number, max: number): number => (x >= max ? 0 : x);
+
+    for (let i = 0; i < this.gridCoords.length; i++)
+      for (let j = 0; j < this.gridCoords[0].length; j++) {
+        // @ts-ignore
+        let start: Vector3 = projectedGridCoords[i][j];
+        let end: Vector3 =
+          projectedGridCoords[relu(i + 1, this.gridCoords.length)][j];
+
+        // start = this.convertCoords(start.x, start.y);
+        // end = this.convertCoords(end.x, end.y);
+
+        this.canvas.drawLine(start.x, start.y, end.x, end.y);
+
+        start = projectedGridCoords[i][j];
+        end = projectedGridCoords[i][relu(j + 1, this.gridCoords[0].length)];
+        this.canvas.drawLine(start.x, start.y, end.x, end.y);
+      }
+
+    // @ts-ignore
+    projectedGridCoords = null;
+  }
+
   convertCoords(x: number, y: number): Vector3 {
-    x += this.canvas.width / 2 - (this.surfaceWidth * this.scaleX) / 2;
-    y += this.canvas.height / 2 - (this.surfaceHeight * this.scaleY) / 2;
+    x += this.canvas.width / 2; //- (this.surfaceWidth * this.scaleX) / 2;
+    y += this.canvas.height / 2; //- (this.surfaceHeight * this.scaleY) / 2;
     return new Vector3(x, y, 0);
   }
 
