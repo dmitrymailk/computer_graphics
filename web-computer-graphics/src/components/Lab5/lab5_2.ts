@@ -4,9 +4,14 @@ import { Vector3 } from "../Lab/Vector3";
 // @ts-ignore
 import Papa from "papaparse";
 
-import { generateRandomFloatInRange, download, copyCoords } from "../Lab/utils";
+import {
+  generateRandomFloatInRange,
+  download,
+  copyCoords,
+  factorial,
+} from "../Lab/utils";
 
-class Lab_5 {
+class Lab_5_2 {
   private canvas: Canvas;
 
   private originalCoords: Array<Vector3> = [];
@@ -18,9 +23,9 @@ class Lab_5 {
   private angleY: number = 0;
 
   // параметры скейла для всех осей
-  private scaleX: number = 200;
-  private scaleY: number = 200;
-  private scaleZ: number = 200;
+  private scaleX: number = 3;
+  private scaleY: number = 3;
+  private scaleZ: number = 3;
   private maxScale: number = 600;
 
   // матрица проекции
@@ -42,14 +47,15 @@ class Lab_5 {
   // параметры поверхности
   // private surfaceWidth: number = 5;
   // private surfaceHeight: number = 5;
-  private surfaceWidth: number = 2 * Math.PI;
-  private surfaceHeight: number = 2 * Math.PI;
-  private surfaceStepX = 0.3;
-  private surfaceStepY = 0.3;
+  private surfaceWidth: number = 1.6 * 2;
+  private surfaceHeight: number = 1.6 * 2;
+  private surfaceStepX: number = 0.4;
+  private surfaceStepY: number = 0.4;
   private surfaceInitialShiftX = 0;
   private surfaceInitialShiftY = 0;
 
   private gridCoords: Array<Array<Vector3>> = [];
+  private gridCoordsCurve: Array<Array<Vector3>> = [];
 
   constructor(drawInstance: Canvas) {
     this.canvas = drawInstance;
@@ -93,6 +99,7 @@ class Lab_5 {
   private addCoordsManually() {
     // добавляем координаты в originalCoords
     console.log("add");
+    // GENERATE INITIAL CONTROL POINTS
     for (
       let i = 0;
       i < Math.ceil(this.surfaceHeight / this.surfaceStepY);
@@ -111,15 +118,75 @@ class Lab_5 {
         y < this.surfaceHeight;
         y += this.surfaceStepY, j += 1
       ) {
-        const _x = this.fx(x, y);
-        const _y = this.fy(x, y);
-        const _z = this.fz(x, y);
+        const _x = x;
+        const _y = y;
+        const _z = generateRandomFloatInRange(0, 0.0001);
         const surfacePoint = new Vector3(_x, _y, _z);
-        this.originalCoords.push(surfacePoint);
+        // this.originalCoords.push(surfacePoint);
 
-        this.gridCoords[j].push(surfacePoint);
+        this.gridCoords[i].push(surfacePoint);
+        debugger;
       }
     }
+    debugger;
+    for (let i = 0; i < this.gridCoords.length; i++) {
+      this.gridCoordsCurve.push([]);
+      // for (let j = 0; this.gridCoords[0].length; j++) {
+      //   // @ts-ignore
+      //   this.gridCoordsCurve[i].push(0);
+      // }
+    }
+    // debugger;
+
+    // GENERATE BEZIER CURVE
+    const delta_u = this.surfaceStepX;
+
+    const degreeM: number = this.gridCoords.length - 1;
+    const degreeFacM: number = factorial(degreeM);
+
+    const degreeN: number = this.gridCoords[0].length - 1;
+    const degreeFacN: number = factorial(degreeN);
+
+    const M_parts: number = this.gridCoords.length;
+    const N_parts: number = this.gridCoords[0].length;
+
+    for (let ui = 0; ui < M_parts; ui += 1) {
+      let point = new Vector3(0, 0, 0);
+      const u = ui / M_parts;
+
+      for (let vi = 0; vi < N_parts; vi += 1) {
+        const v = vi / N_parts;
+
+        for (let i = 0; i < M_parts; i++) {
+          let factorM = degreeFacM / (factorial(i) * factorial(degreeM - i));
+          let powerM = Math.pow(1 - u, degreeM - i);
+          let power_u = Math.pow(u, i);
+          let B_M = factorM * powerM * power_u;
+
+          for (let j = 0; j < N_parts; j++) {
+            let vec: Vector3 = new Vector3(
+              this.gridCoords[i][j].x,
+              this.gridCoords[i][j].y,
+              this.gridCoords[i][j].z
+            );
+
+            let factorN = degreeFacN / (factorial(j) * factorial(degreeN - j));
+            let powerN = Math.pow(1 - v, degreeN - j);
+            let power_v = Math.pow(v, j);
+            let B_N = factorN * powerN * power_v;
+
+            vec = Vector3.mul(vec, B_M * B_N);
+            console.log(vec);
+            point.add(vec);
+          }
+        }
+
+        this.gridCoordsCurve[ui][vi] = point;
+        this.originalCoords.push(point);
+      }
+    }
+    this.gridCoordsCurve;
+    // debugger;
   }
 
   private update(ts: number) {
@@ -130,123 +197,6 @@ class Lab_5 {
   private updated(ts: number) {
     // console.log(ts);
     if (this.originalCoords.length > 0) this.displayCoords2();
-  }
-
-  private surfaceFunction(x: number, y: number): number {
-    return Math.sin(2 * y) + Math.sin(2 * x);
-    // return Math.pow(x / (x + y + 1) + 1, 2) + Math.pow(y / (x + y + 1) + 1, 2);
-  }
-
-  // RENDER TORUS OBJECT https://en.wikipedia.org/wiki/Torus
-  private fx(u: number, v: number): number {
-    const R = 0.5;
-    const r = 0.4;
-    return (R * Math.sin(u) + r * Math.cos(v)) * Math.cos(u);
-  }
-  private fy(u: number, v: number): number {
-    const R = 0.5;
-    const r = 0.4;
-    return (R * Math.sin(u) + r * Math.cos(v)) * Math.sin(u);
-  }
-  private fz(u: number, v: number) {
-    const R = 0.5;
-    const r = 0.4;
-    return r * Math.sin(v);
-  }
-
-  // RENDER  another object https://docs.exponenta.ru/symbolic/ezsurf.html
-  // private fx(u: number, v: number): number {
-  //   const r = 2 + Math.sin(7 * u + 5 * v);
-  //   return r * Math.cos(u) * Math.sin(v);
-  // }
-  // private fy(u: number, v: number): number {
-  //   const r = 2 + Math.sin(7 * u + 5 * v);
-  //   return r * Math.sin(u) * Math.sin(v);
-  // }
-  // private fz(u: number, v: number) {
-  //   const r = 2 + Math.sin(7 * u + 5 * v);
-  //   return r * Math.cos(v);
-  // }
-
-  // RENDER cos sin surface
-  // private fx(u: number, v: number): number {
-  //   return u;
-  // }
-  // private fy(u: number, v: number): number {
-  //   return v;
-  // }
-  // private fz(u: number, v: number) {
-  //   return Math.cos(2 * u) + Math.sin(2 * v);
-  // }
-
-  displayCoords() {
-    this.clearScreen();
-    this.updateRotation();
-    this.updateProjection();
-
-    this.projectedCoords = [];
-    let centerVec = new Vector3(0, 0, 0);
-
-    for (let i = 0; i < this.originalCoords.length; i++) {
-      let vec: Vector3 = this.originalCoords[i];
-      centerVec.add(vec);
-    }
-    // центр по всем проекциям
-    centerVec = Vector3.mul(centerVec, 1 / this.originalCoords.length);
-
-    // трансформация всех координат куба
-    let i = 0;
-    for (let coord of this.originalCoords) {
-      let proj2D = new Vector3(coord.x, coord.y, coord.z);
-
-      //   перенос пространства
-      let trans = new Vector3(
-        this.translationX,
-        this.translationY,
-        this.translationZ
-      );
-
-      //   перенос объекта
-      let transObject = new Vector3(
-        this.translationX,
-        this.translationY,
-        this.translationZ
-      );
-
-      // центрируем координаты фигуры
-      proj2D = Vector3.add(proj2D, Vector3.mul(centerVec, -1));
-
-      proj2D = Vector3.matMul(this.rotationX, proj2D);
-      proj2D = Vector3.matMul(this.rotationZ, proj2D);
-      proj2D = Vector3.matMul(this.rotationY, proj2D);
-
-      proj2D = Vector3.add(proj2D, centerVec);
-
-      // переводим кординаты в размерность экрана, потому что раньше они были от -1 до 1
-      proj2D = Vector3.matMul(this.projection, proj2D);
-      // перенос объекта
-      proj2D = Vector3.add(proj2D, transObject);
-
-      this.projectedCoords.push(proj2D);
-
-      let convertedCoords: Vector3 = this.convertCoords(proj2D.x, proj2D.y);
-      // this.canvas.ctx.fillText(`${i}`, convertedCoords.x, convertedCoords.y);
-      // console.log(convertedCoords);
-      this.canvas.setPoint(convertedCoords.x, convertedCoords.y);
-      i += 1;
-    }
-
-    const height = Math.floor(this.surfaceHeight / this.surfaceStepY);
-    const width = Math.floor(this.surfaceWidth / this.surfaceStepX) - 1;
-    for (let xi = 0; xi < width; xi++) {
-      for (let yi = 0; yi < height; yi++) {
-        // this.connectProjectedDots(
-        //   height * xi + xi + yi,
-        //   height * xi + yi + (yi + 1)
-        // );
-        // this.connectProjectedDots(yi, yi + 1);
-      }
-    }
   }
 
   displayCoords2() {
@@ -264,23 +214,14 @@ class Lab_5 {
     centerVec = Vector3.mul(centerVec, 1 / this.originalCoords.length);
 
     // трансформация всех координат куба
-    let i = 0;
     let projectedGridCoords: Array<Array<Vector3>> = [];
     for (let i = 0; i < this.gridCoords.length; i++)
       projectedGridCoords.push([]);
 
     for (let i = 0; i < this.gridCoords.length; i++)
       for (let j = 0; j < this.gridCoords[0].length; j++) {
-        // let coord = JSON.parse(JSON.stringify(this.gridCoords[i][j]));
         let coord = this.gridCoords[i][j];
         let proj2D = new Vector3(coord.x, coord.y, coord.z);
-
-        //   перенос пространства
-        let trans = new Vector3(
-          this.translationX,
-          this.translationY,
-          this.translationZ
-        );
 
         //   перенос объекта
         let transObject = new Vector3(
@@ -312,23 +253,6 @@ class Lab_5 {
       }
 
     const relu = (x: number, max: number): number => (x >= max ? 0 : x);
-
-    for (let i = 0; i < this.gridCoords.length; i++)
-      for (let j = 0; j < this.gridCoords[0].length; j++) {
-        // @ts-ignore
-        let start: Vector3 = projectedGridCoords[i][j];
-        let end: Vector3 =
-          projectedGridCoords[relu(i + 1, this.gridCoords.length)][j];
-
-        // start = this.convertCoords(start.x, start.y);
-        // end = this.convertCoords(end.x, end.y);
-
-        this.canvas.drawLine(start.x, start.y, end.x, end.y);
-
-        start = projectedGridCoords[i][j];
-        end = projectedGridCoords[i][relu(j + 1, this.gridCoords[0].length)];
-        this.canvas.drawLine(start.x, start.y, end.x, end.y);
-      }
 
     // @ts-ignore
     projectedGridCoords = null;
@@ -439,16 +363,6 @@ class Lab_5 {
     this.clearScreen();
   }
 
-  private connectProjectedDots(startNum: number, endNum: number) {
-    let start: Vector3 = this.projectedCoords[startNum];
-    let end: Vector3 = this.projectedCoords[endNum];
-
-    start = this.convertCoords(start.x, start.y);
-    end = this.convertCoords(end.x, end.y);
-
-    this.canvas.drawLine(start.x, start.y, end.x, end.y);
-  }
-
   changeScale(type: string, value: number) {
     switch (type) {
       case "X": {
@@ -492,4 +406,4 @@ class Lab_5 {
   }
 }
 
-export { Lab_5 };
+export { Lab_5_2 };

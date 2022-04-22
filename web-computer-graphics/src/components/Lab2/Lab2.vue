@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="p-2">
-      <h3>Лабораторная №1</h3>
+      <h3>Лабораторная №2</h3>
       2. Рисование кривой Безье
       <ul>
         <li>
