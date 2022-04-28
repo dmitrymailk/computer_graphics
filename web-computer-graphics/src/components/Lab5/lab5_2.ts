@@ -49,8 +49,8 @@ class Lab_5_2 {
   // private surfaceHeight: number = 5;
   private surfaceWidth: number = 1.6;
   private surfaceHeight: number = 1.6;
-  private surfaceStepX: number = 0.4;
-  private surfaceStepY: number = 0.3;
+  private surfaceStepX: number = 0.7;
+  private surfaceStepY: number = 0.2;
   private surfaceInitialShiftX = 0;
   private surfaceInitialShiftY = 0;
 
@@ -107,9 +107,9 @@ class Lab_5_2 {
     ) {
       this.gridCoords.push([]);
     }
-    // console.log(this.gridCoords);
     const precision = 0.0001;
 
+    // create control points
     for (
       let y = this.surfaceInitialShiftY, j = 0;
       y < this.surfaceHeight - precision;
@@ -123,11 +123,14 @@ class Lab_5_2 {
         const _x = x;
         const _y = y;
         const _z = generateRandomFloatInRange(0, 1);
+
+        // const _x = x;
+        // const _y = generateRandomFloatInRange(-1, 1);
+        // const _z = generateRandomFloatInRange(-1, 1);
         const surfacePoint = new Vector3(_x, _y, _z);
         this.originalCoords.push(surfacePoint);
-        // console.log(x, y, _z);
+
         this.gridCoords[j].push(surfacePoint);
-        // debugger;
       }
     }
 
@@ -135,12 +138,10 @@ class Lab_5_2 {
     const step = 1 / parts;
 
     for (let i = 0; i < parts; i++) this.gridSurfaceCoords.push([]);
-    // debugger;
 
+    // control points amount
     const N = this.gridCoords.length;
     const M = this.gridCoords[0].length;
-    // const M = 3;
-    // const N = 3;
 
     let u = 0;
     for (let i = 0; i < parts; i += 1) {
@@ -164,7 +165,7 @@ class Lab_5_2 {
 
       for (let j = 0; j < m; j++) {
         const B_j = this.B(m - 1, j, v);
-        console.log(i, j, this.gridCoords);
+        // console.log(i, j, this.gridCoords);
         let controlPoint = this.gridCoords[i][j];
         controlPoint = new Vector3(
           controlPoint.x,
@@ -285,13 +286,14 @@ class Lab_5_2 {
         this.canvas.setPoint(convertedCoords.x, convertedCoords.y, 1);
       }
 
-    // @ts-ignore
-    // projectedGridCoords = null;
+    this.angleZ += 0.001;
+    this.angleY += 0.003;
+    this.angleX += 0.001;
   }
 
   convertCoords(x: number, y: number): Vector3 {
-    x += this.canvas.width / 2; //- (this.surfaceWidth * this.scaleX) / 2;
-    y += this.canvas.height / 2; //- (this.surfaceHeight * this.scaleY) / 2;
+    x += this.canvas.width / 2 - (this.surfaceWidth * this.scaleX) / 2;
+    y += this.canvas.width / 2 - (this.surfaceHeight * this.scaleY) / 2;
     return new Vector3(x, y, 0);
   }
 

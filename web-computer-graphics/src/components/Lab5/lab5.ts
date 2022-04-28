@@ -129,7 +129,7 @@ class Lab_5 {
 
   private updated(ts: number) {
     // console.log(ts);
-    if (this.originalCoords.length > 0 && false) this.displayCoords2();
+    if (this.originalCoords.length > 0) this.displayCoords2();
   }
 
   private surfaceFunction(x: number, y: number): number {
@@ -332,6 +332,9 @@ class Lab_5 {
 
     // @ts-ignore
     projectedGridCoords = null;
+    this.angleZ += 0.001;
+    this.angleY += 0.003;
+    this.angleX += 0.001;
   }
 
   convertCoords(x: number, y: number): Vector3 {
