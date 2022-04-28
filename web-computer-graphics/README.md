@@ -11,5 +11,5 @@
 1. Закоммитить свой прогресс
 2. Спуститься в root дирректорию
 3. git add путь**к**папке**с**сайтом -f (это если она была добавленва в gitignore)
-4. git subtree push --prefix путь**к**папке**с**сайтом origin gh-pages
+4. git subtree push --prefix путь**к**папке**с**сайтом origin gh-pages (git subtree push --prefix web-computer-graphics/dist/ origin gh-pages)
 5. Перейти в настройки и открыть раздел _pages_, там будет ссылка на сайт
