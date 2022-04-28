@@ -47,9 +47,9 @@ class Lab_5_2 {
   // параметры поверхности
   // private surfaceWidth: number = 5;
   // private surfaceHeight: number = 5;
-  private surfaceWidth: number = 1.6;
-  private surfaceHeight: number = 1.6;
-  private surfaceStepX: number = 0.7;
+  private surfaceWidth: number = 2;
+  private surfaceHeight: number = 2;
+  private surfaceStepX: number = 0.5;
   private surfaceStepY: number = 0.2;
   private surfaceInitialShiftX = 0;
   private surfaceInitialShiftY = 0;
