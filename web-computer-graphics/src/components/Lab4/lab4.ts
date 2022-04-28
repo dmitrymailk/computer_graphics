@@ -202,6 +202,10 @@ class Lab_4 {
     for (const traversal of this.traversalIndexes) {
       this.connectProjectedDots(traversal[0], traversal[1]);
     }
+
+    this.angleZ += 0.001;
+    this.angleY += 0.003;
+    this.angleX += 0.001;
   }
 
   convertCoords(x: number, y: number): Vector3 {
