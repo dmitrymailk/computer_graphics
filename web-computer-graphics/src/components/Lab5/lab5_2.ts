@@ -50,7 +50,7 @@ class Lab_5_2 {
   private surfaceWidth: number = 1.6;
   private surfaceHeight: number = 1.6;
   private surfaceStepX: number = 0.4;
-  private surfaceStepY: number = 0.4;
+  private surfaceStepY: number = 0.3;
   private surfaceInitialShiftX = 0;
   private surfaceInitialShiftY = 0;
 
@@ -111,14 +111,14 @@ class Lab_5_2 {
     const precision = 0.0001;
 
     for (
-      let x = this.surfaceInitialShiftX, i = 0;
-      x < this.surfaceWidth - precision;
-      x += this.surfaceStepX, i += 1
+      let y = this.surfaceInitialShiftY, j = 0;
+      y < this.surfaceHeight - precision;
+      y += this.surfaceStepY, j += 1
     ) {
       for (
-        let y = this.surfaceInitialShiftY, j = 0;
-        y < this.surfaceHeight - precision;
-        y += this.surfaceStepY, j += 1
+        let x = this.surfaceInitialShiftX, i = 0;
+        x < this.surfaceWidth - precision;
+        x += this.surfaceStepX, i += 1
       ) {
         const _x = x;
         const _y = y;
@@ -126,7 +126,7 @@ class Lab_5_2 {
         const surfacePoint = new Vector3(_x, _y, _z);
         this.originalCoords.push(surfacePoint);
         // console.log(x, y, _z);
-        this.gridCoords[i].push(surfacePoint);
+        this.gridCoords[j].push(surfacePoint);
         // debugger;
       }
     }
@@ -137,8 +137,8 @@ class Lab_5_2 {
     for (let i = 0; i < parts; i++) this.gridSurfaceCoords.push([]);
     // debugger;
 
-    const M = this.gridCoords.length;
-    const N = this.gridCoords[0].length;
+    const N = this.gridCoords.length;
+    const M = this.gridCoords[0].length;
     // const M = 3;
     // const N = 3;
 
@@ -164,6 +164,7 @@ class Lab_5_2 {
 
       for (let j = 0; j < m; j++) {
         const B_j = this.B(m - 1, j, v);
+        console.log(i, j, this.gridCoords);
         let controlPoint = this.gridCoords[i][j];
         controlPoint = new Vector3(
           controlPoint.x,
