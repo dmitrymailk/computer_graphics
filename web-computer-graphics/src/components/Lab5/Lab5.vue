@@ -58,10 +58,10 @@ export default {
     const lab_5 = new Lab_5(canvas);
     this.lab5 = lab_5;
 
-    // const canvas_elem_2: HTMLCanvasElement = this.$refs.canvas_elem_2;
-    // const canvas_2 = new Canvas(canvas_elem_2, 600, 600);
-    // const lab_5_2 = new Lab_5_2(canvas_2);
-    // this.lab5_2 = lab_5_2;
+    const canvas_elem_2: HTMLCanvasElement = this.$refs.canvas_elem_2;
+    const canvas_2 = new Canvas(canvas_elem_2, 600, 600);
+    const lab_5_2 = new Lab_5_2(canvas_2);
+    this.lab5_2 = lab_5_2;
   },
 };
 </script>
