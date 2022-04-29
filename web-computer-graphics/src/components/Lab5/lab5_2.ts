@@ -200,7 +200,7 @@ class Lab_5_2 {
 
   private updated(ts: number) {
     // console.log(ts);
-    if (this.originalCoords.length > 0 && false) this.displayCoords2();
+    if (this.originalCoords.length > 0) this.displayCoords2();
   }
 
   displayCoords2() {

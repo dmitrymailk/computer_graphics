@@ -129,7 +129,7 @@ class Lab_5 {
 
   private updated(ts: number) {
     // console.log(ts);
-    if (this.originalCoords.length > 0 && false) this.displayCoords2();
+    if (this.originalCoords.length > 0) this.displayCoords2();
   }
 
   private surfaceFunction(x: number, y: number): number {

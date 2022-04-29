@@ -23,9 +23,9 @@ class Lab_5_3 {
   private angleY: number = 0;
 
   // параметры скейла для всех осей
-  private scaleX: number = 200;
-  private scaleY: number = 200;
-  private scaleZ: number = 200;
+  private scaleX: number = 300;
+  private scaleY: number = 300;
+  private scaleZ: number = 300;
   private maxScale: number = 600;
 
   // матрица проекции
@@ -47,10 +47,10 @@ class Lab_5_3 {
   // параметры поверхности
   // private surfaceWidth: number = 5;
   // private surfaceHeight: number = 5;
-  private surfaceWidth: number = 2;
-  private surfaceHeight: number = 2;
-  private surfaceStepX: number = 0.2;
-  private surfaceStepY: number = 0.2;
+  private surfaceWidth: number = 1.6;
+  private surfaceHeight: number = 1.6;
+  private surfaceStepX: number = 0.3;
+  private surfaceStepY: number = 0.3;
   private surfaceInitialShiftX = 0;
   private surfaceInitialShiftY = 0;
 
