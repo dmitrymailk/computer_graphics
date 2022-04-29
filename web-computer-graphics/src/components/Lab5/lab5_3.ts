@@ -4,9 +4,14 @@ import { Vector3 } from "../Lab/Vector3";
 // @ts-ignore
 import Papa from "papaparse";
 
-import { generateRandomFloatInRange, download, copyCoords } from "../Lab/utils";
+import {
+  generateRandomFloatInRange,
+  download,
+  copyCoords,
+  factorial,
+} from "../Lab/utils";
 
-class Lab_5 {
+class Lab_5_3 {
   private canvas: Canvas;
 
   private originalCoords: Array<Vector3> = [];
@@ -42,14 +47,20 @@ class Lab_5 {
   // параметры поверхности
   // private surfaceWidth: number = 5;
   // private surfaceHeight: number = 5;
-  private surfaceWidth: number = 2 * Math.PI;
-  private surfaceHeight: number = 2 * Math.PI;
-  private surfaceStepX = 0.3;
-  private surfaceStepY = 0.3;
+  private surfaceWidth: number = 2;
+  private surfaceHeight: number = 2;
+  private surfaceStepX: number = 0.2;
+  private surfaceStepY: number = 0.2;
   private surfaceInitialShiftX = 0;
   private surfaceInitialShiftY = 0;
 
   private gridCoords: Array<Array<Vector3>> = [];
+  private gridSurfaceCoords: Array<Array<Vector3>> = [];
+
+  // B spline
+  private knots: Array<number> = [];
+  private degree: number = 2;
+  private precision: number = 1 / 100;
 
   constructor(drawInstance: Canvas) {
     this.canvas = drawInstance;
@@ -90,9 +101,47 @@ class Lab_5 {
     this.startUpdate();
   }
 
+  // drawB_Spline() {
+  //   const precision = this.precision;
+  //   let points: Array<Array<number>> = [];
+  //   let controlPoints = [];
+  //   for (let i = 0; i < this.coords_3_1.length; i++) {
+  //     controlPoints.push([this.coords_3_1[i].x, this.coords_3_1[i].y]);
+  //   }
+  //   const degree = this.degree;
+  //   let knots = [];
+  //   const n = this.gridCoords.length;
+  //   const len = n + degree + 1;
+  //   for (let i = 0; i < len; i++) {
+  //     if (i <= degree) knots.push(0);
+  //     else if (i < len - degree - 1) {
+  //       knots.push(i / len);
+  //     } else {
+  //       knots.push(1);
+  //     }
+  //   }
+  //   // debugger;
+
+  //   this.knots = knots;
+
+  //   let pointsAmount = this.coords_3_1.length;
+  //   for (let u = 0; u <= 1; u += precision) {
+  //     let x = 0;
+  //     let y = 0;
+  //     for (let i = 0; i < pointsAmount; i++) {
+  //       let res = this.N(i, degree, u);
+  //       x += res * this.coords_3_1[i].x;
+  //       y += res * this.coords_3_1[i].y;
+  //     }
+  //     points.push([x, y]);
+  //     // console.log([x, y]);
+  //   }
+  // }
+
   private addCoordsManually() {
     // добавляем координаты в originalCoords
     console.log("add");
+    // GENERATE INITIAL CONTROL POINTS
     for (
       let i = 0;
       i < Math.ceil(this.surfaceHeight / this.surfaceStepY);
@@ -100,26 +149,126 @@ class Lab_5 {
     ) {
       this.gridCoords.push([]);
     }
+    const precision = 0.0001;
 
+    // create control points
     for (
-      let x = this.surfaceInitialShiftX, i = 0;
-      x < this.surfaceWidth;
-      x += this.surfaceStepX, i += 1
+      let y = this.surfaceInitialShiftY, j = 0;
+      y < this.surfaceHeight - precision;
+      y += this.surfaceStepY, j += 1
     ) {
       for (
-        let y = this.surfaceInitialShiftY, j = 0;
-        y < this.surfaceHeight;
-        y += this.surfaceStepY, j += 1
+        let x = this.surfaceInitialShiftX, i = 0;
+        x < this.surfaceWidth - precision;
+        x += this.surfaceStepX, i += 1
       ) {
-        const _x = this.fx(x, y);
-        const _y = this.fy(x, y);
-        const _z = this.fz(x, y);
+        const _x = x;
+        const _y = y;
+        const _z = generateRandomFloatInRange(0, 1);
+
+        // const _x = x;
+        // const _y = generateRandomFloatInRange(-1, 1);
+        // const _z = generateRandomFloatInRange(-1, 1);
         const surfacePoint = new Vector3(_x, _y, _z);
         this.originalCoords.push(surfacePoint);
 
         this.gridCoords[j].push(surfacePoint);
       }
     }
+
+    const parts = 70;
+    const step = 1 / parts;
+
+    for (let i = 0; i < parts; i++) this.gridSurfaceCoords.push([]);
+
+    // ADD KNOTS
+    const degree = this.degree;
+    let knots = [];
+    const n = this.gridCoords.length;
+    const len = n + degree + 1;
+    for (let i = 0; i < len; i++) {
+      if (i <= degree) knots.push(0);
+      else if (i < len - degree - 1) {
+        knots.push(i / len);
+      } else {
+        knots.push(1);
+      }
+    }
+    // debugger;
+
+    this.knots = knots;
+
+    // control points amount
+    const N = this.gridCoords.length;
+    const M = this.gridCoords[0].length;
+
+    let u = 0;
+    for (let i = 0; i < parts; i += 1) {
+      let v = 0;
+      for (let j = 0; j < parts; j += 1) {
+        const surfacePoint = this.splinePoint(u, v, M, N);
+        console.log(surfacePoint);
+        this.gridSurfaceCoords[i].push(surfacePoint);
+
+        v += step;
+      }
+      u += step;
+    }
+  }
+
+  splinePoint(u: number, v: number, m: number, n: number) {
+    let surfacePoint = new Vector3(0, 0, 0);
+
+    for (let i = 0; i < n; i++) {
+      const N_i = this.N(i, this.degree, u);
+
+      for (let j = 0; j < m; j++) {
+        const N_j = this.N(j, this.degree, v);
+        // console.log(i, j, this.gridCoords);
+        let controlPoint = this.gridCoords[i][j];
+        controlPoint = new Vector3(
+          controlPoint.x,
+          controlPoint.y,
+          controlPoint.z
+        );
+        controlPoint = Vector3.mul(controlPoint, N_i * N_j);
+        surfacePoint.add(controlPoint);
+      }
+    }
+
+    return surfacePoint;
+  }
+
+  // https://en.wikipedia.org/wiki/B%C3%A9zier_surface
+  bezierPoint(u: number, v: number, m: number, n: number) {
+    let surfacePoint = new Vector3(0, 0, 0);
+
+    for (let i = 0; i < n; i++) {
+      const B_i = this.B(n - 1, i, u);
+
+      for (let j = 0; j < m; j++) {
+        const B_j = this.B(m - 1, j, v);
+        // console.log(i, j, this.gridCoords);
+        let controlPoint = this.gridCoords[i][j];
+        controlPoint = new Vector3(
+          controlPoint.x,
+          controlPoint.y,
+          controlPoint.z
+        );
+        controlPoint = Vector3.mul(controlPoint, B_i * B_j);
+        surfacePoint.add(controlPoint);
+      }
+    }
+
+    return surfacePoint;
+  }
+
+  B(n: number, i: number, t: number) {
+    const factor = factorial(n) / (factorial(i) * factorial(n - i));
+    const power = Math.pow(1 - t, n - i);
+    const power_t = Math.pow(t, i);
+    const B = factor * power * power_t;
+    return B;
   }
 
   private update(ts: number) {
@@ -129,124 +278,30 @@ class Lab_5 {
 
   private updated(ts: number) {
     // console.log(ts);
-    if (this.originalCoords.length > 0 && false) this.displayCoords2();
+    if (this.originalCoords.length > 0) this.displayCoords2();
   }
 
-  private surfaceFunction(x: number, y: number): number {
-    return Math.sin(2 * y) + Math.sin(2 * x);
-    // return Math.pow(x / (x + y + 1) + 1, 2) + Math.pow(y / (x + y + 1) + 1, 2);
-  }
-
-  // RENDER TORUS OBJECT https://en.wikipedia.org/wiki/Torus
-  private fx(u: number, v: number): number {
-    const R = 0.5;
-    const r = 0.4;
-    return (R * Math.sin(u) + r * Math.cos(v)) * Math.cos(u);
-  }
-  private fy(u: number, v: number): number {
-    const R = 0.5;
-    const r = 0.4;
-    return (R * Math.sin(u) + r * Math.cos(v)) * Math.sin(u);
-  }
-  private fz(u: number, v: number) {
-    const R = 0.5;
-    const r = 0.4;
-    return r * Math.sin(v);
-  }
-
-  // RENDER  another object https://docs.exponenta.ru/symbolic/ezsurf.html
-  // private fx(u: number, v: number): number {
-  //   const r = 2 + Math.sin(7 * u + 5 * v);
-  //   return r * Math.cos(u) * Math.sin(v);
-  // }
-  // private fy(u: number, v: number): number {
-  //   const r = 2 + Math.sin(7 * u + 5 * v);
-  //   return r * Math.sin(u) * Math.sin(v);
-  // }
-  // private fz(u: number, v: number) {
-  //   const r = 2 + Math.sin(7 * u + 5 * v);
-  //   return r * Math.cos(v);
-  // }
-
-  // RENDER cos sin surface
-  // private fx(u: number, v: number): number {
-  //   return u;
-  // }
-  // private fy(u: number, v: number): number {
-  //   return v;
-  // }
-  // private fz(u: number, v: number) {
-  //   return Math.cos(2 * u) + Math.sin(2 * v);
-  // }
-
-  displayCoords() {
-    this.clearScreen();
-    this.updateRotation();
-    this.updateProjection();
-
-    this.projectedCoords = [];
-    let centerVec = new Vector3(0, 0, 0);
-
-    for (let i = 0; i < this.originalCoords.length; i++) {
-      let vec: Vector3 = this.originalCoords[i];
-      centerVec.add(vec);
+  N(i: number, m: number, u: number): number {
+    if (m == 0) {
+      if (this.knots[i] <= u && u <= this.knots[i + 1]) return 1;
+      return 0;
     }
-    // центр по всем проекциям
-    centerVec = Vector3.mul(centerVec, 1 / this.originalCoords.length);
+    let part_1: number;
+    if (this.knots[i + m] == this.knots[i]) {
+      if (u == this.knots[i]) part_1 = 0;
+      else part_1 = 1;
+    } else part_1 = (u - this.knots[i]) / (this.knots[i + m] - this.knots[i]);
 
-    // трансформация всех координат куба
-    let i = 0;
-    for (let coord of this.originalCoords) {
-      let proj2D = new Vector3(coord.x, coord.y, coord.z);
+    let part_2: number;
+    if (this.knots[i + m + 1] == this.knots[i + 1]) {
+      if (this.knots[i + m + 1] == u) part_2 = 0;
+      else part_2 = 1;
+    } else
+      part_2 =
+        (this.knots[i + m + 1] - u) /
+        (this.knots[i + m + 1] - this.knots[i + 1]);
 
-      //   перенос пространства
-      let trans = new Vector3(
-        this.translationX,
-        this.translationY,
-        this.translationZ
-      );
-
-      //   перенос объекта
-      let transObject = new Vector3(
-        this.translationX,
-        this.translationY,
-        this.translationZ
-      );
-
-      // центрируем координаты фигуры
-      proj2D = Vector3.add(proj2D, Vector3.mul(centerVec, -1));
-
-      proj2D = Vector3.matMul(this.rotationX, proj2D);
-      proj2D = Vector3.matMul(this.rotationZ, proj2D);
-      proj2D = Vector3.matMul(this.rotationY, proj2D);
-
-      proj2D = Vector3.add(proj2D, centerVec);
-
-      // переводим кординаты в размерность экрана, потому что раньше они были от -1 до 1
-      proj2D = Vector3.matMul(this.projection, proj2D);
-      // перенос объекта
-      proj2D = Vector3.add(proj2D, transObject);
-
-      this.projectedCoords.push(proj2D);
-
-      let convertedCoords: Vector3 = this.convertCoords(proj2D.x, proj2D.y);
-      // this.canvas.ctx.fillText(`${i}`, convertedCoords.x, convertedCoords.y);
-      // console.log(convertedCoords);
-      this.canvas.setPoint(convertedCoords.x, convertedCoords.y);
-      i += 1;
-    }
-
-    const height = Math.floor(this.surfaceHeight / this.surfaceStepY);
-    const width = Math.floor(this.surfaceWidth / this.surfaceStepX) - 1;
-    for (let xi = 0; xi < width; xi++) {
-      for (let yi = 0; yi < height; yi++) {
-        // this.connectProjectedDots(
-        //   height * xi + xi + yi,
-        //   height * xi + yi + (yi + 1)
-        // );
-        // this.connectProjectedDots(yi, yi + 1);
-      }
-    }
+    return part_1 * this.N(i, m - 1, u) + part_2 * this.N(i + 1, m - 1, u);
   }
 
   displayCoords2() {
@@ -264,23 +319,16 @@ class Lab_5 {
     centerVec = Vector3.mul(centerVec, 1 / this.originalCoords.length);
 
     // трансформация всех координат куба
-    let i = 0;
-    let projectedGridCoords: Array<Array<Vector3>> = [];
-    for (let i = 0; i < this.gridCoords.length; i++)
-      projectedGridCoords.push([]);
+    // let projectedGridCoords: Array<Array<Vector3>> = [];
+    // for (let i = 0; i < this.gridCoords.length; i++)
+    //   projectedGridCoords.push([]);
 
+    // CONTROL POINTS
     for (let i = 0; i < this.gridCoords.length; i++)
       for (let j = 0; j < this.gridCoords[0].length; j++) {
-        // let coord = JSON.parse(JSON.stringify(this.gridCoords[i][j]));
         let coord = this.gridCoords[i][j];
-        let proj2D = new Vector3(coord.x, coord.y, coord.z);
 
-        //   перенос пространства
-        let trans = new Vector3(
-          this.translationX,
-          this.translationY,
-          this.translationZ
-        );
+        let proj2D = new Vector3(coord.x, coord.y, coord.z);
 
         //   перенос объекта
         let transObject = new Vector3(
@@ -306,40 +354,52 @@ class Lab_5 {
         this.projectedCoords.push(proj2D);
 
         let convertedCoords: Vector3 = this.convertCoords(proj2D.x, proj2D.y);
+        this.canvas.setPoint(convertedCoords.x, convertedCoords.y, 3);
+      }
+    // SURFACE POINTS
+    // debugger;
+    for (let i = 0; i < this.gridSurfaceCoords.length; i++)
+      for (let j = 0; j < this.gridSurfaceCoords[0].length; j++) {
+        let coord = this.gridSurfaceCoords[i][j];
 
-        this.canvas.setPoint(convertedCoords.x, convertedCoords.y);
-        projectedGridCoords[i].push(convertedCoords);
+        let proj2D = new Vector3(coord.x, coord.y, coord.z);
+
+        //   перенос объекта
+        let transObject = new Vector3(
+          this.translationX,
+          this.translationY,
+          this.translationZ
+        );
+
+        // центрируем координаты фигуры
+        proj2D = Vector3.add(proj2D, Vector3.mul(centerVec, -1));
+
+        proj2D = Vector3.matMul(this.rotationX, proj2D);
+        proj2D = Vector3.matMul(this.rotationZ, proj2D);
+        proj2D = Vector3.matMul(this.rotationY, proj2D);
+
+        proj2D = Vector3.add(proj2D, centerVec);
+
+        // переводим кординаты в размерность экрана, потому что раньше они были от -1 до 1
+        proj2D = Vector3.matMul(this.projection, proj2D);
+        // перенос объекта
+        proj2D = Vector3.add(proj2D, transObject);
+
+        this.projectedCoords.push(proj2D);
+
+        let convertedCoords: Vector3 = this.convertCoords(proj2D.x, proj2D.y);
+        // console.log(convertedCoords);
+        this.canvas.setPoint(convertedCoords.x, convertedCoords.y, 1);
       }
 
-    const relu = (x: number, max: number): number => (x >= max ? 0 : x);
-
-    for (let i = 0; i < this.gridCoords.length; i++)
-      for (let j = 0; j < this.gridCoords[0].length; j++) {
-        // @ts-ignore
-        let start: Vector3 = projectedGridCoords[i][j];
-        let end: Vector3 =
-          projectedGridCoords[relu(i + 1, this.gridCoords.length)][j];
-
-        // start = this.convertCoords(start.x, start.y);
-        // end = this.convertCoords(end.x, end.y);
-
-        this.canvas.drawLine(start.x, start.y, end.x, end.y);
-
-        start = projectedGridCoords[i][j];
-        end = projectedGridCoords[i][relu(j + 1, this.gridCoords[0].length)];
-        this.canvas.drawLine(start.x, start.y, end.x, end.y);
-      }
-
-    // @ts-ignore
-    projectedGridCoords = null;
     this.angleZ += 0.001;
     this.angleY += 0.003;
     this.angleX += 0.001;
   }
 
   convertCoords(x: number, y: number): Vector3 {
-    x += this.canvas.width / 2; //- (this.surfaceWidth * this.scaleX) / 2;
-    y += this.canvas.height / 2; //- (this.surfaceHeight * this.scaleY) / 2;
+    x += this.canvas.width / 2 - (this.surfaceWidth * this.scaleX) / 2;
+    y += this.canvas.width / 2 - (this.surfaceHeight * this.scaleY) / 2;
     return new Vector3(x, y, 0);
   }
 
@@ -442,16 +502,6 @@ class Lab_5 {
     this.clearScreen();
   }
 
-  private connectProjectedDots(startNum: number, endNum: number) {
-    let start: Vector3 = this.projectedCoords[startNum];
-    let end: Vector3 = this.projectedCoords[endNum];
-
-    start = this.convertCoords(start.x, start.y);
-    end = this.convertCoords(end.x, end.y);
-
-    this.canvas.drawLine(start.x, start.y, end.x, end.y);
-  }
-
   changeScale(type: string, value: number) {
     switch (type) {
       case "X": {
@@ -495,4 +545,4 @@ class Lab_5 {
   }
 }
 
-export { Lab_5 };
+export { Lab_5_3 };

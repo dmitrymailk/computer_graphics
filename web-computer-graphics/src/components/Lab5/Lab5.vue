@@ -6,6 +6,7 @@
       <ul>
         <li>а) поверхность, заданная формулой. (6)</li>
         <li>б) поверхность Безье (8)</li>
+        <li>в) сплайновая поверхность (8)</li>
       </ul>
     </div>
     <h1>а) поверхность, заданная формулой. (6)</h1>
@@ -16,6 +17,10 @@
     <div class="lab_5__field">
       <canvas class="lab_5__canvas" ref="canvas_elem_2"></canvas>
     </div>
+    <h1>б) сплайновая поверхность (8)</h1>
+    <div class="lab_5__field">
+      <canvas class="lab_5__canvas" ref="canvas_elem_3"></canvas>
+    </div>
   </div>
 </template>
 
@@ -25,12 +30,14 @@ import { ref } from "vue";
 import { Canvas } from "../Lab/Canvas";
 import { Lab_5 } from "./lab5";
 import { Lab_5_2 } from "./lab5_2";
+import { Lab_5_3 } from "./lab5_3";
 
 export default {
   data() {
     return {
       lab5: null,
       lab5_2: null,
+      lab5_3: null,
     };
   },
   components: {},
@@ -62,6 +69,11 @@ export default {
     const canvas_2 = new Canvas(canvas_elem_2, 600, 600);
     const lab_5_2 = new Lab_5_2(canvas_2);
     this.lab5_2 = lab_5_2;
+
+    const canvas_elem_3: HTMLCanvasElement = this.$refs.canvas_elem_3;
+    const canvas_3 = new Canvas(canvas_elem_3, 600, 600);
+    const lab_5_3 = new Lab_5_3(canvas_3);
+    this.lab5_3 = lab_5_3;
   },
 };
 </script>

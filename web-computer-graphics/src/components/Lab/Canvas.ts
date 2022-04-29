@@ -37,6 +37,7 @@ class Canvas {
 
   setPoint(x: number, y: number, size: number = 1) {
     this.ctx.fillRect(x, y, size, size);
+    // this.ctx.
   }
 
   drawLine(

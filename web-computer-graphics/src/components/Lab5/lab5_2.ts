@@ -57,6 +57,11 @@ class Lab_5_2 {
   private gridCoords: Array<Array<Vector3>> = [];
   private gridSurfaceCoords: Array<Array<Vector3>> = [];
 
+  // B spline
+  private knots: Array<number> = [];
+  private degree: number = 2;
+  private precision: number = 1 / 100;
+
   constructor(drawInstance: Canvas) {
     this.canvas = drawInstance;
     this.init();
@@ -195,7 +200,7 @@ class Lab_5_2 {
 
   private updated(ts: number) {
     // console.log(ts);
-    if (this.originalCoords.length > 0) this.displayCoords2();
+    if (this.originalCoords.length > 0 && false) this.displayCoords2();
   }
 
   displayCoords2() {
