@@ -20,6 +20,19 @@ class Vector3 {
     return new Vector3(x * scale, y * scale, z * scale);
   }
 
+  public static dotProduct(v1: Vector3, v2: Vector3): number {
+    let dotProduct = v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
+    let v1_norm = v1.norm2();
+    let v2_norm = v2.norm2();
+    return dotProduct / (v1_norm * v2_norm);
+  }
+  public static crossProduct(v1: Vector3, v2: Vector3): Vector3 {
+    const x: number = v1.y * v2.z - v1.z * v2.y;
+    const y: number = v1.z * v2.x - v1.x * v2.z;
+    const z: number = v1.x * v2.y - v1.y * v2.x;
+    return new Vector3(x, y, z);
+  }
+
   public static lepr(v1: Vector3, v2: Vector3, t: number) {
     const negV1 = Vector3.mul(v1, -1);
     let difference = Vector3.add(v2, negV1);
