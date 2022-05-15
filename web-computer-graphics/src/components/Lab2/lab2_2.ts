@@ -64,12 +64,6 @@ class Lab_2_2 {
       const delta = 0.01;
       for (let t = 0; t < 1.0001; t += delta) {
         let queue = this.coords_2_2.slice();
-        // @ts-ignore
-        const start: Vector3 = queue.shift();
-        // @ts-ignore
-        const end: Vector3 = queue.shift();
-        queue.unshift(start);
-        queue.push(end);
 
         while (queue.length != 1) {
           queue = this.dublicate(queue);
@@ -88,20 +82,6 @@ class Lab_2_2 {
       for (let i = 0; i < points.length - 1; i++) {
         const v1: Vector3 = points[i];
         const v2: Vector3 = points[i + 1];
-        this.canvas.drawLine(v1.x, v1.y, v2.x, v2.y);
-      }
-
-      let queue = this.coords_2_2.slice();
-      // @ts-ignore
-      const start: Vector3 = queue.shift();
-      // @ts-ignore
-      const end: Vector3 = queue.shift();
-      queue.unshift(start);
-      queue.push(end);
-
-      for (let i = 0; i < queue.length - 1; i++) {
-        const v1: Vector3 = queue[i];
-        const v2: Vector3 = queue[i + 1];
         this.canvas.drawLine(v1.x, v1.y, v2.x, v2.y);
       }
     }

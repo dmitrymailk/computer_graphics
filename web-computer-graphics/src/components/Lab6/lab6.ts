@@ -239,7 +239,7 @@ class Lab_6 {
   }
 
   cullingFaces() {
-    const canvasVector = new Vector3(0, 0, 1);
+    const canvasVector = new Vector3(0, 0, -1);
     // console.log("cullingFaces");
     for (let face of this.objectFaces) {
       const point_0_index = face[0];
@@ -257,7 +257,7 @@ class Lab_6 {
       let b = Vector3.add(Vector3.mul(point_0, -1), point_2);
       let normal = Vector3.crossProduct(a, b);
       let angleBetween = Vector3.dotProduct(normal, canvasVector);
-      if (angleBetween >= 0) {
+      if (angleBetween < 0) {
         this.backfacefCulledoObjectFaces.push(face);
       }
     }
